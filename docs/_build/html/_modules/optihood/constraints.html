@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optihood.constraints &mdash; pytrnsys  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> pytrnsys
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/defining_an_energy_network.html">Defining an energy network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/optimizing_the_energy_network.html">Optimizing the energy network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/processing_results.html">Processing results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/advanced_under_development_features.html">Advanced under-development features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Code Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pytrnsys</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>optihood.constraints</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for optihood.constraints</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">pyomo</span> <span class="kn">import</span> <span class="n">environ</span> <span class="k">as</span> <span class="n">pyo</span>
+<span class="kn">from</span> <span class="nn">oemof.solph.plumbing</span> <span class="kn">import</span> <span class="n">sequence</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span>
+
+<div class="viewcode-block" id="dailySHStorageConstraint"><a class="viewcode-back" href="../../optihood.html#optihood.constraints.dailySHStorageConstraint">[docs]</a><span class="k">def</span> <span class="nf">dailySHStorageConstraint</span><span class="p">(</span><span class="n">om</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to limit the SH storage capacity to 2 days</span>
+<span class="sd">    :param om: model</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">om</span><span class="o">.</span><span class="n">NODES</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;shStorage&quot;</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">label</span><span class="p">:</span>
+            <span class="n">constr</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;__Building&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_constraint_&quot;</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">om</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">t</span> <span class="o">%</span> <span class="mi">48</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">t</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
+                    <span class="nb">setattr</span><span class="p">(</span>
+                        <span class="n">om</span><span class="p">,</span>
+                        <span class="n">constr</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">),</span>
+                        <span class="n">pyo</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">expr</span><span class="o">=</span><span class="p">(</span><span class="n">om</span><span class="o">.</span><span class="n">GenericInvestmentStorageBlock</span><span class="o">.</span><span class="n">storage_content</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)),</span>
+                    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">om</span></div>
+
+<div class="viewcode-block" id="environmentalImpactlimit"><a class="viewcode-back" href="../../optihood.html#optihood.constraints.environmentalImpactlimit">[docs]</a><span class="k">def</span> <span class="nf">environmentalImpactlimit</span><span class="p">(</span><span class="n">om</span><span class="p">,</span> <span class="n">keyword1</span><span class="p">,</span> <span class="n">keyword2</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to limit the environmental impacts during the multi-objective optimization</span>
+<span class="sd">    :param om: model</span>
+<span class="sd">    :param keyword1: keyword for environmental impacts per flow, placed in a solph.Flow() object</span>
+<span class="sd">    :param keyword2: keyword for environmental impacts per capacity installed, placed in a solph.Investment() object</span>
+<span class="sd">    :param limit: limit not to be reached</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">flows</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">transformerFlowCapacityDict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">storageCapacityDict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">o</span><span class="p">)</span> <span class="ow">in</span> <span class="n">om</span><span class="o">.</span><span class="n">flows</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">om</span><span class="o">.</span><span class="n">flows</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">o</span><span class="p">],</span> <span class="n">keyword1</span><span class="p">):</span>
+            <span class="n">flows</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">o</span><span class="p">)]</span> <span class="o">=</span> <span class="n">om</span><span class="o">.</span><span class="n">flows</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">o</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">om</span><span class="o">.</span><span class="n">flows</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">o</span><span class="p">]</span><span class="o">.</span><span class="n">investment</span><span class="p">,</span> <span class="n">keyword2</span><span class="p">):</span>
+            <span class="n">transformerFlowCapacityDict</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">o</span><span class="p">)]</span> <span class="o">=</span> <span class="n">om</span><span class="o">.</span><span class="n">flows</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">o</span><span class="p">]</span><span class="o">.</span><span class="n">investment</span>
+
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">om</span><span class="o">.</span><span class="n">GenericInvestmentStorageBlock</span><span class="o">.</span><span class="n">INVESTSTORAGES</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">investment</span><span class="p">,</span> <span class="n">keyword2</span><span class="p">):</span>
+            <span class="n">storageCapacityDict</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">om</span><span class="o">.</span><span class="n">GenericInvestmentStorageBlock</span><span class="o">.</span><span class="n">invest</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+
+    <span class="n">envImpact</span> <span class="o">=</span> <span class="s2">&quot;totalEnvironmentalImpact&quot;</span>
+
+    <span class="nb">setattr</span><span class="p">(</span>
+        <span class="n">om</span><span class="p">,</span>
+        <span class="n">envImpact</span><span class="p">,</span>
+        <span class="n">pyo</span><span class="o">.</span><span class="n">Expression</span><span class="p">(</span>
+            <span class="n">expr</span><span class="o">=</span><span class="nb">sum</span><span class="p">(</span>
+            <span class="c1"># Environmental inpact of input flows</span>
+                <span class="n">om</span><span class="o">.</span><span class="n">flow</span><span class="p">[</span><span class="n">inflow</span><span class="p">,</span> <span class="n">outflow</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span>
+                <span class="o">*</span> <span class="n">om</span><span class="o">.</span><span class="n">timeincrement</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
+                <span class="o">*</span> <span class="n">sequence</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">flows</span><span class="p">[</span><span class="n">inflow</span><span class="p">,</span> <span class="n">outflow</span><span class="p">],</span> <span class="n">keyword1</span><span class="p">))[</span><span class="n">t</span><span class="p">]</span>
+                <span class="k">for</span> <span class="p">(</span><span class="n">inflow</span><span class="p">,</span> <span class="n">outflow</span><span class="p">)</span> <span class="ow">in</span> <span class="n">flows</span>
+                <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">om</span><span class="o">.</span><span class="n">TIMESTEPS</span>
+            <span class="p">)</span>
+            <span class="c1"># fix Environmental impact per transformer capacity</span>
+            <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="n">om</span><span class="o">.</span><span class="n">InvestmentFlow</span><span class="o">.</span><span class="n">invest</span><span class="p">[</span><span class="n">inflow</span><span class="p">,</span> <span class="n">outflow</span><span class="p">]</span> <span class="o">*</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">transformerFlowCapacityDict</span><span class="p">[</span><span class="n">inflow</span><span class="p">,</span> <span class="n">outflow</span><span class="p">],</span> <span class="n">keyword2</span><span class="p">)</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">inflow</span><span class="p">,</span> <span class="n">outflow</span><span class="p">)</span> <span class="ow">in</span> <span class="n">transformerFlowCapacityDict</span><span class="p">)</span>
+            <span class="c1"># fix Environmental impact per storage capacity</span>
+            <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="n">om</span><span class="o">.</span><span class="n">GenericInvestmentStorageBlock</span><span class="o">.</span><span class="n">invest</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">*</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">investment</span><span class="p">,</span> <span class="n">keyword2</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">storageCapacityDict</span><span class="p">)</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+    <span class="nb">setattr</span><span class="p">(</span>
+        <span class="n">om</span><span class="p">,</span>
+        <span class="n">envImpact</span> <span class="o">+</span> <span class="s2">&quot;_constraint&quot;</span><span class="p">,</span>
+        <span class="n">pyo</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">expr</span><span class="o">=</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">om</span><span class="p">,</span> <span class="n">envImpact</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">limit</span><span class="p">)),</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">om</span><span class="p">,</span> <span class="n">flows</span><span class="p">,</span> <span class="n">transformerFlowCapacityDict</span><span class="p">,</span> <span class="n">storageCapacityDict</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, Dani Carbonell, Mattia Battaglia, Jeremias Schmidli, Maike Schubert, Martin Neugebauer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

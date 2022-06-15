@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optihood package &mdash; optihood  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="optihood" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> optihood
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="guide/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide/defining_an_energy_network.html">Defining an energy network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide/optimizing_the_energy_network.html">Optimizing the energy network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide/processing_results.html">Processing results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide/advanced_under_development_features.html">Advanced under-development features</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Code Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">optihood package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-optihood.Run">optihood.Run module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-optihood.Test">optihood.Test module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-optihood.buildings">optihood.buildings module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-optihood.constraints">optihood.constraints module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-optihood.converters">optihood.converters module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-optihood.energy_network">optihood.energy_network module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-optihood.labelDict">optihood.labelDict module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-optihood.loadProfilesResidential">optihood.loadProfilesResidential module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-optihood.plot_functions">optihood.plot_functions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-optihood.plot_sankey">optihood.plot_sankey module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-optihood.plot_sankey_anim">optihood.plot_sankey_anim module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-optihood.shoppingmall">optihood.shoppingmall module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-optihood.sinks">optihood.sinks module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-optihood.sources">optihood.sources module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-optihood.storages">optihood.storages module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-optihood">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">optihood</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">optihood</a> &raquo;</li>
+      <li>optihood package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/optihood.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="optihood-package">
+<h1>optihood package<a class="headerlink" href="#optihood-package" title="Permalink to this headline"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+</section>
+<section id="module-optihood.Run">
+<span id="optihood-run-module"></span><h2>optihood.Run module<a class="headerlink" href="#module-optihood.Run" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.Run.createProfiles">
+<span class="sig-prename descclassname"><span class="pre">optihood.Run.</span></span><span class="sig-name descname"><span class="pre">createProfiles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profilesCreation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputFilePath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputfileName</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/Run.html#createProfiles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.Run.createProfiles" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.Run.optimization">
+<span class="sig-prename descclassname"><span class="pre">optihood.Run.</span></span><span class="sig-name descname"><span class="pre">optimization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numberOfBuildings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numberOfOptimizations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optMode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/Run.html#optimization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.Run.optimization" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.Run.optimizeNetwork">
+<span class="sig-prename descclassname"><span class="pre">optihood.Run.</span></span><span class="sig-name descname"><span class="pre">optimizeNetwork</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">network</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">envImpactlimit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clusterSize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizationOptions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resultFilePath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numberOfBuildings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optMode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/Run.html#optimizeNetwork"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.Run.optimizeNetwork" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.Run.plotParetoFront">
+<span class="sig-prename descclassname"><span class="pre">optihood.Run.</span></span><span class="sig-name descname"><span class="pre">plotParetoFront</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">costsList</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">envList</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/Run.html#plotParetoFront"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.Run.plotParetoFront" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-optihood.Test">
+<span id="optihood-test-module"></span><h2>optihood.Test module<a class="headerlink" href="#module-optihood.Test" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.Test.optimizeNetwork">
+<span class="sig-prename descclassname"><span class="pre">optihood.Test.</span></span><span class="sig-name descname"><span class="pre">optimizeNetwork</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">network</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">envImpactlimit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/Test.html#optimizeNetwork"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.Test.optimizeNetwork" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.Test.plotParetoFront">
+<span class="sig-prename descclassname"><span class="pre">optihood.Test.</span></span><span class="sig-name descname"><span class="pre">plotParetoFront</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">costsList</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">envList</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/Test.html#plotParetoFront"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.Test.plotParetoFront" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-optihood.buildings">
+<span id="optihood-buildings-module"></span><h2>optihood.buildings module<a class="headerlink" href="#module-optihood.buildings" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="optihood.buildings.Building">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optihood.buildings.</span></span><span class="sig-name descname"><span class="pre">Building</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/buildings.html#Building"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.buildings.Building" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.buildings.Building.addBus">
+<span class="sig-name descname"><span class="pre">addBus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/buildings.html#Building.addBus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.buildings.Building.addBus" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.buildings.Building.addGridSeparation">
+<span class="sig-name descname"><span class="pre">addGridSeparation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataGridSeparation</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/buildings.html#Building.addGridSeparation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.buildings.Building.addGridSeparation" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.buildings.Building.addPV">
+<span class="sig-name descname"><span class="pre">addPV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_timeseries</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/buildings.html#Building.addPV"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.buildings.Building.addPV" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.buildings.Building.addSink">
+<span class="sig-name descname"><span class="pre">addSink</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeseries</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buildingModelParams</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/buildings.html#Building.addSink"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.buildings.Building.addSink" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.buildings.Building.addSolar">
+<span class="sig-name descname"><span class="pre">addSolar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_timeseries</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/buildings.html#Building.addSolar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.buildings.Building.addSolar" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.buildings.Building.addSource">
+<span class="sig-name descname"><span class="pre">addSource</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_elec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/buildings.html#Building.addSource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.buildings.Building.addSource" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.buildings.Building.addStorage">
+<span class="sig-name descname"><span class="pre">addStorage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stratifiedStorageParams</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/buildings.html#Building.addStorage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.buildings.Building.addStorage" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.buildings.Building.addTransformer">
+<span class="sig-name descname"><span class="pre">addTransformer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperatureDHW</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperatureSH</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperatureAmb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/buildings.html#Building.addTransformer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.buildings.Building.addTransformer" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.buildings.Building.getBuildingLabel">
+<span class="sig-name descname"><span class="pre">getBuildingLabel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/buildings.html#Building.getBuildingLabel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.buildings.Building.getBuildingLabel" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.buildings.Building.getBusDict">
+<span class="sig-name descname"><span class="pre">getBusDict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/buildings.html#Building.getBusDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.buildings.Building.getBusDict" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.buildings.Building.getCostParam">
+<span class="sig-name descname"><span class="pre">getCostParam</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/buildings.html#Building.getCostParam"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.buildings.Building.getCostParam" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.buildings.Building.getEnvParam">
+<span class="sig-name descname"><span class="pre">getEnvParam</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/buildings.html#Building.getEnvParam"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.buildings.Building.getEnvParam" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.buildings.Building.getInputs">
+<span class="sig-name descname"><span class="pre">getInputs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/buildings.html#Building.getInputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.buildings.Building.getInputs" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.buildings.Building.getNodesList">
+<span class="sig-name descname"><span class="pre">getNodesList</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/buildings.html#Building.getNodesList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.buildings.Building.getNodesList" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.buildings.Building.getTechnologies">
+<span class="sig-name descname"><span class="pre">getTechnologies</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/buildings.html#Building.getTechnologies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.buildings.Building.getTechnologies" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-optihood.constraints">
+<span id="optihood-constraints-module"></span><h2>optihood.constraints module<a class="headerlink" href="#module-optihood.constraints" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.constraints.dailySHStorageConstraint">
+<span class="sig-prename descclassname"><span class="pre">optihood.constraints.</span></span><span class="sig-name descname"><span class="pre">dailySHStorageConstraint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">om</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/constraints.html#dailySHStorageConstraint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.constraints.dailySHStorageConstraint" title="Permalink to this definition"></a></dt>
+<dd><p>Function to limit the SH storage capacity to 2 days
+:param om: model
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.constraints.environmentalImpactlimit">
+<span class="sig-prename descclassname"><span class="pre">optihood.constraints.</span></span><span class="sig-name descname"><span class="pre">environmentalImpactlimit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">om</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keyword1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keyword2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/constraints.html#environmentalImpactlimit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.constraints.environmentalImpactlimit" title="Permalink to this definition"></a></dt>
+<dd><p>Function to limit the environmental impacts during the multi-objective optimization
+:param om: model
+:param keyword1: keyword for environmental impacts per flow, placed in a solph.Flow() object
+:param keyword2: keyword for environmental impacts per capacity installed, placed in a solph.Investment() object
+:param limit: limit not to be reached
+:return:</p>
+</dd></dl>
+
+</section>
+<section id="module-optihood.converters">
+<span id="optihood-converters-module"></span><h2>optihood.converters module<a class="headerlink" href="#module-optihood.converters" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="optihood.converters.CHP">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optihood.converters.</span></span><span class="sig-name descname"><span class="pre">CHP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buildingLabel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputEl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputSH</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputDHW</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">efficiencyEl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">efficiencySH</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">efficiencyDHW</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacityMin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacityEl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacitySH</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacityDHW</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">varc1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">varc2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_flow1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_flow2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_capa</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timesteps</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/converters.html#CHP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.converters.CHP" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.converters.CHP.getCHP">
+<span class="sig-name descname"><span class="pre">getCHP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/converters.html#CHP.getCHP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.converters.CHP.getCHP" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="optihood.converters.GasBoiler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optihood.converters.</span></span><span class="sig-name descname"><span class="pre">GasBoiler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buildingLabel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">efficiency</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacityMin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacityMax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">varc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_flow</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_capa</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/converters.html#GasBoiler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.converters.GasBoiler" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">oemof.solph.network.transformer.Transformer</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="optihood.converters.HeatPumpLinear">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optihood.converters.</span></span><span class="sig-name descname"><span class="pre">HeatPumpLinear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buildingLabel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperatureDHW</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperatureSH</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperatureLow</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputSH</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputDHW</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacityMin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacityMax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nomEff</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">varc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_flow</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_capa</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/converters.html#HeatPumpLinear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.converters.HeatPumpLinear" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.converters.HeatPumpLinear.getHP">
+<span class="sig-name descname"><span class="pre">getHP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/converters.html#HeatPumpLinear.getHP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.converters.HeatPumpLinear.getHP" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="optihood.converters.SolarCollector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optihood.converters.</span></span><span class="sig-name descname"><span class="pre">SolarCollector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buildingLabel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">electrical_consumption</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">peripheral_losses</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collector_tilt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collector_azimuth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eta_0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temp_collector_inlet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_temp_n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">irradiance_global</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">irradiance_diffuse</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temp_amb_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacityMin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacityMax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_capa</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_flow</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">varc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/converters.html#SolarCollector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.converters.SolarCollector" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">oemof.solph.network.transformer.Transformer</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.converters.SolarCollector.getSolar">
+<span class="sig-name descname"><span class="pre">getSolar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/converters.html#SolarCollector.getSolar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.converters.SolarCollector.getSolar" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-optihood.energy_network">
+<span id="optihood-energy-network-module"></span><h2>optihood.energy_network module<a class="headerlink" href="#module-optihood.energy_network" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="optihood.energy_network.EnergyNetworkClass">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optihood.energy_network.</span></span><span class="sig-name descname"><span class="pre">EnergyNetworkClass</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timestamp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tSH</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tDHW</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/energy_network.html#EnergyNetworkClass"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.energy_network.EnergyNetworkClass" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">oemof.solph.network.energy_system.EnergySystem</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.energy_network.EnergyNetworkClass.calcStateofCharge">
+<span class="sig-name descname"><span class="pre">calcStateofCharge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/energy_network.html#EnergyNetworkClass.calcStateofCharge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.energy_network.EnergyNetworkClass.calcStateofCharge" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.energy_network.EnergyNetworkClass.createNodesData">
+<span class="sig-name descname"><span class="pre">createNodesData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filePath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numBuildings</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/energy_network.html#EnergyNetworkClass.createNodesData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.energy_network.EnergyNetworkClass.createNodesData" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.energy_network.EnergyNetworkClass.exportToExcel">
+<span class="sig-name descname"><span class="pre">exportToExcel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/energy_network.html#EnergyNetworkClass.exportToExcel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.energy_network.EnergyNetworkClass.exportToExcel" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.energy_network.EnergyNetworkClass.getTotalCosts">
+<span class="sig-name descname"><span class="pre">getTotalCosts</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/energy_network.html#EnergyNetworkClass.getTotalCosts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.energy_network.EnergyNetworkClass.getTotalCosts" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.energy_network.EnergyNetworkClass.optimize">
+<span class="sig-name descname"><span class="pre">optimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">solver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">envImpactlimit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clusterSize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/energy_network.html#EnergyNetworkClass.optimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.energy_network.EnergyNetworkClass.optimize" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.energy_network.EnergyNetworkClass.printCosts">
+<span class="sig-name descname"><span class="pre">printCosts</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/energy_network.html#EnergyNetworkClass.printCosts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.energy_network.EnergyNetworkClass.printCosts" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.energy_network.EnergyNetworkClass.printEnvImpacts">
+<span class="sig-name descname"><span class="pre">printEnvImpacts</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/energy_network.html#EnergyNetworkClass.printEnvImpacts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.energy_network.EnergyNetworkClass.printEnvImpacts" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.energy_network.EnergyNetworkClass.printInvestedCapacities">
+<span class="sig-name descname"><span class="pre">printInvestedCapacities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">capacitiesInvestedTransformers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacitiesInvestedStorages</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/energy_network.html#EnergyNetworkClass.printInvestedCapacities"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.energy_network.EnergyNetworkClass.printInvestedCapacities" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.energy_network.EnergyNetworkClass.printMetaresults">
+<span class="sig-name descname"><span class="pre">printMetaresults</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/energy_network.html#EnergyNetworkClass.printMetaresults"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.energy_network.EnergyNetworkClass.printMetaresults" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.energy_network.EnergyNetworkClass.printNodes">
+<span class="sig-name descname"><span class="pre">printNodes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/energy_network.html#EnergyNetworkClass.printNodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.energy_network.EnergyNetworkClass.printNodes" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.energy_network.EnergyNetworkClass.setFromExcel">
+<span class="sig-name descname"><span class="pre">setFromExcel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filePath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numberOfBuildings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clusterSize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'costs'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/energy_network.html#EnergyNetworkClass.setFromExcel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.energy_network.EnergyNetworkClass.setFromExcel" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="optihood.energy_network.EnergyNetworkGroup">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optihood.energy_network.</span></span><span class="sig-name descname"><span class="pre">EnergyNetworkGroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timestamp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tSH</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tDHW</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/energy_network.html#EnergyNetworkGroup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.energy_network.EnergyNetworkGroup" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optihood.energy_network.EnergyNetworkClass" title="optihood.energy_network.EnergyNetworkClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">optihood.energy_network.EnergyNetworkClass</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.energy_network.EnergyNetworkGroup.setFromExcel">
+<span class="sig-name descname"><span class="pre">setFromExcel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filePath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numberOfBuildings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clusterSize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'costs'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/energy_network.html#EnergyNetworkGroup.setFromExcel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.energy_network.EnergyNetworkGroup.setFromExcel" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="optihood.energy_network.EnergyNetworkIndiv">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optihood.energy_network.</span></span><span class="sig-name descname"><span class="pre">EnergyNetworkIndiv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timestamp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tSH</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tDHW</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/energy_network.html#EnergyNetworkIndiv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.energy_network.EnergyNetworkIndiv" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optihood.energy_network.EnergyNetworkClass" title="optihood.energy_network.EnergyNetworkClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">optihood.energy_network.EnergyNetworkClass</span></code></a></p>
+</dd></dl>
+
+</section>
+<section id="module-optihood.labelDict">
+<span id="optihood-labeldict-module"></span><h2>optihood.labelDict module<a class="headerlink" href="#module-optihood.labelDict" title="Permalink to this headline"></a></h2>
+</section>
+<section id="module-optihood.loadProfilesResidential">
+<span id="optihood-loadprofilesresidential-module"></span><h2>optihood.loadProfilesResidential module<a class="headerlink" href="#module-optihood.loadProfilesResidential" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="optihood.loadProfilesResidential.Residential">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optihood.loadProfilesResidential.</span></span><span class="sig-name descname"><span class="pre">Residential</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/loadProfilesResidential.html#Residential"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.loadProfilesResidential.Residential" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.loadProfilesResidential.Residential.create_profile">
+<span class="sig-name descname"><span class="pre">create_profile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/loadProfilesResidential.html#Residential.create_profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.loadProfilesResidential.Residential.create_profile" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optihood.loadProfilesResidential.Residential.demandProfiles">
+<span class="sig-name descname"><span class="pre">demandProfiles</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Empty</span> <span class="pre">DataFrame</span> <span class="pre">Columns:</span> <span class="pre">[electricityDemand,</span> <span class="pre">spaceHeatingDemand,</span> <span class="pre">domesticHotWaterDemand]</span> <span class="pre">Index:</span> <span class="pre">[]</span></em><a class="headerlink" href="#optihood.loadProfilesResidential.Residential.demandProfiles" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optihood.loadProfilesResidential.Residential.inputFilePath">
+<span class="sig-name descname"><span class="pre">inputFilePath</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'..\\data\\excels\\'</span></em><a class="headerlink" href="#optihood.loadProfilesResidential.Residential.inputFilePath" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optihood.loadProfilesResidential.Residential.outputFilePath">
+<span class="sig-name descname"><span class="pre">outputFilePath</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'..\\data\\excels\\demand_profiles\\'</span></em><a class="headerlink" href="#optihood.loadProfilesResidential.Residential.outputFilePath" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optihood.loadProfilesResidential.Residential.type">
+<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'DHW</span> <span class="pre">demand</span> <span class="pre">[kWh]':</span> <span class="pre">'domesticHotWaterDemand',</span> <span class="pre">'Electricity</span> <span class="pre">consumption</span> <span class="pre">(Light</span> <span class="pre">+</span> <span class="pre">Equipment)</span> <span class="pre">[kWh]':</span> <span class="pre">'electricityDemand',</span> <span class="pre">'Heating</span> <span class="pre">demand</span> <span class="pre">[W]':</span> <span class="pre">'spaceHeatingDemand'}</span></em><a class="headerlink" href="#optihood.loadProfilesResidential.Residential.type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-optihood.plot_functions">
+<span id="optihood-plot-functions-module"></span><h2>optihood.plot_functions module<a class="headerlink" href="#module-optihood.plot_functions" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.plot_functions.createPlot">
+<span class="sig-prename descclassname"><span class="pre">optihood.plot_functions.</span></span><span class="sig-name descname"><span class="pre">createPlot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resultFilePath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basePath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotLevel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flowType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotAnnualHorizontalBar</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newLegends</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/plot_functions.html#createPlot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.plot_functions.createPlot" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.plot_functions.deduplicateLegend">
+<span class="sig-prename descclassname"><span class="pre">optihood.plot_functions.</span></span><span class="sig-name descname"><span class="pre">deduplicateLegend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">handles</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/plot_functions.html#deduplicateLegend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.plot_functions.deduplicateLegend" title="Permalink to this definition"></a></dt>
+<dd><p>Function from the URBS platform <a class="reference external" href="https://github.com/ojdo/urbs/blob/1house/comp.py">https://github.com/ojdo/urbs/blob/1house/comp.py</a>
+Remove double entries from figure legend.
+:param handles: list of legend entry handles
+:param labels: list of legend entry labels
+:return: (handles, labels) tuple of lists with duplicate labels removed</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.plot_functions.getData">
+<span class="sig-prename descclassname"><span class="pre">optihood.plot_functions.</span></span><span class="sig-name descname"><span class="pre">getData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/plot_functions.html#getData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.plot_functions.getData" title="Permalink to this definition"></a></dt>
+<dd><p>Function for the results recovery from an Excel file
+:param filepath: path to the Excel containing the results of the optimization
+:return: the different dicts created during the optimization</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.plot_functions.groupHbarPlots">
+<span class="sig-prename descclassname"><span class="pre">optihood.plot_functions.</span></span><span class="sig-name descname"><span class="pre">groupHbarPlots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inner_sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/plot_functions.html#groupHbarPlots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.plot_functions.groupHbarPlots" title="Permalink to this definition"></a></dt>
+<dd><p>Function from the URBS platform <a class="reference external" href="https://github.com/ojdo/urbs/blob/1house/comp.py">https://github.com/ojdo/urbs/blob/1house/comp.py</a>
+Group bars of a horizontal barplot closer together.
+Given an existing horizontal bar plot handle ax, move bars of a given group size (&gt;=2) closer together,
+reducing the distance within the bars of a group, but increasing the distance between different groups.
+By default, bars are placed within a coordinate system 1 unit apart. The space between two bars has
+size 1 - bar_height, which can be specified in matplotlib (and pandas) using the <cite>width</cite> argument.
+:param ax: matplotlib axis
+:param group_size: int type, how many bars to group together
+:param inner_sep: float type, vertical spacing within group (optional). Default: reduce the distance to a half
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.plot_functions.hourlyDailyPlot">
+<span class="sig-prename descclassname"><span class="pre">optihood.plot_functions.</span></span><span class="sig-name descname"><span class="pre">hourlyDailyPlot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_legends</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/plot_functions.html#hourlyDailyPlot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.plot_functions.hourlyDailyPlot" title="Permalink to this definition"></a></dt>
+<dd><p>Function for the bokeh plot of hourly and daily balance of a bus
+:param data: list of dict type, results from the optimization
+:param bus: list of str type, buses from which the summary is required
+:param palette: palette type form bokeh.palettes (For example, Category10_8), different types can be found on
+<a class="reference external" href="https://docs.bokeh.org/en/latest/docs/reference/palettes.html">https://docs.bokeh.org/en/latest/docs/reference/palettes.html</a> or
+<a class="reference external" href="https://docs.bokeh.org/en/latest/_modules/bokeh/palettes.html">https://docs.bokeh.org/en/latest/_modules/bokeh/palettes.html</a>
+:param new_legends: dict type, new legends to plot on the graph
+For example, Category10_8
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.plot_functions.loadPlottingData">
+<span class="sig-prename descclassname"><span class="pre">optihood.plot_functions.</span></span><span class="sig-name descname"><span class="pre">loadPlottingData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resultFilePath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/plot_functions.html#loadPlottingData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.plot_functions.loadPlottingData" title="Permalink to this definition"></a></dt>
+<dd><p>Function for loading the data from excel file into variables
+:param resultFilePath: path to the Excel containing the results of the optimization
+:return: the different variables created after reading the excel file</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.plot_functions.monthlyBalance">
+<span class="sig-prename descclassname"><span class="pre">optihood.plot_functions.</span></span><span class="sig-name descname"><span class="pre">monthlyBalance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_legends</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/plot_functions.html#monthlyBalance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.plot_functions.monthlyBalance" title="Permalink to this definition"></a></dt>
+<dd><p>Function for the definition of the monthly summary of a bus
+:param data: dict type, results from the optimization applied to one bus
+:param bus: str type, bus from which the summary is required
+:param new_legends: dict type, new legends to plot on the graph
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.plot_functions.plot">
+<span class="sig-prename descclassname"><span class="pre">optihood.plot_functions.</span></span><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">excelFileName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figureFilePath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotLevel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flowType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotAnnualHorizontalBar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/plot_functions.html#plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.plot_functions.plot" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.plot_functions.resultingDataDemandDiagram">
+<span class="sig-prename descclassname"><span class="pre">optihood.plot_functions.</span></span><span class="sig-name descname"><span class="pre">resultingDataDemandDiagram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elBus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shBus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dhwBus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">COLORS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/plot_functions.html#resultingDataDemandDiagram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.plot_functions.resultingDataDemandDiagram" title="Permalink to this definition"></a></dt>
+<dd><p>Function inspired from the URBS platform <a class="reference external" href="https://github.com/ojdo/urbs/blob/1house/comp.py">https://github.com/ojdo/urbs/blob/1house/comp.py</a>
+Function plotting the different results of the optimization. First, costs will be plotted, then the energy produced,
+comparing energy for electricity bus, sh and dhw bus, and finally the retrieved energy from the storages.
+:param elBus: dict type, results from the optimization applied to one bus. Called like “solph.views.node(results, bus)”
+:param shBus: dict type, results from the optimization applied to one bus. Called like “solph.views.node(results, bus)”
+:param dhwBus: dict type, results from the optimization applied to one bus. Called like “solph.views.node(results, bus)”
+:param COLORS: list type, different colors for the different components of the system
+:param building: str type, name of the building
+:return: Three bar plots and the elec, sh and dhw dict created</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.plot_functions.resultingDataDemandDiagramLoop">
+<span class="sig-prename descclassname"><span class="pre">optihood.plot_functions.</span></span><span class="sig-name descname"><span class="pre">resultingDataDemandDiagramLoop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dhw</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buildings</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/plot_functions.html#resultingDataDemandDiagramLoop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.plot_functions.resultingDataDemandDiagramLoop" title="Permalink to this definition"></a></dt>
+<dd><p>Function inspired from the URBS platform <a class="reference external" href="https://github.com/ojdo/urbs/blob/1house/comp.py">https://github.com/ojdo/urbs/blob/1house/comp.py</a>
+Function plotting the graph comparing the different buildings/scenarios on costs, energy produced and energy
+retrieved from storages
+:param elec: list of dict type, optimization results
+:param sh: list of dict type, optimization results
+:param dhw: list of dict type, optimization results
+:param colors: list type, different colors for the different components of the system
+:param buildings: list of str type, name of the different buildings
+:return: figure created</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.plot_functions.resultingDataDiagram">
+<span class="sig-prename descclassname"><span class="pre">optihood.plot_functions.</span></span><span class="sig-name descname"><span class="pre">resultingDataDiagram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elBus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shBus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dhwBus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">costs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">COLORS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/plot_functions.html#resultingDataDiagram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.plot_functions.resultingDataDiagram" title="Permalink to this definition"></a></dt>
+<dd><p>Function inspired from the URBS platform <a class="reference external" href="https://github.com/ojdo/urbs/blob/1house/comp.py">https://github.com/ojdo/urbs/blob/1house/comp.py</a>
+Function plotting the different results of the optimization. First, costs will be plotted, then the energy produced,
+comparing energy for electricity bus, sh and dhw bus, and finally the retrieved energy from the storages.
+:param elBus: dict type, results from the optimization applied to one bus.
+:param shBus: dict type, results from the optimization applied to one bus.
+:param dhwBus: dict type, results from the optimization applied to one bus.
+:param costs: dict type, resulting costs from the optimization
+:param env: dict type, resulting environmental impacts from the optimization
+:param COLORS: list type, different colors for the different components of the system
+:param building: str type, name of the building
+:return: Four bar plots and the costs, environmental impacts, production and storage dict created</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.plot_functions.resultingDataDiagramLoop">
+<span class="sig-prename descclassname"><span class="pre">optihood.plot_functions.</span></span><span class="sig-name descname"><span class="pre">resultingDataDiagramLoop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dhw</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">costs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buildings</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/plot_functions.html#resultingDataDiagramLoop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.plot_functions.resultingDataDiagramLoop" title="Permalink to this definition"></a></dt>
+<dd><p>Function inspired from the URBS platform <a class="reference external" href="https://github.com/ojdo/urbs/blob/1house/comp.py">https://github.com/ojdo/urbs/blob/1house/comp.py</a>
+Function plotting the graph comparing the different buildings/scenarios on costs, energy produced and energy
+retrieved from storages
+:param elec: list of dict type, optimization results
+:param sh: list of dict type, optimization results
+:param dhw: list of dict type, optimization results
+:param costs: list of dict type, optimization results
+:param env: list of dict type, optimization results
+:param colors: list type, different colors for the different components of the system
+:param buildings: list of str type, name of the different buildings
+:return: figure created</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.plot_functions.toColor">
+<span class="sig-prename descclassname"><span class="pre">optihood.plot_functions.</span></span><span class="sig-name descname"><span class="pre">toColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">COLORS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/plot_functions.html#toColor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.plot_functions.toColor" title="Permalink to this definition"></a></dt>
+<dd><p>Function from the URBS platform <a class="reference external" href="https://github.com/ojdo/urbs/blob/1house/comp.py">https://github.com/ojdo/urbs/blob/1house/comp.py</a>
+Assign a deterministic pseudo-random color to argument.
+If COLORS[obj] is set, return that. For strings, this value depends only
+on the string content, so that same strings always yield the same color.
+:param COLORS: dict of components and their assigned color
+:param obj: any hashable object
+:return: a (r, g, b) color tuple if COLORS[obj] is set, otherwise a hexstring</p>
+</dd></dl>
+
+</section>
+<section id="module-optihood.plot_sankey">
+<span id="optihood-plot-sankey-module"></span><h2>optihood.plot_sankey module<a class="headerlink" href="#module-optihood.plot_sankey" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.plot_sankey.addCapacities">
+<span class="sig-prename descclassname"><span class="pre">optihood.plot_sankey.</span></span><span class="sig-name descname"><span class="pre">addCapacities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataDict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buildings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">UseLabelDict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/plot_sankey.html#addCapacities"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.plot_sankey.addCapacities" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.plot_sankey.createColorList">
+<span class="sig-prename descclassname"><span class="pre">optihood.plot_sankey.</span></span><span class="sig-name descname"><span class="pre">createColorList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputList</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ColorDict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/plot_sankey.html#createColorList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.plot_sankey.createColorList" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.plot_sankey.createSankeyData">
+<span class="sig-prename descclassname"><span class="pre">optihood.plot_sankey.</span></span><span class="sig-name descname"><span class="pre">createSankeyData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataDict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keys</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">UseLabelDict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buildings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/plot_sankey.html#createSankeyData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.plot_sankey.createSankeyData" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.plot_sankey.displaySankey">
+<span class="sig-prename descclassname"><span class="pre">optihood.plot_sankey.</span></span><span class="sig-name descname"><span class="pre">displaySankey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fileName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">UseLabelDict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buildings</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/plot_sankey.html#displaySankey"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.plot_sankey.displaySankey" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.plot_sankey.plotSankey">
+<span class="sig-prename descclassname"><span class="pre">optihood.plot_sankey.</span></span><span class="sig-name descname"><span class="pre">plotSankey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">excelFileName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputFileName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numberOfBuildings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">UseLabelDict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/plot_sankey.html#plotSankey"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.plot_sankey.plotSankey" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.plot_sankey.random">
+<span class="sig-prename descclassname"><span class="pre">optihood.plot_sankey.</span></span><span class="sig-name descname"><span class="pre">random</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">interval</span> <span class="pre">[0,</span> <span class="pre">1).</span></span></span><a class="headerlink" href="#optihood.plot_sankey.random" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.plot_sankey.readResults">
+<span class="sig-prename descclassname"><span class="pre">optihood.plot_sankey.</span></span><span class="sig-name descname"><span class="pre">readResults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fileName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buildings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ColorDict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">UseLabelDict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/plot_sankey.html#readResults"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.plot_sankey.readResults" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-optihood.plot_sankey_anim">
+<span id="optihood-plot-sankey-anim-module"></span><h2>optihood.plot_sankey_anim module<a class="headerlink" href="#module-optihood.plot_sankey_anim" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.plot_sankey_anim.createColorList">
+<span class="sig-prename descclassname"><span class="pre">optihood.plot_sankey_anim.</span></span><span class="sig-name descname"><span class="pre">createColorList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputList</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/plot_sankey_anim.html#createColorList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.plot_sankey_anim.createColorList" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.plot_sankey_anim.createSankeyData">
+<span class="sig-prename descclassname"><span class="pre">optihood.plot_sankey_anim.</span></span><span class="sig-name descname"><span class="pre">createSankeyData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataDict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keys</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buildings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/plot_sankey_anim.html#createSankeyData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.plot_sankey_anim.createSankeyData" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.plot_sankey_anim.displaySankey">
+<span class="sig-prename descclassname"><span class="pre">optihood.plot_sankey_anim.</span></span><span class="sig-name descname"><span class="pre">displaySankey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fileName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buildings</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/plot_sankey_anim.html#displaySankey"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.plot_sankey_anim.displaySankey" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optihood.plot_sankey_anim.readResults">
+<span class="sig-prename descclassname"><span class="pre">optihood.plot_sankey_anim.</span></span><span class="sig-name descname"><span class="pre">readResults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fileName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buildings</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/plot_sankey_anim.html#readResults"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.plot_sankey_anim.readResults" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-optihood.shoppingmall">
+<span id="optihood-shoppingmall-module"></span><h2>optihood.shoppingmall module<a class="headerlink" href="#module-optihood.shoppingmall" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="optihood.shoppingmall.Shopping">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optihood.shoppingmall.</span></span><span class="sig-name descname"><span class="pre">Shopping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/shoppingmall.html#Shopping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.shoppingmall.Shopping" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>docstring to be completed</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.shoppingmall.Shopping.create_profile">
+<span class="sig-name descname"><span class="pre">create_profile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/shoppingmall.html#Shopping.create_profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.shoppingmall.Shopping.create_profile" title="Permalink to this definition"></a></dt>
+<dd><p>create a dataframe in the class object shop
+save dataframe to csv file</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.shoppingmall.Shopping.info">
+<span class="sig-name descname"><span class="pre">info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/shoppingmall.html#Shopping.info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.shoppingmall.Shopping.info" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optihood.shoppingmall.Shopping.outputFilePath">
+<span class="sig-name descname"><span class="pre">outputFilePath</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'..\\data\\excels\\demand_profiles\\'</span></em><a class="headerlink" href="#optihood.shoppingmall.Shopping.outputFilePath" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-optihood.sinks">
+<span id="optihood-sinks-module"></span><h2>optihood.sinks module<a class="headerlink" href="#module-optihood.sinks" title="Permalink to this headline"></a></h2>
+<p>under-development component for a linear RC model for heating a Building</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="optihood.sinks.SinkRCModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optihood.sinks.</span></span><span class="sig-name descname"><span class="pre">SinkRCModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tAmbient</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">totalIrradiationHorizontal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">heatGainOccupants</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rDistribution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.75</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cDistribution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.26</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rIndoor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.09</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cIndoor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.97</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rWall</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cWall</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">226.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">areaWindows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.09</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qDistributionMin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qDistributionMax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tIndoorMin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">19</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tIndoorMax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">23</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tIndoorInit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">21</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tWallInit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tDistributionInit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">35</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/sinks.html#SinkRCModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.sinks.SinkRCModel" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">oemof.solph.network.sink.Sink</span></code></p>
+<p>Building RC Model implemented as a custom Sink component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rDistribution</strong> (<em>Thermal resistance between indoor and distribution system states</em><em> [</em><em>K/kW</em><em>]</em>) – </p></li>
+<li><p><strong>cDistribution</strong> (<em>Thermal capacity of distribution system state</em><em> [</em><em>kWh/K</em><em>]</em>) – </p></li>
+<li><p><strong>rIndoor</strong> (<em>Thermal resistance between indoor and wall states</em><em> [</em><em>K/kW</em><em>]</em>) – </p></li>
+<li><p><strong>cIndoor</strong> (<em>Thermal capacity of indoor air state</em><em> [</em><em>kWh/K</em><em>]</em>) – </p></li>
+<li><p><strong>rWall</strong> (<em>Thermal resistance between wall state and outside</em><em> [</em><em>K/kW</em><em>]</em>) – </p></li>
+<li><p><strong>cWall</strong> (<em>Thermal capacity of wall state</em><em> [</em><em>kWh/K</em><em>]</em>) – </p></li>
+<li><p><strong>areaWindows</strong> (<em>aperture area of windows</em><em> [</em><em>m^2</em><em>]</em>) – </p></li>
+<li><p><strong>qDistributionMin</strong> (<em>Minimum operating power from the SC tank to the distribution system</em><em> [</em><em>kW</em><em>]</em>) – </p></li>
+<li><p><strong>qDistributionMax</strong> (<em>Maximum operating power from the SC tank to the distribution system</em><em> [</em><em>kW</em><em>]</em>) – </p></li>
+<li><p><strong>tIndoorMin</strong> (<em>Indoor minimum comfort temperature</em><em> [</em><em>ºC</em><em>]</em>) – </p></li>
+<li><p><strong>tIndoorMax</strong> (<em>Indoor maximum comfort temperature</em><em> [</em><em>ºC</em><em>]</em>) – </p></li>
+<li><p><strong>tIndoorInit</strong> (<em>Indoor initial temperature</em><em> [</em><em>ºC</em><em>]</em>) – </p></li>
+<li><p><strong>tWallInit</strong> (<em>Wall initial temperature</em><em> [</em><em>ºC</em><em>]</em>) – </p></li>
+<li><p><strong>tDistributionInit</strong> (<em>Distribution system initial temperature</em><em> [</em><em>ºC</em><em>]</em>) – </p></li>
+<li><p><strong>tAmbient</strong> (<em>Ambient outside air temperature at each timestep</em><em> [</em><em>ºC</em><em>]</em>) – </p></li>
+<li><p><strong>totalIrradiationHorizontal</strong> (<em>Total horizontal irradiation at each timestep</em><em> [</em><em>kW/m^2</em><em>]</em>) – </p></li>
+<li><p><strong>heatGainOccupants</strong> (<em>Internal heat gains from occupants at each timestep</em><em> [</em><em>kW</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.sinks.SinkRCModel.constraint_group">
+<span class="sig-name descname"><span class="pre">constraint_group</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/sinks.html#SinkRCModel.constraint_group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.sinks.SinkRCModel.constraint_group" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="optihood.sinks.SinkRCModelBlock">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optihood.sinks.</span></span><span class="sig-name descname"><span class="pre">SinkRCModelBlock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/sinks.html#SinkRCModelBlock"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.sinks.SinkRCModelBlock" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pyomo.core.base.block.SimpleBlock</span></code></p>
+<p>Constraints for SinkRCModel Class</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optihood.sinks.SinkRCModelBlock.CONSTRAINT_GROUP">
+<span class="sig-name descname"><span class="pre">CONSTRAINT_GROUP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#optihood.sinks.SinkRCModelBlock.CONSTRAINT_GROUP" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-optihood.sources">
+<span id="optihood-sources-module"></span><h2>optihood.sources module<a class="headerlink" href="#module-optihood.sources" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="optihood.sources.PV">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optihood.sources.</span></span><span class="sig-name descname"><span class="pre">PV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buildingLabel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">peripheral_losses</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pv_tilt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pv_azimuth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">irradiance_global</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">irradiance_diffuse</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temp_amb_pv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacityMin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacityMax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_capa</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_flow</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">varc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/sources.html#PV"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.sources.PV" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">oemof.solph.network.source.Source</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.sources.PV.computePvSolarPosition">
+<span class="sig-name descname"><span class="pre">computePvSolarPosition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">irradiance_diffuse</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">irradiance_global</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pv_azimuth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pv_tilt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temp_amb_pv</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/sources.html#PV.computePvSolarPosition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.sources.PV.computePvSolarPosition" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.sources.PV.getPV">
+<span class="sig-name descname"><span class="pre">getPV</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/sources.html#PV.getPV"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.sources.PV.getPV" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optihood.sources.PV.pv_precalc">
+<span class="sig-name descname"><span class="pre">pv_precalc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">temp_amb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i_H_t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">17.23292</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.451708</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a3</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">22.706</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a4</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">0.062059</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a5</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.04277774</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a6</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9.692792</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a7</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1.885868</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a8</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6.6</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/sources.html#PV.pv_precalc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.sources.PV.pv_precalc" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-optihood.storages">
+<span id="optihood-storages-module"></span><h2>optihood.storages module<a class="headerlink" href="#module-optihood.storages" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="optihood.storages.ElectricalStorage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optihood.storages.</span></span><span class="sig-name descname"><span class="pre">ElectricalStorage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buildingLabel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_storage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">efficiency_in</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">efficiency_out</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacity_min</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacity_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">varc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_flow</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_capa</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/storages.html#ElectricalStorage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.storages.ElectricalStorage" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">oemof.solph.components.generic_storage.GenericStorage</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="optihood.storages.ThermalStorage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optihood.storages.</span></span><span class="sig-name descname"><span class="pre">ThermalStorage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stratifiedStorageParams</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_storage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacity_min</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacity_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">varc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_flow</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_capa</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optihood/storages.html#ThermalStorage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optihood.storages.ThermalStorage" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">oemof.solph.components.generic_storage.GenericStorage</span></code></p>
+</dd></dl>
+
+</section>
+<section id="module-optihood">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-optihood" title="Permalink to this headline"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="optihood" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022  .... .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

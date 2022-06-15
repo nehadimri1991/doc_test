@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optihood.sinks &mdash; pytrnsys  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> pytrnsys
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/defining_an_energy_network.html">Defining an energy network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/optimizing_the_energy_network.html">Optimizing the energy network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/processing_results.html">Processing results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/advanced_under_development_features.html">Advanced under-development features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Code Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pytrnsys</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>optihood.sinks</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for optihood.sinks</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">under-development component for a linear RC model for heating a Building</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">oemof.solph</span> <span class="k">as</span> <span class="nn">solph</span>
+<span class="kn">from</span> <span class="nn">oemof.solph.plumbing</span> <span class="kn">import</span> <span class="n">sequence</span>
+<span class="kn">from</span> <span class="nn">pyomo.core.base.block</span> <span class="kn">import</span> <span class="n">SimpleBlock</span>
+<span class="kn">from</span> <span class="nn">pyomo.environ</span> <span class="kn">import</span> <span class="n">BuildAction</span>
+<span class="kn">from</span> <span class="nn">pyomo.environ</span> <span class="kn">import</span> <span class="n">Constraint</span>
+<span class="kn">from</span> <span class="nn">pyomo.environ</span> <span class="kn">import</span> <span class="n">Expression</span>
+<span class="kn">from</span> <span class="nn">pyomo.environ</span> <span class="kn">import</span> <span class="n">NonNegativeReals</span><span class="p">,</span> <span class="n">Reals</span><span class="p">,</span> <span class="n">Boolean</span>
+<span class="kn">from</span> <span class="nn">pyomo.environ</span> <span class="kn">import</span> <span class="n">Set</span>
+<span class="kn">from</span> <span class="nn">pyomo.environ</span> <span class="kn">import</span> <span class="n">Var</span>
+
+<div class="viewcode-block" id="SinkRCModel"><a class="viewcode-back" href="../../optihood.html#optihood.sinks.SinkRCModel">[docs]</a><span class="k">class</span> <span class="nc">SinkRCModel</span><span class="p">(</span><span class="n">solph</span><span class="o">.</span><span class="n">Sink</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Building RC Model implemented as a custom Sink component</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    rDistribution : Thermal resistance between indoor and distribution system states [K/kW]</span>
+<span class="sd">    cDistribution : Thermal capacity of distribution system state [kWh/K]</span>
+<span class="sd">    rIndoor : Thermal resistance between indoor and wall states [K/kW]</span>
+<span class="sd">    cIndoor : Thermal capacity of indoor air state [kWh/K]</span>
+<span class="sd">    rWall : Thermal resistance between wall state and outside [K/kW]</span>
+<span class="sd">    cWall  : Thermal capacity of wall state [kWh/K]</span>
+<span class="sd">    areaWindows : aperture area of windows [m^2]</span>
+<span class="sd">    qDistributionMin : Minimum operating power from the SC tank to the distribution system [kW]</span>
+<span class="sd">    qDistributionMax : Maximum operating power from the SC tank to the distribution system [kW]</span>
+<span class="sd">    tIndoorMin : Indoor minimum comfort temperature [ºC]</span>
+<span class="sd">    tIndoorMax : Indoor maximum comfort temperature [ºC]</span>
+<span class="sd">    tIndoorInit : Indoor initial temperature [ºC]</span>
+<span class="sd">    tWallInit : Wall initial temperature [ºC]</span>
+<span class="sd">    tDistributionInit : Distribution system initial temperature [ºC]</span>
+<span class="sd">    tAmbient : Ambient outside air temperature at each timestep [ºC]</span>
+<span class="sd">    totalIrradiationHorizontal : Total horizontal irradiation at each timestep [kW/m^2]</span>
+<span class="sd">    heatGainOccupants : Internal heat gains from occupants at each timestep [kW]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">tAmbient</span><span class="p">,</span>
+            <span class="n">totalIrradiationHorizontal</span><span class="p">,</span>
+            <span class="n">heatGainOccupants</span><span class="p">,</span>
+            <span class="n">rDistribution</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span>
+            <span class="n">cDistribution</span><span class="o">=</span><span class="mf">0.26</span><span class="p">,</span>
+            <span class="n">rIndoor</span><span class="o">=</span><span class="mf">0.09</span><span class="p">,</span>
+            <span class="n">cIndoor</span><span class="o">=</span><span class="mf">0.97</span><span class="p">,</span>
+            <span class="n">rWall</span><span class="o">=</span><span class="mf">1.70</span><span class="p">,</span>
+            <span class="n">cWall</span><span class="o">=</span><span class="mf">226.30</span><span class="p">,</span>
+            <span class="n">areaWindows</span><span class="o">=</span><span class="mf">0.09</span><span class="p">,</span>
+            <span class="n">qDistributionMin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">qDistributionMax</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+            <span class="n">tIndoorMin</span><span class="o">=</span><span class="mi">19</span><span class="p">,</span>
+            <span class="n">tIndoorMax</span><span class="o">=</span><span class="mi">23</span><span class="p">,</span>
+            <span class="n">tIndoorInit</span><span class="o">=</span><span class="mi">21</span><span class="p">,</span>
+            <span class="n">tWallInit</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+            <span class="n">tDistributionInit</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rDistribution</span> <span class="o">=</span> <span class="n">rDistribution</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cDistribution</span> <span class="o">=</span> <span class="n">cDistribution</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rIndoor</span> <span class="o">=</span> <span class="n">rIndoor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cIndoor</span> <span class="o">=</span> <span class="n">cIndoor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rWall</span> <span class="o">=</span> <span class="n">rWall</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cWall</span> <span class="o">=</span> <span class="n">cWall</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">areaWindows</span> <span class="o">=</span> <span class="n">areaWindows</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qDistributionMin</span> <span class="o">=</span> <span class="n">qDistributionMin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qDistributionMax</span> <span class="o">=</span> <span class="n">qDistributionMax</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tIndoorMin</span> <span class="o">=</span> <span class="n">tIndoorMin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tIndoorMax</span> <span class="o">=</span> <span class="n">tIndoorMax</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tIndoorInit</span> <span class="o">=</span> <span class="n">tIndoorInit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tWallInit</span> <span class="o">=</span> <span class="n">tWallInit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tDistributionInit</span> <span class="o">=</span> <span class="n">tDistributionInit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tAmbient</span> <span class="o">=</span> <span class="n">sequence</span><span class="p">(</span><span class="n">tAmbient</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">totalIrradiationHorizontal</span> <span class="o">=</span> <span class="n">sequence</span><span class="p">(</span><span class="n">totalIrradiationHorizontal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heatGainOccupants</span> <span class="o">=</span> <span class="n">sequence</span><span class="p">(</span><span class="n">heatGainOccupants</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SinkRCModel.constraint_group"><a class="viewcode-back" href="../../optihood.html#optihood.sinks.SinkRCModel.constraint_group">[docs]</a>    <span class="k">def</span> <span class="nf">constraint_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">SinkRCModelBlock</span></div></div>
+
+<div class="viewcode-block" id="SinkRCModelBlock"><a class="viewcode-back" href="../../optihood.html#optihood.sinks.SinkRCModelBlock">[docs]</a><span class="k">class</span> <span class="nc">SinkRCModelBlock</span><span class="p">(</span><span class="n">SimpleBlock</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Constraints for SinkRCModel Class</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">CONSTRAINT_GROUP</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">group</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent_block</span><span class="p">()</span>
+
+        <span class="c1"># for all Sink RC model components get inflow from a bus</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+            <span class="n">n</span><span class="o">.</span><span class="n">inflow</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">inputs</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1">#  ************* SET OF CUSTOM SINK COMPONENTS *****************************</span>
+
+        <span class="c1"># Set of Sink RC model Components</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sinkrc</span> <span class="o">=</span> <span class="n">Set</span><span class="p">(</span><span class="n">initialize</span><span class="o">=</span><span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">group</span><span class="p">])</span>
+
+        <span class="c1">#  ************* DECISION VARIABLES *****************************</span>
+
+        <span class="c1"># Variable indoor temperature</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tIndoor</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sinkrc</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">Reals</span><span class="p">)</span>
+
+        <span class="c1"># Variable wall temperature</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tWall</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sinkrc</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">Reals</span><span class="p">)</span>
+
+        <span class="c1"># Variable distribution temperature</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tDistribution</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sinkrc</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">Reals</span><span class="p">)</span>
+
+        <span class="c1"># Variable indoor comfort temperature range violation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epsilonIndoor</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sinkrc</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+
+        <span class="c1"># Variable indoor final temperature requirement violation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deltaIndoor</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sinkrc</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+
+        <span class="c1"># Variable binary indicator (0 whenever Q = 0)</span>
+        <span class="c1"># self.Xsc_dis = Var(self.sinkrc, m.TIMESTEPS, within=Boolean)</span>
+
+        <span class="c1">#  ************* CONSTRAINTS *****************************</span>
+
+        <span class="k">def</span> <span class="nf">_initial_indoor_temperature_rule</span><span class="p">(</span><span class="n">block</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;set initial values of indoor temperature</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+                <span class="n">lhs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tIndoor</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+                <span class="n">rhs</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">tIndoorInit</span>
+                <span class="n">block</span><span class="o">.</span><span class="n">initial_indoor_temperature</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">g</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="n">lhs</span> <span class="o">==</span> <span class="n">rhs</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_indoor_temperature</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">,</span> <span class="n">noruleinit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_indoor_temperature_build</span> <span class="o">=</span> <span class="n">BuildAction</span><span class="p">(</span><span class="n">rule</span><span class="o">=</span><span class="n">_initial_indoor_temperature_rule</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_initial_wall_temperature_rule</span><span class="p">(</span><span class="n">block</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;set initial values of wall temperature</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+                <span class="n">lhs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tWall</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+                <span class="n">rhs</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">tWallInit</span>
+                <span class="n">block</span><span class="o">.</span><span class="n">initial_wall_temperature</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">g</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="n">lhs</span> <span class="o">==</span> <span class="n">rhs</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_wall_temperature</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">,</span> <span class="n">noruleinit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_wall_temperature_build</span> <span class="o">=</span> <span class="n">BuildAction</span><span class="p">(</span><span class="n">rule</span><span class="o">=</span><span class="n">_initial_wall_temperature_rule</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_initial_distribution_temperature_rule</span><span class="p">(</span><span class="n">block</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;set initial values of distribution temperature</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+                <span class="n">lhs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tDistribution</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+                <span class="n">rhs</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">tDistributionInit</span>
+                <span class="n">block</span><span class="o">.</span><span class="n">initial_distribution_temperature</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">g</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="n">lhs</span> <span class="o">==</span> <span class="n">rhs</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_distribution_temperature</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">,</span> <span class="n">noruleinit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_distribution_temperature_build</span> <span class="o">=</span> <span class="n">BuildAction</span><span class="p">(</span><span class="n">rule</span><span class="o">=</span><span class="n">_initial_distribution_temperature_rule</span><span class="p">)</span>
+
+        <span class="c1">#def _boolean_indicator_set_rule(block):</span>
+        <span class="c1">#    &quot;&quot;&quot;sets the value of boolean indicator self.Xsc_dis</span>
+        <span class="c1">#    value is set to False whenever qDistribution = 0, otherwise True</span>
+        <span class="c1">#    &quot;&quot;&quot;</span>
+        <span class="c1">#    for t in m.TIMESTEPS:</span>
+        <span class="c1">#        for g in group:</span>
+        <span class="c1">#            lhs = self.Xsc_dis[g, t]</span>
+        <span class="c1">#            rhs = not(m.flow[g.inflow, g, t] == 0)</span>
+
+         <span class="c1">#           block.boolean_indicator_set.add((g, t), (lhs == rhs))</span>
+
+        <span class="c1">#self.boolean_indicator_set = Constraint(group, m.TIMESTEPS, noruleinit=True)</span>
+        <span class="c1">#self.boolean_indicator_set_build = BuildAction(rule=_boolean_indicator_set_rule)</span>
+
+        <span class="k">def</span> <span class="nf">_indoor_comfort_upper_limit_rule</span><span class="p">(</span><span class="n">block</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;Indoor comfort temperature &lt; = maximum limit</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+                    <span class="n">lhs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tIndoor</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span>
+                    <span class="n">rhs</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">tIndoorMax</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilonIndoor</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span>
+                    <span class="n">block</span><span class="o">.</span><span class="n">indoor_comfort_upper_limit</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">),</span> <span class="p">(</span><span class="n">lhs</span> <span class="o">&lt;=</span> <span class="n">rhs</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">indoor_comfort_upper_limit</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">,</span> <span class="n">noruleinit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">indoor_comfort_upper_limit_build</span> <span class="o">=</span> <span class="n">BuildAction</span><span class="p">(</span><span class="n">rule</span><span class="o">=</span><span class="n">_indoor_comfort_upper_limit_rule</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_indoor_comfort_lower_limit_rule</span><span class="p">(</span><span class="n">block</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;Indoor comfort temperature &gt; = minimum limit</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+                    <span class="n">lhs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tIndoor</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span>
+                    <span class="n">rhs</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">tIndoorMin</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilonIndoor</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span>
+                    <span class="n">block</span><span class="o">.</span><span class="n">indoor_comfort_lower_limit</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">),</span> <span class="p">(</span><span class="n">lhs</span> <span class="o">&gt;=</span> <span class="n">rhs</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">indoor_comfort_lower_limit</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">,</span> <span class="n">noruleinit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">indoor_comfort_lower_limit_build</span> <span class="o">=</span> <span class="n">BuildAction</span><span class="p">(</span><span class="n">rule</span><span class="o">=</span><span class="n">_indoor_comfort_lower_limit_rule</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_indoor_final_temperature_rule</span><span class="p">(</span><span class="n">block</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;Indoor temperature at the final timestamp should be higher than initial indoor temperature</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1">#final timestep</span>
+            <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+                <span class="n">lhs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tIndoor</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span>
+                <span class="n">rhs</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">tIndoorInit</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">deltaIndoor</span><span class="p">[</span><span class="n">g</span><span class="p">]</span>
+                <span class="n">block</span><span class="o">.</span><span class="n">indoor_final_temperature</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">),</span> <span class="p">(</span><span class="n">lhs</span> <span class="o">&gt;=</span> <span class="n">rhs</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">indoor_final_temperature</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">,</span> <span class="n">noruleinit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">indoor_final_temperature_build</span> <span class="o">=</span> <span class="n">BuildAction</span><span class="p">(</span><span class="n">rule</span><span class="o">=</span><span class="n">_indoor_final_temperature_rule</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_q_distribution_upper_limit_rule</span><span class="p">(</span><span class="n">block</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;q distribution &lt; = maximum limit</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+                    <span class="n">lhs</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">flow</span><span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">inflow</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span>
+                    <span class="n">rhs</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">qDistributionMax</span>
+                    <span class="c1"># rhs = g.qDistributionMax * self.Xsc_dis[g, t]</span>
+                    <span class="n">block</span><span class="o">.</span><span class="n">q_distribution_upper_limit</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">),</span> <span class="p">(</span><span class="n">lhs</span> <span class="o">&lt;=</span> <span class="n">rhs</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">q_distribution_upper_limit</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">,</span> <span class="n">noruleinit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">q_distribution_upper_limit_build</span> <span class="o">=</span> <span class="n">BuildAction</span><span class="p">(</span><span class="n">rule</span><span class="o">=</span><span class="n">_q_distribution_upper_limit_rule</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_q_distribution_lower_limit_rule</span><span class="p">(</span><span class="n">block</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;q distribution &gt; = minimum limit</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+                    <span class="n">lhs</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">flow</span><span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">inflow</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span>
+                    <span class="n">rhs</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">qDistributionMin</span>
+                    <span class="c1"># rhs = g.qDistributionMin * self.Xsc_dis[g, t]</span>
+                    <span class="n">block</span><span class="o">.</span><span class="n">q_distribution_lower_limit</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">),</span> <span class="p">(</span><span class="n">lhs</span> <span class="o">&gt;=</span> <span class="n">rhs</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">q_distribution_lower_limit</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">,</span> <span class="n">noruleinit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">q_distribution_lower_limit_build</span> <span class="o">=</span> <span class="n">BuildAction</span><span class="p">(</span><span class="n">rule</span><span class="o">=</span><span class="n">_q_distribution_lower_limit_rule</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_indoor_temperature_equation_rule</span><span class="p">(</span><span class="n">block</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;discrete state space equation for tIndoor</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+                <span class="n">c2</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">rIndoor</span><span class="o">*</span><span class="n">g</span><span class="o">.</span><span class="n">cIndoor</span><span class="p">)</span>
+                <span class="n">c3</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">rDistribution</span><span class="o">*</span><span class="n">g</span><span class="o">.</span><span class="n">cIndoor</span><span class="p">)</span>
+                <span class="n">c1</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">c2</span> <span class="o">-</span> <span class="n">c3</span>
+                <span class="n">c4</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">areaWindows</span><span class="o">/</span><span class="n">g</span><span class="o">.</span><span class="n">cIndoor</span>
+                <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">t</span><span class="o">!=</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                        <span class="n">lhs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tIndoor</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="n">rhs</span> <span class="o">=</span> <span class="n">c1</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">tIndoor</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">+</span> <span class="n">c2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">tWall</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">+</span> <span class="n">c3</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">tDistribution</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">+</span> <span class="n">c4</span><span class="o">*</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">totalIrradiationHorizontal</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">+</span> <span class="n">g</span><span class="o">.</span><span class="n">heatGainOccupants</span><span class="p">[</span><span class="n">t</span><span class="p">])</span>
+                        <span class="n">block</span><span class="o">.</span><span class="n">indoor_temperature_equation</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">),</span> <span class="p">(</span><span class="n">lhs</span> <span class="o">==</span> <span class="n">rhs</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">indoor_temperature_equation</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">,</span> <span class="n">noruleinit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">indoor_temperature_equation_build</span> <span class="o">=</span> <span class="n">BuildAction</span><span class="p">(</span><span class="n">rule</span><span class="o">=</span><span class="n">_indoor_temperature_equation_rule</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_wall_temperature_equation_rule</span><span class="p">(</span><span class="n">block</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;discrete state space equation for tWall</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+                <span class="n">c1</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">rIndoor</span> <span class="o">*</span> <span class="n">g</span><span class="o">.</span><span class="n">cWall</span><span class="p">)</span>
+                <span class="n">c3</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">rWall</span> <span class="o">*</span> <span class="n">g</span><span class="o">.</span><span class="n">cWall</span><span class="p">)</span>
+                <span class="n">c2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">c1</span> <span class="o">-</span> <span class="n">c3</span>
+                <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">t</span> <span class="o">!=</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                        <span class="n">lhs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tWall</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+                        <span class="n">rhs</span> <span class="o">=</span> <span class="n">c1</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tIndoor</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">+</span> <span class="n">c2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tWall</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">+</span> <span class="n">c3</span> <span class="o">*</span> <span class="n">g</span><span class="o">.</span><span class="n">tAmbient</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
+                        <span class="n">block</span><span class="o">.</span><span class="n">wall_temperature_equation</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">),</span> <span class="p">(</span><span class="n">lhs</span> <span class="o">==</span> <span class="n">rhs</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">wall_temperature_equation</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">,</span> <span class="n">noruleinit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wall_temperature_equation_build</span> <span class="o">=</span> <span class="n">BuildAction</span><span class="p">(</span><span class="n">rule</span><span class="o">=</span><span class="n">_wall_temperature_equation_rule</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_distribution_temperature_equation_rule</span><span class="p">(</span><span class="n">block</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;discrete state space equation for tDistribution</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+                <span class="n">c1</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">rDistribution</span> <span class="o">*</span> <span class="n">g</span><span class="o">.</span><span class="n">cDistribution</span><span class="p">)</span>
+                <span class="n">c2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">c1</span>
+                <span class="n">c3</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span><span class="n">g</span><span class="o">.</span><span class="n">cDistribution</span>
+                <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">t</span> <span class="o">!=</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                        <span class="n">lhs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tDistribution</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+                        <span class="n">rhs</span> <span class="o">=</span> <span class="n">c1</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tIndoor</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">+</span> <span class="n">c2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tDistribution</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">+</span> <span class="n">c3</span> <span class="o">*</span> <span class="n">m</span><span class="o">.</span><span class="n">flow</span><span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">inflow</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span>
+                        <span class="n">block</span><span class="o">.</span><span class="n">distribution_temperature_equation</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">),</span> <span class="p">(</span><span class="n">lhs</span> <span class="o">==</span> <span class="n">rhs</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">distribution_temperature_equation</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">TIMESTEPS</span><span class="p">,</span> <span class="n">noruleinit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">distribution_temperature_equation_build</span> <span class="o">=</span> <span class="n">BuildAction</span><span class="p">(</span><span class="n">rule</span><span class="o">=</span><span class="n">_distribution_temperature_equation_rule</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, Dani Carbonell, Mattia Battaglia, Jeremias Schmidli, Maike Schubert, Martin Neugebauer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

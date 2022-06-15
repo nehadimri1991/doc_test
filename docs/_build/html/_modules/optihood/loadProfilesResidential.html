@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optihood.loadProfilesResidential &mdash; pytrnsys  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> pytrnsys
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/defining_an_energy_network.html">Defining an energy network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/optimizing_the_energy_network.html">Optimizing the energy network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/processing_results.html">Processing results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/advanced_under_development_features.html">Advanced under-development features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Code Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pytrnsys</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>optihood.loadProfilesResidential</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for optihood.loadProfilesResidential</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<div class="viewcode-block" id="Residential"><a class="viewcode-back" href="../../optihood.html#optihood.loadProfilesResidential.Residential">[docs]</a><span class="k">class</span> <span class="nc">Residential</span><span class="p">:</span>
+    <span class="n">inputFilePath</span> <span class="o">=</span> <span class="s2">&quot;..\data\excels</span><span class="se">\\</span><span class="s2">&quot;</span>
+    <span class="n">outputFilePath</span> <span class="o">=</span> <span class="s2">&quot;..\data\excels\demand_profiles</span><span class="se">\\</span><span class="s2">&quot;</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Electricity consumption (Light + Equipment) [kWh]&quot;</span><span class="p">:</span> <span class="s2">&quot;electricityDemand&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Heating demand [W]&quot;</span><span class="p">:</span> <span class="s2">&quot;spaceHeatingDemand&quot;</span><span class="p">,</span> <span class="s2">&quot;DHW demand [kWh]&quot;</span><span class="p">:</span> <span class="s2">&quot;domesticHotWaterDemand&quot;</span><span class="p">}</span>
+    <span class="n">demandProfiles</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;electricityDemand&quot;</span><span class="p">,</span> <span class="s2">&quot;spaceHeatingDemand&quot;</span><span class="p">,</span> <span class="s2">&quot;domesticHotWaterDemand&quot;</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;number&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buildingType</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span>  <span class="c1"># &quot;MFH30&quot; or &quot;MFH90&quot; or &quot;MFH150&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numberOfFloors</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;nb_floors&quot;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">refBuildingProfile</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputFilePath</span><span class="p">,</span> <span class="s2">&quot;Profiles_MFH30_90_150.xls&quot;</span><span class="p">),</span>
+                                                <span class="n">header</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                                                <span class="n">index_col</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                <span class="n">sheet_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">buildingType</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">buildingType</span> <span class="o">==</span> <span class="s2">&quot;MFH150&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">apptPerFloor</span> <span class="o">=</span> <span class="mi">4</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">apptPerFloor</span> <span class="o">=</span> <span class="mi">2</span>
+
+<div class="viewcode-block" id="Residential.create_profile"><a class="viewcode-back" href="../../optihood.html#optihood.loadProfilesResidential.Residential.create_profile">[docs]</a>    <span class="k">def</span> <span class="nf">create_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;Heating demand [W]&quot;</span><span class="p">:</span>
+                <span class="n">div</span> <span class="o">=</span> <span class="mi">1000</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">div</span> <span class="o">=</span> <span class="mi">1</span>
+
+            <span class="n">groundFloor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">refBuildingProfile</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">apptPerFloor</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">div</span>
+            <span class="n">middleFloor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">refBuildingProfile</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">apptPerFloor</span><span class="p">:</span><span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">apptPerFloor</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">div</span>
+            <span class="n">topFloor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">refBuildingProfile</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">apptPerFloor</span><span class="p">:</span><span class="mi">3</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">apptPerFloor</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">div</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">demandProfiles</span><span class="p">[</span><span class="n">value</span><span class="p">]</span> <span class="o">=</span> <span class="n">groundFloor</span> <span class="o">+</span> <span class="n">topFloor</span> <span class="o">+</span> <span class="n">middleFloor</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">numberOfFloors</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s2">&quot;2018-01-01 00:00:00&quot;</span><span class="p">,</span> <span class="s2">&quot;2018-12-31 23:00:00&quot;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;60min&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">demandProfiles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">demandProfiles</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">demandProfiles</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;timestamp&#39;</span>
+
+        <span class="n">outputFileName</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">buildingType</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">numberOfFloors</span><span class="si">}</span><span class="s2">Floors.csv&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputFilePath</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputFilePath</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">demandProfiles</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputFilePath</span><span class="p">,</span> <span class="n">outputFileName</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">)</span></div></div>
+
+
+
+
+
+
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, Dani Carbonell, Mattia Battaglia, Jeremias Schmidli, Maike Schubert, Martin Neugebauer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

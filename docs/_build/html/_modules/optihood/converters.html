@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optihood.converters &mdash; pytrnsys  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> pytrnsys
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/defining_an_energy_network.html">Defining an energy network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/optimizing_the_energy_network.html">Optimizing the energy network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/processing_results.html">Processing results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/advanced_under_development_features.html">Advanced under-development features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Code Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pytrnsys</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>optihood.converters</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for optihood.converters</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">oemof.solph</span> <span class="k">as</span> <span class="nn">solph</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">oemof.thermal.solar_thermal_collector</span> <span class="kn">import</span> <span class="n">flat_plate_precalc</span>
+
+<div class="viewcode-block" id="SolarCollector"><a class="viewcode-back" href="../../optihood.html#optihood.converters.SolarCollector">[docs]</a><span class="k">class</span> <span class="nc">SolarCollector</span><span class="p">(</span><span class="n">solph</span><span class="o">.</span><span class="n">Transformer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">buildingLabel</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">connector</span><span class="p">,</span> <span class="n">electrical_consumption</span><span class="p">,</span> <span class="n">peripheral_losses</span><span class="p">,</span> <span class="n">latitude</span><span class="p">,</span>
+                 <span class="n">longitude</span><span class="p">,</span>
+                 <span class="n">collector_tilt</span><span class="p">,</span> <span class="n">collector_azimuth</span><span class="p">,</span> <span class="n">eta_0</span><span class="p">,</span> <span class="n">a_1</span><span class="p">,</span> <span class="n">a_2</span><span class="p">,</span> <span class="n">temp_collector_inlet</span><span class="p">,</span> <span class="n">delta_temp_n</span><span class="p">,</span>
+                 <span class="n">irradiance_global</span><span class="p">,</span>
+                 <span class="n">irradiance_diffuse</span><span class="p">,</span> <span class="n">temp_amb_col</span><span class="p">,</span> <span class="n">capacityMin</span><span class="p">,</span> <span class="n">capacityMax</span><span class="p">,</span> <span class="n">epc</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">env_capa</span><span class="p">,</span> <span class="n">env_flow</span><span class="p">,</span> <span class="n">varc</span><span class="p">):</span>
+
+        <span class="n">flatPlateCollectorData</span> <span class="o">=</span> <span class="n">flat_plate_precalc</span><span class="p">(</span>
+            <span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span><span class="p">,</span> <span class="n">collector_tilt</span><span class="p">,</span> <span class="n">collector_azimuth</span><span class="p">,</span> <span class="n">eta_0</span><span class="p">,</span> <span class="n">a_1</span><span class="p">,</span> <span class="n">a_2</span><span class="p">,</span> <span class="n">temp_collector_inlet</span><span class="p">,</span> <span class="n">delta_temp_n</span><span class="p">,</span>
+            <span class="n">irradiance_global</span><span class="p">,</span> <span class="n">irradiance_diffuse</span><span class="p">,</span> <span class="n">temp_amb_col</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">collectors_eta_c</span> <span class="o">=</span> <span class="n">flatPlateCollectorData</span><span class="p">[</span><span class="s1">&#39;eta_c&#39;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">collectors_heat</span> <span class="o">=</span> <span class="n">flatPlateCollectorData</span><span class="p">[</span><span class="s1">&#39;collectors_heat&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">1000</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__collector_source</span> <span class="o">=</span> <span class="n">solph</span><span class="o">.</span><span class="n">Source</span><span class="p">(</span>
+            <span class="n">label</span><span class="o">=</span><span class="s1">&#39;heat_&#39;</span><span class="o">+</span><span class="n">label</span> <span class="o">+</span> <span class="s2">&quot;__&quot;</span> <span class="o">+</span> <span class="n">buildingLabel</span><span class="p">,</span>
+            <span class="n">outputs</span><span class="o">=</span><span class="p">{</span>
+                <span class="n">connector</span><span class="p">:</span> <span class="n">solph</span><span class="o">.</span><span class="n">Flow</span><span class="p">(</span>
+                    <span class="n">fix</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">collectors_heat</span><span class="p">,</span>
+                    <span class="n">investment</span><span class="o">=</span><span class="n">solph</span><span class="o">.</span><span class="n">Investment</span><span class="p">(</span>
+                        <span class="n">ep_costs</span><span class="o">=</span><span class="n">epc</span><span class="p">,</span>
+                        <span class="n">minimum</span><span class="o">=</span><span class="n">capacityMin</span><span class="p">,</span>
+                        <span class="n">maximum</span><span class="o">=</span><span class="n">capacityMax</span><span class="p">,</span>
+                        <span class="n">nonconvex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">offset</span><span class="o">=</span><span class="n">base</span><span class="p">,</span>
+                        <span class="n">env_per_capa</span><span class="o">=</span><span class="n">env_capa</span><span class="p">,</span>
+                    <span class="p">),</span>
+                     <span class="n">variable_costs</span><span class="o">=</span><span class="n">varc</span><span class="p">,</span>
+                     <span class="n">env_per_flow</span><span class="o">=</span><span class="n">env_flow</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__collector_excess_heat</span> <span class="o">=</span> <span class="n">solph</span><span class="o">.</span><span class="n">Sink</span><span class="p">(</span>
+            <span class="n">label</span><span class="o">=</span><span class="s1">&#39;excess_solarheat&#39;</span> <span class="o">+</span> <span class="s2">&quot;__&quot;</span> <span class="o">+</span> <span class="n">buildingLabel</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="n">connector</span><span class="p">:</span> <span class="n">solph</span><span class="o">.</span><span class="n">Flow</span><span class="p">()}</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__collector_transformer</span> <span class="o">=</span> <span class="n">solph</span><span class="o">.</span><span class="n">Transformer</span><span class="p">(</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">label</span> <span class="o">+</span> <span class="s1">&#39;__&#39;</span> <span class="o">+</span> <span class="n">buildingLabel</span><span class="p">,</span>
+            <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="n">connector</span><span class="p">:</span> <span class="n">solph</span><span class="o">.</span><span class="n">Flow</span><span class="p">(),</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">solph</span><span class="o">.</span><span class="n">Flow</span><span class="p">()},</span>
+            <span class="n">outputs</span><span class="o">=</span><span class="p">{</span><span class="n">outputs</span><span class="p">:</span> <span class="n">solph</span><span class="o">.</span><span class="n">Flow</span><span class="p">()},</span>
+            <span class="n">conversion_factors</span><span class="o">=</span><span class="p">{</span>
+                <span class="n">connector</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="n">inputs</span><span class="p">:</span> <span class="n">electrical_consumption</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">peripheral_losses</span><span class="p">),</span>
+                <span class="n">outputs</span><span class="p">:</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">peripheral_losses</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="SolarCollector.getSolar"><a class="viewcode-back" href="../../optihood.html#optihood.converters.SolarCollector.getSolar">[docs]</a>    <span class="k">def</span> <span class="nf">getSolar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;source&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__collector_source</span>
+        <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;transformer&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__collector_transformer</span>
+        <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;sink&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__collector_excess_heat</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Transformer label not identified...&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[]</span></div></div>
+
+
+<div class="viewcode-block" id="HeatPumpLinear"><a class="viewcode-back" href="../../optihood.html#optihood.converters.HeatPumpLinear">[docs]</a><span class="k">class</span> <span class="nc">HeatPumpLinear</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buildingLabel</span><span class="p">,</span> <span class="n">temperatureDHW</span><span class="p">,</span> <span class="n">temperatureSH</span><span class="p">,</span> <span class="n">temperatureLow</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">outputSH</span><span class="p">,</span> <span class="n">outputDHW</span><span class="p">,</span>
+                 <span class="n">capacityMin</span><span class="p">,</span> <span class="n">capacityMax</span><span class="p">,</span> <span class="n">nomEff</span><span class="p">,</span>
+                 <span class="n">epc</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">varc</span><span class="p">,</span> <span class="n">env_flow</span><span class="p">,</span> <span class="n">env_capa</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__copDHW</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculateCop</span><span class="p">(</span><span class="n">temperatureDHW</span><span class="p">,</span> <span class="n">temperatureLow</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__copSH</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculateCop</span><span class="p">(</span><span class="n">temperatureSH</span><span class="p">,</span> <span class="n">temperatureLow</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">avgCopSh</span><span class="o">=</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__copSH</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__copSH</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__DHWChargingTimesteps</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_chargingRule</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">temperatureLow</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nominalEff</span> <span class="o">=</span><span class="n">nomEff</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__heatpump</span> <span class="o">=</span> <span class="n">solph</span><span class="o">.</span><span class="n">Transformer</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;HP&#39;</span> <span class="o">+</span> <span class="s1">&#39;__&#39;</span> <span class="o">+</span> <span class="n">buildingLabel</span><span class="p">,</span>
+                                            <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="nb">input</span><span class="p">:</span> <span class="n">solph</span><span class="o">.</span><span class="n">Flow</span><span class="p">(</span>
+                                                <span class="n">investment</span><span class="o">=</span><span class="n">solph</span><span class="o">.</span><span class="n">Investment</span><span class="p">(</span>
+                                                    <span class="n">ep_costs</span><span class="o">=</span><span class="n">epc</span><span class="o">*</span><span class="n">nomEff</span><span class="p">,</span>
+                                                    <span class="n">minimum</span><span class="o">=</span><span class="n">capacityMin</span><span class="o">/</span><span class="n">nomEff</span><span class="p">,</span>
+                                                    <span class="n">maximum</span><span class="o">=</span><span class="n">capacityMax</span><span class="o">/</span><span class="n">nomEff</span><span class="p">,</span>
+                                                    <span class="n">nonconvex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                    <span class="n">offset</span><span class="o">=</span><span class="n">base</span><span class="p">,</span>
+                                                    <span class="n">env_per_capa</span><span class="o">=</span><span class="n">env_capa</span><span class="o">*</span><span class="n">nomEff</span><span class="p">,</span>
+                                                <span class="p">),</span>
+                                            <span class="p">)},</span>
+                                            <span class="n">outputs</span><span class="o">=</span><span class="p">{</span><span class="n">outputSH</span><span class="p">:</span> <span class="n">solph</span><span class="o">.</span><span class="n">Flow</span><span class="p">(</span>
+                                                          <span class="n">variable_costs</span><span class="o">=</span><span class="n">varc</span><span class="p">,</span>
+                                                          <span class="n">env_per_flow</span><span class="o">=</span><span class="n">env_flow</span><span class="p">,</span>
+                                                      <span class="p">),</span>
+                                                      <span class="n">outputDHW</span><span class="p">:</span> <span class="n">solph</span><span class="o">.</span><span class="n">Flow</span><span class="p">(</span>
+                                                          <span class="n">variable_costs</span><span class="o">=</span><span class="n">varc</span><span class="p">,</span>
+                                                          <span class="n">env_per_flow</span><span class="o">=</span><span class="n">env_flow</span><span class="p">,</span>
+                                                      <span class="p">)</span>
+                                                  <span class="p">},</span>
+                                            <span class="n">conversion_factors</span><span class="o">=</span><span class="p">{</span><span class="n">outputSH</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__copSH</span><span class="p">,</span>
+                                                                  <span class="n">outputDHW</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__copDHW</span><span class="p">})</span>
+
+    <span class="k">def</span> <span class="nf">_calculateCop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tHigh</span><span class="p">,</span> <span class="n">tLow</span><span class="p">):</span>
+        <span class="n">coefW</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1600</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.2369</span><span class="p">,</span> <span class="mf">19.9391</span><span class="p">,</span> <span class="mf">19.3448</span><span class="p">,</span> <span class="mf">7.1057</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.4048</span><span class="p">]</span>
+        <span class="n">coefQ</span> <span class="o">=</span> <span class="p">[</span><span class="mf">13.8978</span><span class="p">,</span> <span class="mf">114.8358</span><span class="p">,</span> <span class="o">-</span><span class="mf">9.3634</span><span class="p">,</span> <span class="o">-</span><span class="mf">179.4227</span><span class="p">,</span> <span class="mf">342.3363</span><span class="p">,</span> <span class="o">-</span><span class="mf">12.4969</span><span class="p">]</span>
+        <span class="n">QCondenser</span> <span class="o">=</span> <span class="n">coefQ</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">coefQ</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">tLow</span> <span class="o">/</span> <span class="mf">273.15</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">coefQ</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">tHigh</span> <span class="o">/</span> <span class="mf">273.15</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span>
+                <span class="n">coefQ</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">tLow</span> <span class="o">/</span> <span class="mf">273.15</span> <span class="o">*</span> <span class="n">tHigh</span> <span class="o">/</span> <span class="mf">273.15</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span>
+                             <span class="n">coefQ</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">tLow</span> <span class="o">/</span> <span class="mf">273.15</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span>
+                             <span class="n">coefQ</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">tHigh</span> <span class="o">/</span> <span class="mf">273.15</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">WCompressor</span> <span class="o">=</span> <span class="n">coefW</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">coefW</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">tLow</span> <span class="o">/</span> <span class="mf">273.15</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">coefW</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">tHigh</span> <span class="o">/</span> <span class="mf">273.15</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span>
+                <span class="n">coefW</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">tLow</span> <span class="o">/</span> <span class="mf">273.15</span> <span class="o">*</span> <span class="n">tHigh</span> <span class="o">/</span> <span class="mf">273.15</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span>
+                             <span class="n">coefW</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">tLow</span> <span class="o">/</span> <span class="mf">273.15</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span>
+                              <span class="n">coefW</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">tHigh</span> <span class="o">/</span> <span class="mf">273.15</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">cop</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">QCondenser</span><span class="p">,</span> <span class="n">WCompressor</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cop</span>
+
+    <span class="k">def</span> <span class="nf">_chargingRule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataLength</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dataLength</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">([(</span><span class="n">t</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span> <span class="o">%</span> <span class="mi">24</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__DHWChargingTimesteps</span><span class="p">]):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__copSH</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__copDHW</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="HeatPumpLinear.getHP"><a class="viewcode-back" href="../../optihood.html#optihood.converters.HeatPumpLinear.getHP">[docs]</a>    <span class="k">def</span> <span class="nf">getHP</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;sh&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__heatpump</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Transformer label not identified...&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[]</span></div></div>
+
+
+<div class="viewcode-block" id="CHP"><a class="viewcode-back" href="../../optihood.html#optihood.converters.CHP">[docs]</a><span class="k">class</span> <span class="nc">CHP</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buildingLabel</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">outputEl</span><span class="p">,</span> <span class="n">outputSH</span><span class="p">,</span> <span class="n">outputDHW</span><span class="p">,</span> <span class="n">efficiencyEl</span><span class="p">,</span> <span class="n">efficiencySH</span><span class="p">,</span> <span class="n">efficiencyDHW</span><span class="p">,</span>
+                 <span class="n">capacityMin</span><span class="p">,</span> <span class="n">capacityEl</span><span class="p">,</span> <span class="n">capacitySH</span><span class="p">,</span> <span class="n">capacityDHW</span><span class="p">,</span> <span class="n">epc</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">varc1</span><span class="p">,</span> <span class="n">varc2</span><span class="p">,</span> <span class="n">env_flow1</span><span class="p">,</span> <span class="n">env_flow2</span><span class="p">,</span> <span class="n">env_capa</span><span class="p">,</span> <span class="n">timesteps</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__DHWChargingTimesteps</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_efficiencyElCHPSH</span> <span class="o">=</span> <span class="p">[</span><span class="n">efficiencyEl</span><span class="p">]</span> <span class="o">*</span> <span class="n">timesteps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_efficiencyElCHPDHW</span> <span class="o">=</span> <span class="p">[</span><span class="n">efficiencyEl</span><span class="p">]</span> <span class="o">*</span> <span class="n">timesteps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_efficiencySH</span> <span class="o">=</span> <span class="p">[</span><span class="n">efficiencySH</span><span class="p">]</span> <span class="o">*</span> <span class="n">timesteps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_efficiencyDHW</span> <span class="o">=</span> <span class="p">[</span><span class="n">efficiencyDHW</span><span class="p">]</span> <span class="o">*</span> <span class="n">timesteps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">avgEff</span> <span class="o">=</span> <span class="n">efficiencySH</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_chargingRule</span><span class="p">(</span><span class="n">timesteps</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__CHP</span> <span class="o">=</span> <span class="n">solph</span><span class="o">.</span><span class="n">Transformer</span><span class="p">(</span>
+                        <span class="n">label</span><span class="o">=</span><span class="s1">&#39;CHP&#39;</span><span class="o">+</span><span class="s1">&#39;__&#39;</span><span class="o">+</span><span class="n">buildingLabel</span><span class="p">,</span>
+                        <span class="n">inputs</span><span class="o">=</span><span class="p">{</span>
+                            <span class="nb">input</span><span class="p">:</span> <span class="n">solph</span><span class="o">.</span><span class="n">Flow</span><span class="p">(</span>
+                                <span class="n">investment</span><span class="o">=</span><span class="n">solph</span><span class="o">.</span><span class="n">Investment</span><span class="p">(</span>
+                                    <span class="n">ep_costs</span><span class="o">=</span><span class="n">epc</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">avgEff</span><span class="p">,</span>
+                                    <span class="n">minimum</span><span class="o">=</span><span class="n">capacityMin</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">avgEff</span><span class="p">,</span>
+                                    <span class="n">maximum</span><span class="o">=</span><span class="n">capacitySH</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">avgEff</span><span class="p">,</span>
+                                    <span class="n">nonconvex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                    <span class="n">offset</span><span class="o">=</span><span class="n">base</span><span class="p">,</span>
+                                    <span class="n">env_per_capa</span><span class="o">=</span><span class="n">env_capa</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">avgEff</span><span class="p">,</span>
+                                <span class="p">),</span>
+                            <span class="p">)</span>
+                        <span class="p">},</span>
+                        <span class="n">outputs</span><span class="o">=</span><span class="p">{</span>
+                            <span class="n">outputEl</span><span class="p">:</span> <span class="n">solph</span><span class="o">.</span><span class="n">Flow</span><span class="p">(</span>
+                                <span class="n">variable_costs</span><span class="o">=</span><span class="n">varc1</span><span class="p">,</span>
+                                <span class="n">env_per_flow</span><span class="o">=</span><span class="n">env_flow1</span><span class="p">,</span>
+                            <span class="p">),</span>
+                            <span class="n">outputSH</span><span class="p">:</span> <span class="n">solph</span><span class="o">.</span><span class="n">Flow</span><span class="p">(</span>
+                                <span class="n">variable_costs</span><span class="o">=</span><span class="n">varc2</span><span class="p">,</span>
+                                <span class="n">env_per_flow</span><span class="o">=</span><span class="n">env_flow2</span><span class="p">,</span>
+                            <span class="p">),</span>
+                            <span class="n">outputDHW</span><span class="p">:</span> <span class="n">solph</span><span class="o">.</span><span class="n">Flow</span><span class="p">(</span>
+                                <span class="n">variable_costs</span><span class="o">=</span><span class="n">varc2</span><span class="p">,</span>
+                                <span class="n">env_per_flow</span><span class="o">=</span><span class="n">env_flow2</span><span class="p">,</span>
+                            <span class="p">),</span>
+                        <span class="p">},</span>
+                        <span class="n">conversion_factors</span><span class="o">=</span><span class="p">{</span><span class="n">outputEl</span><span class="p">:</span> <span class="p">[</span><span class="nb">sum</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_efficiencyElCHPDHW</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_efficiencyElCHPSH</span><span class="p">)],</span>
+                                            <span class="n">outputSH</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_efficiencySH</span><span class="p">,</span>
+                                            <span class="n">outputDHW</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_efficiencyDHW</span><span class="p">,</span>
+                                            <span class="p">}</span>
+                    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_chargingRule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataLength</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dataLength</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">([(</span><span class="n">t</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span> <span class="o">%</span> <span class="mi">24</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__DHWChargingTimesteps</span><span class="p">]):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_efficiencyElCHPSH</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_efficiencySH</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_efficiencyElCHPDHW</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_efficiencyDHW</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="CHP.getCHP"><a class="viewcode-back" href="../../optihood.html#optihood.converters.CHP.getCHP">[docs]</a>    <span class="k">def</span> <span class="nf">getCHP</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;sh&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__CHP</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Transformer label not identified...&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[]</span></div></div>
+
+<div class="viewcode-block" id="GasBoiler"><a class="viewcode-back" href="../../optihood.html#optihood.converters.GasBoiler">[docs]</a><span class="k">class</span> <span class="nc">GasBoiler</span><span class="p">(</span><span class="n">solph</span><span class="o">.</span><span class="n">Transformer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buildingLabel</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">efficiency</span><span class="p">,</span>
+                 <span class="n">capacityMin</span><span class="p">,</span> <span class="n">capacityMax</span><span class="p">,</span> <span class="n">epc</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">varc</span><span class="p">,</span> <span class="n">env_flow</span><span class="p">,</span> <span class="n">env_capa</span><span class="p">):</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">GasBoiler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">label</span><span class="o">=</span><span class="s1">&#39;GasBoiler&#39;</span><span class="o">+</span><span class="s1">&#39;__&#39;</span><span class="o">+</span><span class="n">buildingLabel</span><span class="p">,</span>
+            <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="nb">input</span><span class="p">:</span> <span class="n">solph</span><span class="o">.</span><span class="n">Flow</span><span class="p">()},</span>
+            <span class="n">outputs</span><span class="o">=</span><span class="p">{</span><span class="n">output</span><span class="p">:</span> <span class="n">solph</span><span class="o">.</span><span class="n">Flow</span><span class="p">(</span>
+                     <span class="n">investment</span><span class="o">=</span><span class="n">solph</span><span class="o">.</span><span class="n">Investment</span><span class="p">(</span>
+                         <span class="n">ep_costs</span><span class="o">=</span><span class="n">epc</span><span class="p">,</span>
+                         <span class="n">minimum</span><span class="o">=</span><span class="n">capacityMin</span><span class="p">,</span>
+                         <span class="n">maximum</span><span class="o">=</span><span class="n">capacityMax</span><span class="p">,</span>
+                         <span class="n">nonconvex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                         <span class="n">offset</span><span class="o">=</span><span class="n">base</span><span class="p">,</span>
+                         <span class="n">env_per_capa</span><span class="o">=</span><span class="n">env_capa</span><span class="p">,</span>
+                     <span class="p">),</span>
+                     <span class="n">variable_costs</span><span class="o">=</span><span class="n">varc</span><span class="p">,</span>
+                     <span class="n">env_per_flow</span><span class="o">=</span><span class="n">env_flow</span>
+                 <span class="p">)},</span>
+            <span class="n">conversion_factors</span> <span class="o">=</span> <span class="p">{</span><span class="n">output</span><span class="p">:</span> <span class="n">efficiency</span><span class="p">}</span>
+                 <span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, Dani Carbonell, Mattia Battaglia, Jeremias Schmidli, Maike Schubert, Martin Neugebauer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

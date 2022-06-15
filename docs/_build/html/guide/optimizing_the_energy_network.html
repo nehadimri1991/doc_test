@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Optimizing the energy network &mdash; optihood  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Processing results" href="processing_results.html" />
+    <link rel="prev" title="Defining an energy network" href="defining_an_energy_network.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> optihood
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="defining_an_energy_network.html">Defining an energy network</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Optimizing the energy network</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#optimization-options">Optimization options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#single-objective-optimization">Single-objective optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#multi-objective-optimization">Multi-objective optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="processing_results.html">Processing results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced_under_development_features.html">Advanced under-development features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">Code Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">optihood</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Optimizing the energy network</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/guide/optimizing_the_energy_network.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="optimizing-the-energy-network">
+<span id="id1"></span><h1>Optimizing the energy network<a class="headerlink" href="#optimizing-the-energy-network" title="Permalink to this headline"></a></h1>
+<p>Once the energy system has been defined as an object of the EnergyNetworkIndiv class or the EnergyNetworkGroup class
+and the model components (and parameters) have been set from the input excel file, the network object could then be
+optimized:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">network</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="s1">&#39;gurobi&#39;</span><span class="p">,</span>
+                 <span class="n">envImpactlimit</span><span class="o">=</span><span class="n">envImpactlimit</span><span class="p">,</span>
+                 <span class="n">clusterSize</span><span class="o">=</span><span class="n">clusterSize</span><span class="p">,</span>
+                 <span class="n">options</span><span class="o">=</span><span class="n">optimizationOptions</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The first parameter solver specifies the name of solver to be used for optimization. ‘solver’ could take the values
+‘gurobi’, ‘cbc’, ‘cplex’ or ‘glpk’. ‘envImpactlimit’ denotes the maximum limit for environmental impact. This parameter
+becomes relevant in case of multi-objective optimization and would be described in the later sections. For single-objective
+optimization set this parameter to a significantly high value which would never be reached (For example: 10^6). ‘clusterSize’
+is the parameter related to clustered days (if defined). This is an optional parameter and is required only if clustered
+days are used. ‘options’ specifies the command line parameters to be passed to the selected solver. This parameter is
+described further in the following section.</p>
+<section id="optimization-options">
+<h2>Optimization options<a class="headerlink" href="#optimization-options" title="Permalink to this headline"></a></h2>
+<p>To be completed</p>
+</section>
+<section id="single-objective-optimization">
+<h2>Single-objective optimization<a class="headerlink" href="#single-objective-optimization" title="Permalink to this headline"></a></h2>
+<p>To be completed</p>
+</section>
+<section id="multi-objective-optimization">
+<h2>Multi-objective optimization<a class="headerlink" href="#multi-objective-optimization" title="Permalink to this headline"></a></h2>
+<p>To be completed</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="defining_an_energy_network.html" class="btn btn-neutral float-left" title="Defining an energy network" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="processing_results.html" class="btn btn-neutral float-right" title="Processing results" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022  .... .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

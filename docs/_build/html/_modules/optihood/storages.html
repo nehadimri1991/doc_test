@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optihood.storages &mdash; pytrnsys  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> pytrnsys
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/defining_an_energy_network.html">Defining an energy network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/optimizing_the_energy_network.html">Optimizing the energy network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/processing_results.html">Processing results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/advanced_under_development_features.html">Advanced under-development features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Code Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pytrnsys</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>optihood.storages</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for optihood.storages</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">oemof.thermal.stratified_thermal_storage</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">calculate_storage_u_value</span><span class="p">,</span>
+    <span class="n">calculate_losses</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">oemof.solph</span> <span class="k">as</span> <span class="nn">solph</span>
+
+<div class="viewcode-block" id="ElectricalStorage"><a class="viewcode-back" href="../../optihood.html#optihood.storages.ElectricalStorage">[docs]</a><span class="k">class</span> <span class="nc">ElectricalStorage</span><span class="p">(</span><span class="n">solph</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">GenericStorage</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buildingLabel</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">loss_rate</span><span class="p">,</span> <span class="n">initial_storage</span><span class="p">,</span> <span class="n">efficiency_in</span><span class="p">,</span> <span class="n">efficiency_out</span><span class="p">,</span> <span class="n">capacity_min</span><span class="p">,</span> <span class="n">capacity_max</span><span class="p">,</span> <span class="n">epc</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">varc</span><span class="p">,</span> <span class="n">env_flow</span><span class="p">,</span> <span class="n">env_capa</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ElectricalStorage</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">label</span><span class="o">=</span><span class="s2">&quot;electricalStorage&quot;</span><span class="o">+</span><span class="s1">&#39;__&#39;</span><span class="o">+</span><span class="n">buildingLabel</span><span class="p">,</span>
+            <span class="n">inputs</span><span class="o">=</span><span class="p">{</span>
+                <span class="nb">input</span><span class="p">:</span> <span class="n">solph</span><span class="o">.</span><span class="n">Flow</span><span class="p">()</span>
+            <span class="p">},</span>
+            <span class="n">outputs</span><span class="o">=</span><span class="p">{</span>
+                <span class="n">output</span><span class="p">:</span> <span class="n">solph</span><span class="o">.</span><span class="n">Flow</span><span class="p">(</span><span class="n">variable_costs</span><span class="o">=</span><span class="n">varc</span><span class="p">,</span> <span class="n">env_per_flow</span><span class="o">=</span><span class="n">env_flow</span><span class="p">,</span> <span class="p">)</span>
+            <span class="p">},</span>
+            <span class="n">loss_rate</span><span class="o">=</span><span class="n">loss_rate</span><span class="p">,</span>
+            <span class="n">initial_storage_level</span><span class="o">=</span><span class="n">initial_storage</span><span class="p">,</span>
+            <span class="n">inflow_conversion_factor</span><span class="o">=</span><span class="n">efficiency_in</span><span class="p">,</span>
+            <span class="n">outflow_conversion_factor</span><span class="o">=</span><span class="n">efficiency_out</span><span class="p">,</span>
+            <span class="n">Balanced</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">invest_relation_input_capacity</span><span class="o">=</span><span class="n">efficiency_in</span><span class="p">,</span>
+            <span class="n">invest_relation_output_capacity</span><span class="o">=</span><span class="n">efficiency_out</span><span class="p">,</span>
+            <span class="n">investment</span><span class="o">=</span><span class="n">solph</span><span class="o">.</span><span class="n">Investment</span><span class="p">(</span>
+                <span class="n">minimum</span><span class="o">=</span><span class="n">capacity_min</span><span class="p">,</span>
+                <span class="n">maximum</span><span class="o">=</span><span class="n">capacity_max</span><span class="p">,</span>
+                <span class="n">ep_costs</span><span class="o">=</span><span class="n">epc</span><span class="p">,</span>
+                <span class="n">existing</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                <span class="n">nonconvex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">offset</span><span class="o">=</span><span class="n">base</span><span class="p">,</span>
+                <span class="n">env_per_capa</span><span class="o">=</span><span class="n">env_capa</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ThermalStorage"><a class="viewcode-back" href="../../optihood.html#optihood.storages.ThermalStorage">[docs]</a><span class="k">class</span> <span class="nc">ThermalStorage</span><span class="p">(</span><span class="n">solph</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">GenericStorage</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label1</span><span class="p">,</span> <span class="n">label2</span><span class="p">,</span> <span class="n">stratifiedStorageParams</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">initial_storage</span><span class="p">,</span> <span class="n">capacity_min</span><span class="p">,</span> <span class="n">capacity_max</span><span class="p">,</span> <span class="n">epc</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">varc</span><span class="p">,</span> <span class="n">env_flow</span><span class="p">,</span> <span class="n">env_capa</span><span class="p">):</span>
+        <span class="n">u_value</span><span class="p">,</span> <span class="n">loss_rate</span><span class="p">,</span> <span class="n">fixed_losses_relative</span><span class="p">,</span> <span class="n">fixed_losses_absolute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_precalculate</span><span class="p">(</span><span class="n">stratifiedStorageParams</span><span class="p">,</span> <span class="n">label2</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ThermalStorage</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">label1</span><span class="p">,</span>
+            <span class="n">inputs</span><span class="o">=</span><span class="p">{</span>
+                <span class="nb">input</span><span class="p">:</span> <span class="n">solph</span><span class="o">.</span><span class="n">Flow</span><span class="p">(),</span>
+            <span class="p">},</span>
+            <span class="n">outputs</span><span class="o">=</span><span class="p">{</span>
+                <span class="n">output</span><span class="p">:</span> <span class="n">solph</span><span class="o">.</span><span class="n">Flow</span><span class="p">(</span><span class="n">variable_costs</span><span class="o">=</span><span class="n">varc</span><span class="p">,</span> <span class="n">env_per_flow</span><span class="o">=</span><span class="n">env_flow</span><span class="p">,</span> <span class="p">)</span>
+            <span class="p">},</span>
+            <span class="n">loss_rate</span><span class="o">=</span><span class="n">loss_rate</span><span class="p">,</span>
+            <span class="n">initial_storage_level</span><span class="o">=</span><span class="n">initial_storage</span><span class="p">,</span>
+            <span class="n">fixed_losses_relative</span><span class="o">=</span><span class="n">fixed_losses_relative</span><span class="p">,</span>
+            <span class="n">fixed_losses_absolute</span><span class="o">=</span><span class="n">fixed_losses_absolute</span><span class="p">,</span>
+            <span class="n">inflow_conversion_factor</span><span class="o">=</span><span class="n">stratifiedStorageParams</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">label2</span><span class="p">,</span> <span class="s1">&#39;inflow_conversion_factor&#39;</span><span class="p">],</span>
+            <span class="n">outflow_conversion_factor</span><span class="o">=</span><span class="n">stratifiedStorageParams</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">label2</span><span class="p">,</span> <span class="s1">&#39;outflow_conversion_factor&#39;</span><span class="p">],</span>
+            <span class="n">Balanced</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">invest_relation_input_capacity</span><span class="o">=</span><span class="n">stratifiedStorageParams</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">label2</span><span class="p">,</span> <span class="s1">&#39;inflow_conversion_factor&#39;</span><span class="p">],</span>
+            <span class="n">invest_relation_output_capacity</span><span class="o">=</span><span class="n">stratifiedStorageParams</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">label2</span><span class="p">,</span> <span class="s1">&#39;outflow_conversion_factor&#39;</span><span class="p">],</span>
+            <span class="n">investment</span><span class="o">=</span><span class="n">solph</span><span class="o">.</span><span class="n">Investment</span><span class="p">(</span>
+                <span class="n">minimum</span><span class="o">=</span><span class="n">capacity_min</span><span class="p">,</span>
+                <span class="n">maximum</span><span class="o">=</span><span class="n">capacity_max</span><span class="p">,</span>
+                <span class="n">ep_costs</span><span class="o">=</span><span class="n">epc</span><span class="p">,</span>
+                <span class="n">existing</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                <span class="n">nonconvex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">offset</span><span class="o">=</span><span class="n">base</span><span class="p">,</span>
+                <span class="n">env_per_capa</span><span class="o">=</span><span class="n">env_capa</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_precalculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+        <span class="n">u_value</span> <span class="o">=</span> <span class="n">calculate_storage_u_value</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">label</span><span class="p">,</span> <span class="s1">&#39;s_iso&#39;</span><span class="p">],</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">label</span><span class="p">,</span> <span class="s1">&#39;lamb_iso&#39;</span><span class="p">],</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">label</span><span class="p">,</span> <span class="s1">&#39;alpha_inside&#39;</span><span class="p">],</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">label</span><span class="p">,</span> <span class="s1">&#39;alpha_outside&#39;</span><span class="p">])</span>
+
+        <span class="n">loss_rate</span><span class="p">,</span> <span class="n">fixed_losses_relative</span><span class="p">,</span> <span class="n">fixed_losses_absolute</span> <span class="o">=</span> <span class="n">calculate_losses</span><span class="p">(</span>
+            <span class="n">u_value</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">label</span><span class="p">,</span> <span class="s1">&#39;diameter&#39;</span><span class="p">],</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">label</span><span class="p">,</span> <span class="s1">&#39;temp_h&#39;</span><span class="p">],</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">label</span><span class="p">,</span> <span class="s1">&#39;temp_c&#39;</span><span class="p">],</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">label</span><span class="p">,</span> <span class="s1">&#39;temp_env&#39;</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">u_value</span><span class="p">,</span> <span class="n">loss_rate</span><span class="p">,</span> <span class="n">fixed_losses_relative</span><span class="p">,</span> <span class="n">fixed_losses_absolute</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, Dani Carbonell, Mattia Battaglia, Jeremias Schmidli, Maike Schubert, Martin Neugebauer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

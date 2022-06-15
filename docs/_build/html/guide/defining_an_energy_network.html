@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Defining an energy network &mdash; optihood  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Optimizing the energy network" href="optimizing_the_energy_network.html" />
+    <link rel="prev" title="Getting Started" href="getting_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> optihood
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Defining an energy network</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#energynetworkclass">EnergyNetworkClass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#input-excel-file">Input Excel File</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#buses">buses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#commodity-sources">commodity_sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#demand">demand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transformers">transformers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#solar">solar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#storages">storages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stratified-storage">stratified_storage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#links">links</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#csv-data">csv_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#grid-connection">grid_connection</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="optimizing_the_energy_network.html">Optimizing the energy network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="processing_results.html">Processing results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced_under_development_features.html">Advanced under-development features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">Code Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">optihood</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="getting_started.html">Getting Started</a> &raquo;</li>
+      <li>Defining an energy network</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/guide/defining_an_energy_network.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="defining-an-energy-network">
+<span id="id1"></span><h1>Defining an energy network<a class="headerlink" href="#defining-an-energy-network" title="Permalink to this headline"></a></h1>
+<p>An energy network can be defined as an object of the EnergyNetworkIndiv class or the EnergyNetworkGroup class. This
+object then acts as the primary container for the model. An energy network is grouped into buildings, each building would
+then contain the definition of components such as sources, sinks, transformers, and buses (the connections between
+different components). These components, and their respective parameters, are defined in an excel file which is provided
+as an input. A description on how to prepare the excel file is provided in the next sections.</p>
+<section id="energynetworkclass">
+<h2>EnergyNetworkClass<a class="headerlink" href="#energynetworkclass" title="Permalink to this headline"></a></h2>
+<p>The EnergyNetworkClass is the main parent class, from which two child classes EnergyNetworkIndiv and EnergyNetworkGroup
+are inherited. Either EnergyNetworkIndiv class or EnergyNetworkGroup class could be used to define an energy network.
+The choice mainly depends on whether the buildings are linked together (electrically and/or thermally) or not.</p>
+<p>If the buildings within an energy network do not share electricity and/or heat, EnergyNetworkIndiv class is used:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">EnergyNetworkIndiv</span>
+<span class="n">network</span> <span class="o">=</span> <span class="n">EnergyNetworkIndiv</span><span class="p">(</span><span class="n">dateTimeIndex</span><span class="p">,</span> <span class="n">tSH</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span> <span class="n">tDHW</span><span class="o">=</span><span class="mi">55</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Otherwise, if the buildings are expected to share energy (electrical and/or heat), EnergyNetworkGroup class is used:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">EnergyNetworkGroup</span>
+<span class="n">network</span> <span class="o">=</span> <span class="n">EnergyNetworkGroup</span><span class="p">(</span><span class="n">dateTimeIndex</span><span class="p">,</span> <span class="n">tSH</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span> <span class="n">tDHW</span><span class="o">=</span><span class="mi">55</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The first parameter to be passed in both the cases is a Datetime index. This parameter gives the time range for an
+optimization model. The Datetime index could be defined using date_range() in pandas:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">dateTimeIndex</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s1">&#39;2021-01-01 00:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;2021-12-31 23:00:00&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;60min&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The second and the third parameters tSH and tDHW define the temperatures for space heating and domestic hot water
+production, respectively.</p>
+<p>Once the ‘network’ object has been created, the next step then is to build the model from an input excel file which
+defines different components which constitute the model, how they are connected and their associated parameters:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">network</span><span class="o">.</span><span class="n">setFromExcel</span><span class="p">(</span><span class="n">inputExcelFilePath</span><span class="p">,</span> <span class="n">numberOfBuildings</span><span class="p">,</span> <span class="n">clusterSize</span><span class="p">,</span> <span class="n">opt</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>‘inputExcelFilePath’ gives the path of the excel input file. ‘numberofBuildings’ is an integer parameter specifying the
+number of buildings defined in the excel file. The last two parameters clusterSize and opt are optional. The ‘opt’
+parameter could be either ‘costs’ (default value) or ‘env’ depending on which criteria should be optimized. The
+‘clusterSize’ parameter is used to provide a selected number of days which could be assumed representative of the entire
+time range. For example: two typical days could be selected to model the entire year, which could represent two clusters
+summer and winter. This would improve the optimization speed. If not given during the function call, the default value
+of the clusterSize parameter assumes no day clusters. This parameter is described further in
+<a class="reference internal" href="advanced_under_development_features.html#advanced-under-development-features"><span class="std std-ref">Advanced under-development features</span></a></p>
+</section>
+<section id="input-excel-file">
+<h2>Input Excel File<a class="headerlink" href="#input-excel-file" title="Permalink to this headline"></a></h2>
+<p>The input excel file is used to define an optimization model and set the model parameters. Each sheet of this excel file
+is structured to defin different components, such as buses, storages and transformers, their respective parameters,
+connections between these components and the building to which they belong.</p>
+<p>A sample excel file for building the energy network model could be found with the <a class="reference external" href="https://github.com/SPF-OST/OptiHood/tree/main/data/examples/">basic example</a>.
+The input excel file typically has 9-10 sheets, each defining a different component type of the model.</p>
+<section id="buses">
+<h3>buses<a class="headerlink" href="#buses" title="Permalink to this headline"></a></h3>
+<p>This excel sheet defines the buses used in the energy network. Buses define the connections between different
+components. Each row of this excel sheet represents a bus node in the model.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">label</span></code> (string)</dt><dd><p>label name of the bus. Should be unique for each building i.e. different buildings could have the same label for two
+buses but for one building the buses should not have duplicate labels.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">active</span></code> (0 or 1)</dt><dd><p>If set to 1 then the corresponding bus is active, otherwise (if 0) then the bus is inactive in the model. Could be
+used to optimize different scenarios with different buses without the need to re-construct the base excel file.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">excess</span></code> (0 or 1)</dt><dd><p>If set to 1 then the corresponding bus has the possibility of having an excess flow unbalanced to the demand. An
+additional sink node is automatically added in this case to accept this excess flow. If set to 0 then the bus cannot
+have an excess flow.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">excess</span> <span class="pre">costs</span></code> (float)</dt><dd><p>The associated cost of excess flow from a bus. Relevant only if <code class="docutils literal notranslate"><span class="pre">excess</span></code> is set to 1. Could be negative to denote
+monetary gains such as in case of PV feed-in.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">building</span></code> (integer)</dt><dd><p>Building number to which the bus belongs. Should be unique for each building.</p>
+</dd>
+</dl>
+</section>
+<section id="commodity-sources">
+<h3>commodity_sources<a class="headerlink" href="#commodity-sources" title="Permalink to this headline"></a></h3>
+<p>This sheet defines the different commodity sources which serve as an energy input to the model. The parameters <code class="docutils literal notranslate"><span class="pre">label</span></code>,
+<code class="docutils literal notranslate"><span class="pre">active</span></code> and <code class="docutils literal notranslate"><span class="pre">building</span></code> are analogous to the parameters described earlier for buses.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">to</span></code> (string)</dt><dd><p>Label of bus to which the energy from the commodity source flows. The corresponding bus label should exist in
+the buses sheet.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">variable</span> <span class="pre">costs</span></code> (float)</dt><dd><p>Cost per kW of the commodity source.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">CO2</span> <span class="pre">impact</span></code> (float)</dt><dd><p>CO2 impact per kW of the commodity source.</p>
+</dd>
+</dl>
+</section>
+<section id="demand">
+<h3>demand<a class="headerlink" href="#demand" title="Permalink to this headline"></a></h3>
+<p>The nodes related to the energy demand i.e. sink are defined in this sheet. The parameters <code class="docutils literal notranslate"><span class="pre">label</span></code>, <code class="docutils literal notranslate"><span class="pre">active</span></code> and
+<code class="docutils literal notranslate"><span class="pre">building</span></code> are analogous to the parameters described earlier for buses.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">from</span></code> (string)</dt><dd><p>Label of the bus from which the energy flows to the demand node. The corresponding bus label should exist in
+the buses sheet.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">fixed</span></code> (0 or 1)</dt><dd><p>If set to 1, the energy demand profiles are fixed and a path to the demand profiles should then be given in the
+csv_data sheet of the input excel file. If set to 0, the optimizer will select the demand profiles for optimum
+operation (a total annual demand profile could be given in this case). At the present development stage only fixed
+demands are accepted.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">nominal</span> <span class="pre">value</span></code> (float)</dt><dd><p>The demand profiles series should be normalized values. this parameter then defines the maximum demand with which
+the normalized series is multiplied to obtain the actual demand profile series. If set to 1, then the given demand
+profile series is taken as it is (not normalized).</p>
+</dd>
+</dl>
+</section>
+<section id="transformers">
+<h3>transformers<a class="headerlink" href="#transformers" title="Permalink to this headline"></a></h3>
+<p>The nodes related to the energy conversion units (or transformers) such as CHP, heat pump, etc. are given in this excel
+sheet. The parameters <code class="docutils literal notranslate"><span class="pre">label</span></code>, <code class="docutils literal notranslate"><span class="pre">active</span></code> and <code class="docutils literal notranslate"><span class="pre">building</span></code> are analogous to the parameters described earlier for buses.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">from</span></code> (string)</dt><dd><p>Label of bus from which the energy flows to the transformer node. The corresponding bus label should exist in
+the buses sheet.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">to</span></code> (strings separated by comma)</dt><dd><p>Label of the bus(es) to which the energy flows from the transformer node. Different bus labels should be separated
+by a comma (,), for example: Bus1, Bus2, Bus3. The bus label(s) should exist in the buses sheet.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">efficiency</span></code> (float values separated by comma)</dt><dd><p>Conversion efficiency from input to the output(s) of the transformer node. Efficiencies should be separated by
+a comma (,) in the case with more than one outputs (i.e. when more than one buses are listed under <code class="docutils literal notranslate"><span class="pre">to</span></code>).</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">capacity_DHW</span></code> (float)</dt><dd><p>Maximum capacity limit for domestic hot water (DHW) production from the transformer unit in kW. Could be left blank
+if the parameter is not relevant to a transformer (for example if a transformer does not produce DHW)</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">capacity_SH</span></code> (float)</dt><dd><p>Maximum capacity limit for space heat (SH) production from the transformer unit in kW. Could be left blank if the
+parameter is not relevant to a transformer (for example if a transformer does not produce SH)</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">capacity_el</span></code> (float)</dt><dd><p>Maximum capacity limit for electricity production from the transformer unit in kW. Could be left blank if the
+parameter is not relevant to a transformer (for example if a transformer does not produce electricity). Note for CHP
+this parameter acts as the main capacity against which optimization is performed.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">capacity_min</span></code> (float)</dt><dd><p>Minimum capacity to be installed in kW for an investment in the transformer unit.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">lifetime</span></code> (non-negative integer)</dt><dd><p>Lifetime of the node in years.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">invest_base</span></code> (float)</dt><dd><p>Base investment cost of the node.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">invest_cap</span></code> (float)</dt><dd><p>Investment cost per unit installed capacity (i.e. per kW) of the node.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">maintenance</span></code> (float)</dt><dd><p>Maintenance cost of the node. Given as a percentage of the base investment cost <code class="docutils literal notranslate"><span class="pre">invest_base</span></code>. For example:
+if the investment cost is to be taken as 5% of <code class="docutils literal notranslate"><span class="pre">invest_base</span></code>, then the value of <code class="docutils literal notranslate"><span class="pre">maintenance</span></code> field should be 0.05.
+Set as 0 if this cost is to be ignored.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">installation</span></code> (float)</dt><dd><p>Installation cost of the node. Given as a percentage of the base investment cost <code class="docutils literal notranslate"><span class="pre">invest_base</span></code>. For example:
+if the Installation cost is to be taken as 15% of <code class="docutils literal notranslate"><span class="pre">invest_base</span></code>, then <code class="docutils literal notranslate"><span class="pre">installation</span></code> field should be 0.15. Set
+as 0 if this cost is to be ignored.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">planification</span></code> (float)</dt><dd><p>Cost associated with planning. Given as a percentage of the base investment cost <code class="docutils literal notranslate"><span class="pre">invest_base</span></code>. For example:
+if the planning cost is 5% of <code class="docutils literal notranslate"><span class="pre">invest_base</span></code>, then <code class="docutils literal notranslate"><span class="pre">planification</span></code> should be 0.05. Set as 0 if this cost is to be
+ignored.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">heat_impact</span></code> (float)</dt><dd><p>Environmental impact for heat production. Set as 0 if there is no impact due to heat production.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">elec_impact</span></code> (float)</dt><dd><p>Environmental impact for electricity production. Set as 0 if there is no impact due to electricity production.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">impact_cap</span></code> (float)</dt><dd><p>Environmental impact per unit installed capacity i.e. per kW of the node. Set as 0 if there is no impact per
+installed capacity of the node.</p>
+</dd>
+</dl>
+</section>
+<section id="solar">
+<h3>solar<a class="headerlink" href="#solar" title="Permalink to this headline"></a></h3>
+<p>This excel sheet defines the parameters related to the solar components such as solar thermal collector and PV panels.
+The parameters <code class="docutils literal notranslate"><span class="pre">label</span></code>, <code class="docutils literal notranslate"><span class="pre">active</span></code> and <code class="docutils literal notranslate"><span class="pre">building</span></code> are analogous to the parameters described earlier for buses.
+<code class="docutils literal notranslate"><span class="pre">from</span></code> and <code class="docutils literal notranslate"><span class="pre">to</span></code> parameters have been previously defined for commodity sources and demand sheets, respectively, while
+the cost and environmental impact paramaters are described under transformers sheet.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">connect</span></code> (string)</dt><dd><p>Label of the bus which connects a solar collector to the model. This bus allows excess heat production from the solar
+collector. A node for heat sink is created automatically. The given bus label should exist in the buses sheet. This
+parameter is irrelevant for PV.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">electrical_consumption</span></code> (float)</dt><dd><p>Electrical consumption of the solar component. Given as a percentage fraction of the energy produced. 0.02 means
+the electrical consumption is 2% of the energy is produced.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">peripheral_losses</span></code> (float)</dt><dd><p>Peripheral losses of the solar component. Given as a percentage fraction of the energy produced. 0.05 means 5% of
+the energy produced is lost to the surrounding environment.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">latitude</span></code> (float)</dt><dd><p>Latitude of the geographical location where the solar collector/panel is placed. Given in degrees.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">longitude</span></code> (float)</dt><dd><p>Longitude of the geographical location where the solar collector/panel is placed. Given in degrees.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">tilt</span></code> (float)</dt><dd><p>Tilt angle of the solar collector/panel. Given in degrees.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">azimuth</span></code> (float)</dt><dd><p>Azimuth angle of the solar collector/panel. Given in degrees.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">eta_0</span></code>, <code class="docutils literal notranslate"><span class="pre">a_1</span></code> and <code class="docutils literal notranslate"><span class="pre">a_2</span></code> (float)</dt><dd><p>Efficiency parameters of the solar thermal collector. Solar thermal collector is linearized using the pre-calculations
+given in <a class="reference external" href="https://oemof-thermal.readthedocs.io/en/latest/solar_thermal_collector.html">oemof-thermal</a>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">temp_collector_inlet</span></code> (float)</dt><dd><p>Inlet fluid temperature of the solar thermal collector. Given in degree C.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">delta_temp_n</span></code> (float)</dt><dd><p>Temperature difference between the inlet fluid and the mean fluid temperature in case of solar collector. For PV,
+this parameter denotes the temperature difference between the solar cells and the ambient.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">capacity_max</span></code> (float)</dt><dd><p>Maximum capacity limit in kW.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">capacity_min</span></code> (float)</dt><dd><p>Minimum possible capacity in kW for the installation of solar collector/panel.</p>
+</dd>
+</dl>
+</section>
+<section id="storages">
+<h3>storages<a class="headerlink" href="#storages" title="Permalink to this headline"></a></h3>
+<p>This excel sheet defines the parameters related to the energy storage units such as battery and hot water tank. <code class="docutils literal notranslate"><span class="pre">label</span></code>,
+<code class="docutils literal notranslate"><span class="pre">active</span></code> and <code class="docutils literal notranslate"><span class="pre">building</span></code> have been defined previously for buses excel sheet. A description of <code class="docutils literal notranslate"><span class="pre">from</span></code> and <code class="docutils literal notranslate"><span class="pre">to</span></code> has
+been given in commodity sources and demand sheets, respectively. The cost and environmental impact parameters are
+described in the transformers sheet section. <code class="docutils literal notranslate"><span class="pre">capacity_min</span></code> and <code class="docutils literal notranslate"><span class="pre">capacity_max</span></code> are described in the solar excel sheet
+section.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">efficiency</span> <span class="pre">inflow</span></code> (float)</dt><dd><p>Charging efficiency of battery. This parameter is not relevant for thermal storages.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">efficiency</span> <span class="pre">outflow</span></code> (float)</dt><dd><p>Discharging efficiency of battery. This parameter is not relevant for thermal storages.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">initial</span> <span class="pre">capacity</span></code> (float)</dt><dd><p>initial capacity of the storage. This parameter is expressed as a fraction of the total storage capacity. 0 means storage is initially
+assumed to be empty, 1 denotes that the storage is 100% full initially, while 0.5 means the storage is at 50% capacity initially.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">capacity</span> <span class="pre">loss</span></code> (float)</dt><dd><p>Losses from battery storage. This parameter is not relevant for thermal storages.</p>
+</dd>
+</dl>
+</section>
+<section id="stratified-storage">
+<h3>stratified_storage<a class="headerlink" href="#stratified-storage" title="Permalink to this headline"></a></h3>
+<p>This excel sheet defines the parameters relevant to stratified thermal storage. The pre-calculations given in <a class="reference external" href="https://oemof-thermal.readthedocs.io/en/latest/stratified_thermal_storage.html">oemof-thermal</a>
+have been used to linearize the thermal hot water storage. The parameter names used here are similar to the parameters
+defined in oemof-thermal.</p>
+</section>
+<section id="links">
+<h3>links<a class="headerlink" href="#links" title="Permalink to this headline"></a></h3>
+<p>This excel sheet defines the parameters for electricity and space heating links. The buildings could share electricity
+production and/or space heat production. Links allow this sharing to be possible. <code class="docutils literal notranslate"><span class="pre">label</span></code> and <code class="docutils literal notranslate"><span class="pre">active</span></code> have been
+defined already for buses excel sheet. <code class="docutils literal notranslate"><span class="pre">invest_base</span></code> and <code class="docutils literal notranslate"><span class="pre">invest_cap</span></code> parameters (defined in the transformers sheet
+section) are only relevant for space heating links in the present stage of development.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">buildingA</span></code> (integer)</dt><dd><p>Building number of the first building of the link. This should match with the values typically given in the
+<code class="docutils literal notranslate"><span class="pre">building</span></code> parameter in the other excel sheets.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">buildingB</span></code> (integer)</dt><dd><p>Building number of the second building of the link. This should match with the values typically given in the
+<code class="docutils literal notranslate"><span class="pre">building</span></code> parameter in the other excel sheets.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">efficiency</span> <span class="pre">from</span> <span class="pre">A</span> <span class="pre">to</span> <span class="pre">B</span></code> (integer)</dt><dd><p>Efficiency of energy transfer over the link from <code class="docutils literal notranslate"><span class="pre">buildingA</span></code> to <code class="docutils literal notranslate"><span class="pre">buildingB</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">efficiency</span> <span class="pre">from</span> <span class="pre">B</span> <span class="pre">to</span> <span class="pre">A</span></code> (integer)</dt><dd><p>Efficiency of energy transfer over the link from <code class="docutils literal notranslate"><span class="pre">buildingB</span></code> to <code class="docutils literal notranslate"><span class="pre">buildingA</span></code>.</p>
+</dd>
+</dl>
+</section>
+<section id="csv-data">
+<h3>csv_data<a class="headerlink" href="#csv-data" title="Permalink to this headline"></a></h3>
+<p>The paths to CSV files containing demand profiles, weather data and electricity impact data are to be given in this
+excel sheet. <code class="docutils literal notranslate"><span class="pre">INFO</span></code> gives further information about each row.</p>
+</section>
+<section id="grid-connection">
+<h3>grid_connection<a class="headerlink" href="#grid-connection" title="Permalink to this headline"></a></h3>
+<p>This excel sheet should not be modified by the users. It defines the separation of the flows from electricity grid and
+the produced electricity flows to make sure that the grid electricity is not stored in batteries.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getting_started.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="optimizing_the_energy_network.html" class="btn btn-neutral float-right" title="Optimizing the energy network" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022  .... .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

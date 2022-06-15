@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optihood.Run &mdash; pytrnsys  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> pytrnsys
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/defining_an_energy_network.html">Defining an energy network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/optimizing_the_energy_network.html">Optimizing the energy network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/processing_results.html">Processing results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/advanced_under_development_features.html">Advanced under-development features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Code Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pytrnsys</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>optihood.Run</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for optihood.Run</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">optihood.loadProfilesResidential</span> <span class="k">as</span> <span class="nn">Resi</span>
+<span class="kn">import</span> <span class="nn">optihood.shoppingmall</span> <span class="k">as</span> <span class="nn">Shop</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">plt</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="createProfiles"><a class="viewcode-back" href="../../optihood.html#optihood.Run.createProfiles">[docs]</a><span class="k">def</span> <span class="nf">createProfiles</span><span class="p">(</span><span class="n">profilesCreation</span><span class="p">,</span> <span class="n">inputFilePath</span><span class="p">,</span> <span class="n">inputfileName</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">profilesCreation</span><span class="p">:</span>
+        <span class="n">residentialBuildings</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">inputFilePath</span><span class="p">,</span> <span class="n">inputfileName</span><span class="p">),</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;residential&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">residentialBuildings</span><span class="p">)):</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">residentialBuildings</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">building</span> <span class="o">=</span> <span class="n">Resi</span><span class="o">.</span><span class="n">Residential</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+            <span class="n">building</span><span class="o">.</span><span class="n">create_profile</span><span class="p">()</span>
+        <span class="n">shoppingMalls</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">inputFilePath</span><span class="p">,</span> <span class="n">inputfileName</span><span class="p">),</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;mall&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shoppingMalls</span><span class="p">)):</span>
+            <span class="n">mall</span> <span class="o">=</span> <span class="n">shoppingMalls</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">building</span> <span class="o">=</span> <span class="n">Shop</span><span class="o">.</span><span class="n">Shopping</span><span class="p">(</span><span class="n">mall</span><span class="p">)</span>
+            <span class="n">building</span><span class="o">.</span><span class="n">create_profile</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="optimizeNetwork"><a class="viewcode-back" href="../../optihood.html#optihood.Run.optimizeNetwork">[docs]</a><span class="k">def</span> <span class="nf">optimizeNetwork</span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">envImpactlimit</span><span class="p">,</span> <span class="n">clusterSize</span><span class="p">,</span> <span class="n">optimizationOptions</span><span class="p">,</span> <span class="n">resultFilePath</span><span class="p">,</span> <span class="n">numberOfBuildings</span><span class="p">,</span> <span class="n">optMode</span><span class="p">):</span>
+    <span class="n">limit</span><span class="p">,</span> <span class="n">capacitiesTransformers</span><span class="p">,</span> <span class="n">capacitiesStorages</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="s1">&#39;gurobi&#39;</span><span class="p">,</span> <span class="n">envImpactlimit</span><span class="o">=</span><span class="n">envImpactlimit</span><span class="p">,</span>
+                                                                         <span class="n">clusterSize</span><span class="o">=</span><span class="n">clusterSize</span><span class="p">,</span>
+                                                                         <span class="n">options</span><span class="o">=</span><span class="n">optimizationOptions</span><span class="p">)</span>
+    <span class="n">network</span><span class="o">.</span><span class="n">printInvestedCapacities</span><span class="p">(</span><span class="n">capacitiesTransformers</span><span class="p">,</span> <span class="n">capacitiesStorages</span><span class="p">)</span>
+    <span class="n">network</span><span class="o">.</span><span class="n">printCosts</span><span class="p">()</span>
+    <span class="n">network</span><span class="o">.</span><span class="n">printEnvImpacts</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">resultFilePath</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">resultFilePath</span><span class="p">)</span>
+    <span class="n">network</span><span class="o">.</span><span class="n">exportToExcel</span><span class="p">(</span>
+        <span class="n">resultFilePath</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">results&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">numberOfBuildings</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">optMode</span> <span class="o">+</span> <span class="s1">&#39;.xlsx&#39;</span><span class="p">)</span>
+    <span class="n">costs</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">getTotalCosts</span><span class="p">()</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">printMetaresults</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">limit</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">limit</span><span class="p">,</span> <span class="n">costs</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="plotParetoFront"><a class="viewcode-back" href="../../optihood.html#optihood.Run.plotParetoFront">[docs]</a><span class="k">def</span> <span class="nf">plotParetoFront</span><span class="p">(</span><span class="n">costsList</span><span class="p">,</span> <span class="n">envList</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">costsList</span><span class="p">,</span> <span class="n">envList</span><span class="p">,</span> <span class="s1">&#39;o-.&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Costs (CHF)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Emissions (kgCO2eq)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Pareto-front&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;ParetoFront.png&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Costs : (CHF)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">costsList</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Emissions : (kgCO2)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">envList</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="optimization"><a class="viewcode-back" href="../../optihood.html#optihood.Run.optimization">[docs]</a><span class="k">def</span> <span class="nf">optimization</span><span class="p">(</span><span class="n">numberOfBuildings</span><span class="p">,</span> <span class="n">numberOfOptimizations</span><span class="p">,</span> <span class="n">optMode</span><span class="p">,</span> <span class="n">cluster</span><span class="p">):</span>
+    <span class="n">inputFilePath</span> <span class="o">=</span> <span class="s2">&quot;..\data\excels</span><span class="se">\\</span><span class="s2">&quot;</span>
+    <span class="n">resultFilePath</span> <span class="o">=</span> <span class="s2">&quot;..\data\Results&quot;</span>
+    <span class="n">inputfileName</span> <span class="o">=</span> <span class="s2">&quot;scenario&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">numberOfBuildings</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.xls&quot;</span>
+    <span class="k">if</span> <span class="n">optMode</span> <span class="o">==</span> <span class="s2">&quot;indiv&quot;</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">energy_network</span> <span class="kn">import</span> <span class="n">EnergyNetworkIndiv</span> <span class="k">as</span> <span class="n">EnergyNetwork</span>
+    <span class="k">elif</span> <span class="n">optMode</span> <span class="o">==</span> <span class="s2">&quot;group&quot;</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">energy_network</span> <span class="kn">import</span> <span class="n">EnergyNetworkGroup</span> <span class="k">as</span> <span class="n">EnergyNetwork</span>
+    <span class="k">if</span> <span class="n">cluster</span><span class="p">:</span>
+        <span class="n">clusterSize</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;2018-07-30&quot;</span><span class="p">:</span> <span class="mi">26</span><span class="p">,</span>
+                       <span class="s2">&quot;2018-02-03&quot;</span><span class="p">:</span> <span class="mi">44</span><span class="p">,</span>
+                       <span class="s2">&quot;2018-07-23&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
+                       <span class="s2">&quot;2018-09-18&quot;</span><span class="p">:</span> <span class="mi">28</span><span class="p">,</span>
+                       <span class="s2">&quot;2018-04-15&quot;</span><span class="p">:</span> <span class="mi">22</span><span class="p">,</span>
+                       <span class="s2">&quot;2018-10-01&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
+                       <span class="s2">&quot;2018-11-04&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
+                       <span class="s2">&quot;2018-10-11&quot;</span><span class="p">:</span> <span class="mi">37</span><span class="p">,</span>
+                       <span class="s2">&quot;2018-01-24&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+                       <span class="s2">&quot;2018-08-18&quot;</span><span class="p">:</span> <span class="mi">26</span><span class="p">,</span>
+                       <span class="s2">&quot;2018-05-28&quot;</span><span class="p">:</span> <span class="mi">23</span><span class="p">,</span>
+                       <span class="s2">&quot;2018-02-06&quot;</span><span class="p">:</span> <span class="mi">48</span><span class="p">}</span>
+        <span class="n">timePeriod</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;2018-01-01 00:00:00&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;2018-01-12 23:00:00&quot;</span><span class="p">]</span>  <span class="c1"># 1 Jan is a specific case (for elec_impact), so we start from 2</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">clusterSize</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">timePeriod</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;2018-01-01 00:00:00&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;2018-12-31 23:00:00&quot;</span><span class="p">]</span>
+    <span class="n">optimizationOptions</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;gurobi&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;BarConvTol&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+            <span class="c1"># The barrier solver terminates when the relative difference between the primal and dual objective values is less than the specified tolerance (with a GRB_OPTIMAL status)</span>
+            <span class="c1"># &quot;NonConvex&quot;:2, # when 0 error is being sent when non-convex, 1 when non-convex funktion could not be linearized, 2 bilinear form and spacial branching for non-convex</span>
+            <span class="s2">&quot;OptimalityTol&quot;</span><span class="p">:</span> <span class="mf">1e-4</span><span class="p">,</span>
+            <span class="c1"># Reduced costs must all be smaller than OptimalityTol in the improving direction in order for a model to be declared optimal</span>
+            <span class="c1"># &quot;PoolGap&quot;:1  #Determines how large a (relative) gap to tolerate in stored solutions. When this parameter is set to a non-default value, solutions whose objective values exceed that of the best known solution by more than the specified (relative) gap are discarded.</span>
+            <span class="s2">&quot;MIPGap&quot;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">,</span>
+            <span class="c1"># Relative Tolerance between the best integer objective and de objective of the best node remaining</span>
+            <span class="s2">&quot;MIPFocus&quot;</span><span class="p">:</span> <span class="mi">2</span>
+            <span class="c1"># 1 feasible solution quickly. 2 proving optimality. 3 if the best objective bound is moving very slowly/focus on the bound</span>
+            <span class="c1"># &quot;Cutoff&quot;: #Indicates that you aren&#39;t interested in solutions whose objective values are worse than the specified value., could be dynamically be used in moo</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;CBC &quot;</span><span class="p">:</span> <span class="p">{</span>
+
+        <span class="p">},</span>
+        <span class="s2">&quot;GLPK&quot;</span><span class="p">:</span> <span class="p">{</span>
+
+        <span class="p">}}</span>
+
+    <span class="k">if</span> <span class="n">clusterSize</span><span class="p">:</span>
+        <span class="n">optimizationOptions</span><span class="p">[</span><span class="s1">&#39;gurobi&#39;</span><span class="p">][</span>
+            <span class="s1">&#39;MIPGap&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e-4</span>  <span class="c1"># If clusterSize is set, reduce the MIP Gap parameter in optimizationOptions to 1e-4 (else 100 is acceptable)</span>
+    <span class="n">optimizationInstanceNumber</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">costsList</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">envList</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># -----------------------------------------------------------------------------#</span>
+    <span class="c1">## First optimization ##</span>
+    <span class="c1"># -----------------------------------------------------------------------------#</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;******************</span><span class="se">\n</span><span class="s2">OPTIMIZATION &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">optimizationInstanceNumber</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">******************&quot;</span><span class="p">)</span>
+    <span class="n">network</span> <span class="o">=</span> <span class="n">EnergyNetwork</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">timePeriod</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">timePeriod</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;60min&quot;</span><span class="p">),</span> <span class="n">tSH</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span> <span class="n">tDHW</span><span class="o">=</span><span class="mi">55</span><span class="p">)</span>
+    <span class="n">network</span><span class="o">.</span><span class="n">setFromExcel</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">inputFilePath</span><span class="p">,</span> <span class="n">inputfileName</span><span class="p">),</span> <span class="n">numberOfBuildings</span><span class="p">,</span> <span class="n">clusterSize</span><span class="p">,</span> <span class="n">opt</span><span class="o">=</span><span class="s2">&quot;costs&quot;</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">max_env</span><span class="p">,</span> <span class="n">costs</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span> <span class="o">=</span> <span class="n">optimizeNetwork</span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="n">optimizationInstanceNumber</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">,</span> <span class="n">clusterSize</span><span class="p">,</span> <span class="n">optimizationOptions</span><span class="p">,</span> <span class="n">resultFilePath</span><span class="p">,</span> <span class="n">numberOfBuildings</span><span class="p">,</span> <span class="n">optMode</span><span class="p">)</span>
+    <span class="n">optimizationInstanceNumber</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">costsListLast</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;objective&#39;</span><span class="p">]</span>
+    <span class="n">envListLast</span> <span class="o">=</span> <span class="n">max_env</span>
+    <span class="c1"># -----------------------------------------------------------------------------#</span>
+    <span class="c1">## Second optimization ##</span>
+    <span class="c1"># -----------------------------------------------------------------------------#</span>
+    <span class="k">if</span> <span class="n">numberOfOptimizations</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;******************</span><span class="se">\n</span><span class="s2">OPTIMIZATION &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">optimizationInstanceNumber</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">******************&quot;</span><span class="p">)</span>
+        <span class="n">network</span> <span class="o">=</span> <span class="n">EnergyNetwork</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">timePeriod</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">timePeriod</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;60min&quot;</span><span class="p">),</span> <span class="n">tSH</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span> <span class="n">tDHW</span><span class="o">=</span><span class="mi">55</span><span class="p">)</span>
+        <span class="n">network</span><span class="o">.</span><span class="n">setFromExcel</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">inputFilePath</span><span class="p">,</span> <span class="n">inputfileName</span><span class="p">),</span> <span class="n">numberOfBuildings</span><span class="p">,</span> <span class="n">clusterSize</span><span class="p">,</span> <span class="n">opt</span><span class="o">=</span><span class="s2">&quot;env&quot;</span><span class="p">)</span>
+        <span class="p">(</span><span class="n">min_env</span><span class="p">,</span> <span class="n">costs</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span> <span class="o">=</span> <span class="n">optimizeNetwork</span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="n">optimizationInstanceNumber</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">,</span> <span class="n">clusterSize</span><span class="p">,</span> <span class="n">optimizationOptions</span><span class="p">,</span> <span class="n">resultFilePath</span><span class="p">,</span> <span class="n">numberOfBuildings</span><span class="p">,</span> <span class="n">optMode</span><span class="p">)</span>
+        <span class="n">optimizationInstanceNumber</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">costsList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">costs</span><span class="p">)</span>
+        <span class="n">envList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">min_env</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s1">&#39;Each iteration will keep emissions lower than some values between femissions_min and femissions_max, so [&#39;</span>
+            <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">min_env</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">max_env</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;]&#39;</span><span class="p">)</span>
+
+        <span class="c1"># -----------------------------------------------------------------------------#</span>
+        <span class="c1">## MOO steps between Cost-Optimized and Env-Optimized ##</span>
+        <span class="c1"># -----------------------------------------------------------------------------#</span>
+        <span class="n">steps</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">min_env</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">max_env</span><span class="p">),</span> <span class="nb">int</span><span class="p">((</span><span class="n">max_env</span> <span class="o">-</span> <span class="n">min_env</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">numberOfOptimizations</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))))</span>
+        <span class="k">for</span> <span class="n">envCost</span> <span class="ow">in</span> <span class="n">steps</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">numberOfOptimizations</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;******************</span><span class="se">\n</span><span class="s2">OPTIMIZATION &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">optimizationInstanceNumber</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">******************&quot;</span><span class="p">)</span>
+            <span class="n">network</span> <span class="o">=</span> <span class="n">EnergyNetwork</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">timePeriod</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">timePeriod</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;60min&quot;</span><span class="p">),</span> <span class="n">tSH</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span>
+                                    <span class="n">tDHW</span><span class="o">=</span><span class="mi">55</span><span class="p">)</span>
+            <span class="n">network</span><span class="o">.</span><span class="n">setFromExcel</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">inputFilePath</span><span class="p">,</span> <span class="n">inputfileName</span><span class="p">),</span> <span class="n">numberOfBuildings</span><span class="p">,</span> <span class="n">clusterSize</span><span class="p">,</span>
+                                 <span class="n">opt</span><span class="o">=</span><span class="s2">&quot;costs&quot;</span><span class="p">)</span>
+            <span class="p">(</span><span class="n">limit</span><span class="p">,</span> <span class="n">costs</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span> <span class="o">=</span> <span class="n">optimizeNetwork</span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="n">optimizationInstanceNumber</span><span class="p">,</span> <span class="n">envCost</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">clusterSize</span><span class="p">,</span> <span class="n">optimizationOptions</span><span class="p">,</span> <span class="n">resultFilePath</span><span class="p">,</span> <span class="n">numberOfBuildings</span><span class="p">,</span> <span class="n">optMode</span><span class="p">)</span>
+            <span class="n">costsList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">meta</span><span class="p">[</span><span class="s1">&#39;objective&#39;</span><span class="p">])</span>
+            <span class="n">envList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">limit</span><span class="p">)</span>
+            <span class="n">optimizationInstanceNumber</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">costsList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">costsListLast</span><span class="p">)</span>
+    <span class="n">envList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">envListLast</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">costsList</span><span class="p">,</span> <span class="n">envList</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, Dani Carbonell, Mattia Battaglia, Jeremias Schmidli, Maike Schubert, Martin Neugebauer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

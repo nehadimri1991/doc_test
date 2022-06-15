@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getting Started &mdash; optihood  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Defining an energy network" href="defining_an_energy_network.html" />
+    <link rel="prev" title="optihood" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> optihood
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prerequesites">Prerequesites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-up-your-optimization-model">Setting up your optimization model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="defining_an_energy_network.html">Defining an energy network</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="defining_an_energy_network.html">Defining an energy network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="optimizing_the_energy_network.html">Optimizing the energy network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="processing_results.html">Processing results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced_under_development_features.html">Advanced under-development features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">Code Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">optihood</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Getting Started</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/guide/getting_started.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="getting-started">
+<span id="id1"></span><h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h1>
+<section id="prerequesites">
+<h2>Prerequesites<a class="headerlink" href="#prerequesites" title="Permalink to this headline"></a></h2>
+<p>In order to use optihood, the following prerequisites are needed on your machine:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.python.org/downloads/">Python 3.9</a> is installed.</p></li>
+<li><p>An active <a class="reference external" href="https://github.com/">Github</a> account to clone the repo.</p></li>
+<li><p>A solver is installed. <a class="reference external" href="https://www.gurobi.com/resource/parallelism-linear-mixed-integer-programming/">Gurobi solver</a> is recommended, although other solvers like CBC, GLPK, Cplex could also be used.</p></li>
+</ul>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h2>
+<p>As of now, optihood is available as an open source code and needs to be installed from source. Please follow the
+instructions mentioned below to complete the installation. The commands given below are suited for the Windows platform
+and should be run from within the optihood directory in a Command Prompt. For other platforms, similar alternative
+commands could be used.</p>
+<ol class="arabic">
+<li><p>Clone the optihood repo to a folder called ‘optihood’ on your local machine:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">SPF</span><span class="o">-</span><span class="n">OST</span><span class="o">/</span><span class="n">OptiHood</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+</li>
+<li><p>All the next commands should be run from within the optihood folder. Create a virtual environment and activate it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">py</span> <span class="o">-</span><span class="mf">3.9</span> <span class="o">-</span><span class="n">m</span> <span class="n">venv</span> <span class="n">venv</span>
+<span class="n">venv</span>\<span class="n">Scripts</span>\<span class="n">activate</span>
+</pre></div>
+</div>
+</li>
+<li><p>Install the requirements into the created virtual environment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">wheel</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</li>
+<li><p>To test whether the installation worked well, you could run a <a class="reference external" href="https://github.com/SPF-OST/OptiHood/tree/main/data/examples/">basic example</a>.</p></li>
+</ol>
+</section>
+<section id="setting-up-your-optimization-model">
+<h2>Setting up your optimization model<a class="headerlink" href="#setting-up-your-optimization-model" title="Permalink to this headline"></a></h2>
+<p>Optihood offers a several functionalities to define an energy network, optimize it and visualize the results, which
+provides the user with a complete framework for optimization without the need to code by hand. You could learn more
+about using optihood by walking through the remaining sections of the documentation:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="defining_an_energy_network.html">Defining an energy network</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="defining_an_energy_network.html#energynetworkclass">EnergyNetworkClass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="defining_an_energy_network.html#input-excel-file">Input Excel File</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="defining_an_energy_network.html#buses">buses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="defining_an_energy_network.html#commodity-sources">commodity_sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="defining_an_energy_network.html#demand">demand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="defining_an_energy_network.html#transformers">transformers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="defining_an_energy_network.html#solar">solar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="defining_an_energy_network.html#storages">storages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="defining_an_energy_network.html#stratified-storage">stratified_storage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="defining_an_energy_network.html#links">links</a></li>
+<li class="toctree-l3"><a class="reference internal" href="defining_an_energy_network.html#csv-data">csv_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="defining_an_energy_network.html#grid-connection">grid_connection</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="optihood" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="defining_an_energy_network.html" class="btn btn-neutral float-right" title="Defining an energy network" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022  .... .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

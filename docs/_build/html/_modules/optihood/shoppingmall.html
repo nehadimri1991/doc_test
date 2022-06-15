@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optihood.shoppingmall &mdash; pytrnsys  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> pytrnsys
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/defining_an_energy_network.html">Defining an energy network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/optimizing_the_energy_network.html">Optimizing the energy network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/processing_results.html">Processing results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/advanced_under_development_features.html">Advanced under-development features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Code Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pytrnsys</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>optihood.shoppingmall</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for optihood.shoppingmall</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+
+<div class="viewcode-block" id="Shopping"><a class="viewcode-back" href="../../optihood.html#optihood.shoppingmall.Shopping">[docs]</a><span class="k">class</span> <span class="nc">Shopping</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    docstring to be completed</span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">outputFilePath</span> <span class="o">=</span> <span class="s2">&quot;..\data\excels\demand_profiles</span><span class="se">\\</span><span class="s2">&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+        <span class="c1"># label of the building</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;number&quot;</span><span class="p">])</span>
+
+        <span class="c1"># leasable surface</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">S</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;surface&quot;</span><span class="p">]</span>
+        
+        <span class="c1"># proportion of food shop</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">f_food</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;food_proportion&quot;</span><span class="p">]</span>
+        
+        <span class="c1"># specific annual consumption</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spE_fri</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;refrigeration_consumption&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spE_light</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;light_consumption&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spE_hvac</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;hvac_consumption&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spE_othr</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;other_consumption&quot;</span><span class="p">]</span>
+        
+        <span class="c1"># Opening hours (from - to)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frm</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;opening_hour&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">to</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;closing_hour&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">days</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;days_opened&quot;</span><span class="p">]</span>
+
+        <span class="c1"># Annual energy consumptions (kWh/an) [1][2]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">E_fri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spE_fri</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">f_food</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">E_light</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spE_light</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">E_hvac</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spE_hvac</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">E_othr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spE_othr</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span>
+
+<div class="viewcode-block" id="Shopping.info"><a class="viewcode-back" href="../../optihood.html#optihood.shoppingmall.Shopping.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the leasable surface is </span><span class="si">%g</span><span class="s2"> m^2&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the fraction of food store is </span><span class="si">%g</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">f_food</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the specific energie demand for refrigeration is </span><span class="si">%g</span><span class="s2"> kWh/m^2&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">spE_fri</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the specific energie demand for lighting is </span><span class="si">%g</span><span class="s2"> kWh/m^2&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">spE_light</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the specific energie demand for HVAC is </span><span class="si">%g</span><span class="s2"> kWh/m^2&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">spE_hvac</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the specific energie demand for other usage is </span><span class="si">%g</span><span class="s2"> kWh/m^2&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">spE_othr</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;open </span><span class="si">%g</span><span class="s2"> day from </span><span class="si">%g</span><span class="s2">h to </span><span class="si">%g</span><span class="s2">h&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">days</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">to</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Shopping.create_profile"><a class="viewcode-back" href="../../optihood.html#optihood.shoppingmall.Shopping.create_profile">[docs]</a>    <span class="k">def</span> <span class="nf">create_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        create a dataframe in the class object shop</span>
+<span class="sd">        save dataframe to csv file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Refrigeration mean annual power (day/night together) </span>
+        <span class="n">p_fri_mean</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_fri</span> <span class="o">/</span> <span class="mi">8760</span> <span class="c1">#kW</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">365</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">365</span><span class="p">,</span><span class="mi">365</span><span class="p">)</span>
+        <span class="c1"># Annual profile of mean refrigeration power [3]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">P</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_fri_mean</span> <span class="o">*</span> <span class="p">(</span> <span class="mi">1</span> <span class="o">-</span> <span class="mf">0.22</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span> <span class="p">(</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">n</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="mi">365</span> <span class="p">))</span>
+            
+<span class="c1">#       plt.plot(self.P)</span>
+
+
+        <span class="c1"># 1 year hourly profile based on Flexynets opening hours: 8h/20h </span>
+        <span class="n">p_tot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">8760</span><span class="p">,</span><span class="mi">8760</span><span class="p">)</span>
+        <span class="n">p_fri</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">8760</span><span class="p">,</span><span class="mi">8760</span><span class="p">)</span>
+        <span class="n">p_light</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">8760</span><span class="p">,</span><span class="mi">8760</span><span class="p">)</span>
+        <span class="n">p_hvac</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">8760</span><span class="p">,</span><span class="mi">8760</span><span class="p">)</span>
+        <span class="n">p_othr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">8760</span><span class="p">,</span><span class="mi">8760</span><span class="p">)</span>
+        <span class="n">hours</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">8760</span><span class="p">,</span><span class="mi">8760</span><span class="p">)</span>
+
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> 
+        <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">T</span> <span class="ow">in</span> <span class="n">p_tot</span><span class="p">:</span>
+            <span class="n">H</span> <span class="o">=</span> <span class="n">T</span> <span class="o">-</span> <span class="n">k</span> <span class="o">*</span> <span class="mi">24</span>
+        
+            <span class="c1"># Night / Day / Week-end</span>
+            <span class="k">if</span> <span class="n">H</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">frm</span> <span class="ow">or</span> <span class="n">H</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">to</span> <span class="ow">or</span> <span class="n">k</span> <span class="o">%</span> <span class="mi">7</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">days</span><span class="p">:</span>
+                <span class="n">p_fri</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.6</span><span class="o">/</span><span class="mf">1.8</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">P</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>                   <span class="c1"># kW</span>
+                <span class="n">p_light</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>                              <span class="c1"># kW</span>
+                <span class="n">p_hvac</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">37.5</span><span class="o">/</span><span class="mf">137.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_hvac</span> <span class="o">/</span> <span class="p">(</span><span class="mi">24</span><span class="o">*</span><span class="mi">365</span><span class="p">)</span> <span class="c1"># kW</span>
+                <span class="n">p_othr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">p_tot</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_fri</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">p_light</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">p_hvac</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">p_othr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">p_fri</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span><span class="o">/</span><span class="mf">1.8</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">P</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>                     <span class="c1"># kW</span>
+                <span class="n">p_light</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_light</span> <span class="o">/</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">to</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">frm</span><span class="p">)</span><span class="o">*</span><span class="mi">365</span><span class="p">)</span>       <span class="c1"># kW</span>
+                <span class="n">p_hvac</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span><span class="o">/</span><span class="mf">137.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_hvac</span> <span class="o">/</span> <span class="p">(</span><span class="mi">24</span><span class="o">*</span><span class="mi">365</span><span class="p">)</span>  <span class="c1"># kW</span>
+                <span class="n">p_othr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_othr</span> <span class="o">/</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">to</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">frm</span><span class="p">)</span><span class="o">*</span><span class="mi">365</span><span class="p">)</span>
+                <span class="n">p_tot</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_fri</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">p_light</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">p_hvac</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">p_othr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">hours</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">H</span>
+            <span class="n">K</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">K</span> <span class="o">//</span> <span class="mi">24</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+        <span class="c1"># put profil in dataframe</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s2">&quot;2018-01-01 00:00:00&quot;</span><span class="p">,</span> <span class="s2">&quot;2018-12-31 23:00:00&quot;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;60min&quot;</span><span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;electricityDemand&#39;</span><span class="p">:</span> <span class="n">p_fri</span><span class="o">/</span><span class="mi">3</span> <span class="o">+</span> <span class="n">p_light</span> <span class="o">+</span> <span class="n">p_othr</span><span class="p">,</span> <span class="s1">&#39;spaceHeatingDemand&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;domesticHotWaterDemand&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">}</span>
+        <span class="n">profile</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+        <span class="n">profile</span> <span class="o">=</span> <span class="n">profile</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">profile</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;timestamp&#39;</span>
+        
+        <span class="c1"># save to csv</span>
+        <span class="n">outputFileName</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s2">_mall_profile.csv&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputFilePath</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputFilePath</span><span class="p">)</span>
+        <span class="n">profile</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputFilePath</span><span class="p">,</span> <span class="n">outputFileName</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">)</span></div></div>
+        
+        
+        
+        
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, Dani Carbonell, Mattia Battaglia, Jeremias Schmidli, Maike Schubert, Martin Neugebauer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
