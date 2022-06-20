@@ -125,11 +125,29 @@ look at the documentation of the respective solver.</p>
 </section>
 <section id="single-objective-optimization">
 <h2>Single-objective optimization<a class="headerlink" href="#single-objective-optimization" title="Permalink to this headline"></a></h2>
-<p>To be completed</p>
+<p>Single-objective optimization can be performed easily by calling the ‘optimize’ function of the EnergyNetworkIndiv or
+EnergyNetworkGroup class once the energy network has been defined. The optimization problem and the energy network should
+be defined using the input excel file. The target for single-objective optimization could be specified at this stage as
+a parameter passed in the ‘setFromExcel’ function:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">network</span><span class="o">.</span><span class="n">setFromExcel</span><span class="p">(</span><span class="n">inputExcelFilePath</span><span class="p">,</span> <span class="n">numberOfBuildings</span><span class="p">,</span> <span class="n">clusterSize</span><span class="p">,</span> <span class="n">opt</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The parameter ‘opt’ could be set to either ‘costs’ or ‘env’ for optimization based on cost or environmental impact,
+respectively. The respective data related to costs/environmental impact of the energy resources and the available energy
+conversion and storage technologies should be given in the appropriate sections of the input excel file.</p>
+<p>For more details on the ‘setFromExcel’ function and the structure of the input excel file, have a look at <a class="reference internal" href="defining_an_energy_network.html#defining-an-energy-network"><span class="std std-ref">Defining an energy network</span></a>.</p>
 </section>
 <section id="multi-objective-optimization">
 <h2>Multi-objective optimization<a class="headerlink" href="#multi-objective-optimization" title="Permalink to this headline"></a></h2>
-<p>To be completed</p>
+<p>Multi-objective optimization can be performed as multiple single objective optimizations. At present, the two supported
+target objectives are ‘costs’ (total cost) and ‘env’ (environmental emission). The first optimization would then be for
+cost minimization and the second for the minimization of emissions, which would give the two extremes i.e. cost-optimum
+solution and environmental optimum solution. And then, more solutions are obtained between the cost and environmental
+optimum, these optimizations are a minimization of the cost subject to a constraint on the environmental criteria (epsilon
+constraint method). The speed of optimization would be greatly affected by the number of optimizations to be performed.</p>
+<p>The results from multi-objective optimization can be visualized using a pareto front.</p>
+<a class="reference internal image-reference" href="guide/guide/resources/pareto.png"><img alt="pareto" src="guide/guide/resources/pareto.png" style="width: 400px;" /></a>
+<p>For more information on how to work with multi-objective optimization go through the <a class="reference external" href="https://github.com/SPF-OST/optihood/blob/main/data/examples/multi_objective_optimization.py">example</a>.</p>
 </section>
 </section>
 

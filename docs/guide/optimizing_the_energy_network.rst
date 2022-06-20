@@ -55,10 +55,35 @@ look at the documentation of the respective solver.
 Single-objective optimization
 -----------------------------
 
-To be completed
+Single-objective optimization can be performed easily by calling the 'optimize' function of the EnergyNetworkIndiv or
+EnergyNetworkGroup class once the energy network has been defined. The optimization problem and the energy network should
+be defined using the input excel file. The target for single-objective optimization could be specified at this stage as
+a parameter passed in the 'setFromExcel' function::
+
+   network.setFromExcel(inputExcelFilePath, numberOfBuildings, clusterSize, opt)
+
+The parameter 'opt' could be set to either 'costs' or 'env' for optimization based on cost or environmental impact,
+respectively. The respective data related to costs/environmental impact of the energy resources and the available energy
+conversion and storage technologies should be given in the appropriate sections of the input excel file.
+
+For more details on the 'setFromExcel' function and the structure of the input excel file, have a look at :ref:`defining_an_energy_network`.
 
 Multi-objective optimization
 ----------------------------
 
-To be completed
+Multi-objective optimization can be performed as multiple single objective optimizations. At present, the two supported
+target objectives are 'costs' (total cost) and 'env' (environmental emission). The first optimization would then be for
+cost minimization and the second for the minimization of emissions, which would give the two extremes i.e. cost-optimum
+solution and environmental optimum solution. And then, more solutions are obtained between the cost and environmental
+optimum, these optimizations are a minimization of the cost subject to a constraint on the environmental criteria (epsilon
+constraint method). The speed of optimization would be greatly affected by the number of optimizations to be performed.
+
+The results from multi-objective optimization can be visualized using a pareto front.
+
+.. image:: ./guide/resources/pareto.png
+      :width: 400
+      :alt: pareto
+
+For more information on how to work with multi-objective optimization go through the `example <https://github.com/SPF-OST/optihood/blob/main/data/examples/multi_objective_optimization.py>`_.
+
 
