@@ -17,7 +17,7 @@ The optimization results can be saved into an excel file using the 'exportToExce
     # save results
     network.exportToExcel("results.xlsx")
 
-The absolute path of the results excel file should be specified in 'exportToExcel' function call.
+The absolute path of the results excel file should be specified in ``exportToExcel`` function call.
 
 Moreover, the following additional functions could be used to print some of the optimization results such as the capacities
 selected by the optimizer for different components, total cost and environmental impact of the energy network::
