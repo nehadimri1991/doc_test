@@ -7,10 +7,10 @@ Once the energy system has been defined as an object of the EnergyNetworkIndiv c
 and the model components (and parameters) have been set from the input excel file, the network object could then be
 optimized::
 
-    network.optimize(solver='gurobi',
-                     envImpactlimit=envImpactlimit,
-                     clusterSize=clusterSize,
-                     options=optimizationOptions)
+    envImpact, capacitiesTransformers, capacitiesStorages = network.optimize(solver='gurobi',
+                                                                           envImpactlimit=envImpactlimit,
+                                                                           clusterSize=clusterSize,
+                                                                           options=optimizationOptions)
 
 The first parameter solver specifies the name of solver to be used for optimization. 'solver' could take the values
 'gurobi', 'cbc', 'cplex' or 'glpk'. 'envImpactlimit' denotes the maximum limit for environmental impact. This parameter
@@ -18,7 +18,9 @@ becomes relevant in case of multi-objective optimization and would be described 
 optimization set this parameter to a significantly high value which would never be reached (For example: 10^6). 'clusterSize'
 is the parameter related to clustered days (if defined). This is an optional parameter and is required only if clustered
 days are used. 'options' specifies the command line parameters to be passed to the selected solver. This parameter is
-described further in the following section.
+described further in the following section. The 'optimize' function returns the environmental impact of the optimized energy
+model, the capacities selected for energy transformers (or converters such as CHP, heat pump, etc.) and for the storages
+in the optimized energy network model.
 
 Optimization options
 --------------------

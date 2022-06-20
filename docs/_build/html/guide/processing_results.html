@@ -76,13 +76,78 @@
              
   <section id="processing-results">
 <span id="id1"></span><h1>Processing results<a class="headerlink" href="#processing-results" title="Permalink to this headline"></a></h1>
+<p>Once the energy network has been optimized, the next step is to collect and visualize the results. The results can be saved
+into an excel file so that they could be analysed later without the need to perform optimization again.</p>
+<p>Moreover, optihood features several useful plotting methods for visualizing the selected technologies, detailed energy
+flows and energy balance across the network.</p>
 <section id="saving-the-results">
 <h2>Saving the results<a class="headerlink" href="#saving-the-results" title="Permalink to this headline"></a></h2>
-<p>to be completed</p>
+<p>The optimization results can be saved into an excel file using the ‘exportToExcel’ function of the EnergyNetwork class:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># save results</span>
+<span class="n">network</span><span class="o">.</span><span class="n">exportToExcel</span><span class="p">(</span><span class="s2">&quot;results.xlsx&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The absolute path of the results excel file should be specified in ‘exportToExcel’ function call.</p>
+<p>Moreover, the following additional functions could be used to print some of the optimization results such as the capacities
+selected by the optimizer for different components, total cost and environmental impact of the energy network:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">network</span><span class="o">.</span><span class="n">printInvestedCapacities</span><span class="p">(</span><span class="n">capacitiesTransformers</span><span class="p">,</span> <span class="n">capacitiesStorages</span><span class="p">)</span>
+<span class="n">network</span><span class="o">.</span><span class="n">printCosts</span><span class="p">()</span>
+<span class="n">network</span><span class="o">.</span><span class="n">printEnvImpacts</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>‘capacitiesTransformers’ and ‘capacitiesStorages’ are returned by the optimize function of the EnergyNetwork class (For
+more details look at <a class="reference internal" href="optimizing_the_energy_network.html#optimizing-the-energy-network"><span class="std std-ref">Optimizing the energy network</span></a>.).</p>
 </section>
 <section id="result-visualization">
 <h2>Result visualization<a class="headerlink" href="#result-visualization" title="Permalink to this headline"></a></h2>
-<p>to be completed</p>
+<p>The results can be visualized at different levels of detail, for example a sankey diagram of the energy network summarizes
+the capacities of the technologies selected and the annual energy flows between different components, while a detailed plot
+could be made for visualizing the hourly electricity flows to/from Building 1.</p>
+<p>To view the sankey diagram summarizing the optimization results, the plotting functions defined in optihood.plot_sankey
+should first be imported. ‘plot’ function could then be used to obtain the interactive sankey diagram:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># import plotting methods for Sankey</span>
+<span class="kn">import</span> <span class="nn">optihood.plot_sankey</span> <span class="k">as</span> <span class="nn">snk</span>
+
+<span class="o">...</span>
+
+<span class="n">numberOfBuildings</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="o">...</span>
+
+<span class="n">UseLabelDict</span> <span class="o">=</span> <span class="kc">True</span>     <span class="c1"># a dictionary defining the labels to be used for different flows</span>
+<span class="n">snk</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s2">&quot;results.xlsx&quot;</span><span class="p">,</span> <span class="s2">&quot;sankey.html&quot;</span><span class="p">,</span> <span class="n">numberOfBuildings</span><span class="p">,</span> <span class="n">UseLabelDict</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The ‘plot’ function requires four parameters: the absolute path (including filename) of the results excel file, filename for
+the sankey diagram, number of buildings and a boolean specifying whether or not the label dictionary should be used. The label
+dictionary is defined in <a class="reference external" href="https://github.com/SPF-OST/optihood/blob/main/optihood/labelDict.py">labelDict.py</a>. Note that
+if ‘useLabelDict’ is set to True, the label for each flow should be defined in labelDict.py, otherwise there will be an error.</p>
+<a class="reference internal image-reference" href="guide/guide/resources/sankey.png"><img alt="sankey" src="guide/guide/resources/sankey.png" style="width: 600px;" /></a>
+<p>The detailed energy flows can be visualized using the ‘plot_functions’ library of optihood:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># import the plot_functions library</span>
+<span class="kn">import</span> <span class="nn">optihood.plot_functions</span> <span class="k">as</span> <span class="nn">fnc</span>
+
+<span class="o">...</span>
+
+
+<span class="n">plotLevel</span> <span class="o">=</span> <span class="s2">&quot;allMonths&quot;</span>
+<span class="n">plotType</span> <span class="o">=</span> <span class="s2">&quot;bokeh&quot;</span>
+<span class="n">flowType</span> <span class="o">=</span> <span class="s2">&quot;electricity&quot;</span>
+
+<span class="n">fnc</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s2">&quot;results.xlsx&quot;</span><span class="p">,</span> <span class="n">figureFolderName</span><span class="p">,</span> <span class="n">plotLevel</span><span class="p">,</span> <span class="n">plotType</span><span class="p">,</span> <span class="n">flowType</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>optihood provides two types of detailed plots: interactive bokeh plots for visualizing the energy flows and the monthly
+balance plots to check the energy balance across each flow. Accordingly, plotType can be selected as either ‘bokeh’ or
+‘energy balance’. ‘plotLevel’ can be set to either “allMonths” (for the entire year) or a specific month (three letter
+abbreviation of the month, example: “Jan”, “Feb”, “Mar”, etc.) or a specific date in the format “YYYY-MM-DD”. Note that
+if the plotType is ‘energy balance’, the ‘plotLevel’ should be set to “allMonths” since the energy balance is made only
+at a monthly level. The interactive bokeh plots are illustrated at both hourly and daily resolutions. ‘flowType’ could be
+set to “all”, “electricity”, “space heat” or “domestic hot water” to plot the respective energy flow. ‘figureFolderName’ is
+the path of the folder where the figures should be saved.</p>
+<a class="reference internal image-reference" href="guide/guide/resources/bokeh_elec.png"><img alt="bokeh_elec" src="guide/guide/resources/bokeh_elec.png" style="width: 400px;" /></a>
+<p>Moreover, the monthly energy balance could be checked for each flow.</p>
+<a class="reference internal image-reference" href="guide/guide/resources/balance.png"><img alt="balance" src="guide/guide/resources/balance.png" style="width: 400px;" /></a>
 </section>
 </section>
 

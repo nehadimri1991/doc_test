@@ -80,10 +80,10 @@
 <p>Once the energy system has been defined as an object of the EnergyNetworkIndiv class or the EnergyNetworkGroup class
 and the model components (and parameters) have been set from the input excel file, the network object could then be
 optimized:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">network</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="s1">&#39;gurobi&#39;</span><span class="p">,</span>
-                 <span class="n">envImpactlimit</span><span class="o">=</span><span class="n">envImpactlimit</span><span class="p">,</span>
-                 <span class="n">clusterSize</span><span class="o">=</span><span class="n">clusterSize</span><span class="p">,</span>
-                 <span class="n">options</span><span class="o">=</span><span class="n">optimizationOptions</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">envImpact</span><span class="p">,</span> <span class="n">capacitiesTransformers</span><span class="p">,</span> <span class="n">capacitiesStorages</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="s1">&#39;gurobi&#39;</span><span class="p">,</span>
+                                                                       <span class="n">envImpactlimit</span><span class="o">=</span><span class="n">envImpactlimit</span><span class="p">,</span>
+                                                                       <span class="n">clusterSize</span><span class="o">=</span><span class="n">clusterSize</span><span class="p">,</span>
+                                                                       <span class="n">options</span><span class="o">=</span><span class="n">optimizationOptions</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The first parameter solver specifies the name of solver to be used for optimization. ‘solver’ could take the values
@@ -92,7 +92,9 @@ becomes relevant in case of multi-objective optimization and would be described 
 optimization set this parameter to a significantly high value which would never be reached (For example: 10^6). ‘clusterSize’
 is the parameter related to clustered days (if defined). This is an optional parameter and is required only if clustered
 days are used. ‘options’ specifies the command line parameters to be passed to the selected solver. This parameter is
-described further in the following section.</p>
+described further in the following section. The ‘optimize’ function returns the environmental impact of the optimized energy
+model, the capacities selected for energy transformers (or converters such as CHP, heat pump, etc.) and for the storages
+in the optimized energy network model.</p>
 <section id="optimization-options">
 <h2>Optimization options<a class="headerlink" href="#optimization-options" title="Permalink to this headline"></a></h2>
 <p>The ‘options’ parameter of the optimize function allows passing command line options to the solver. The optimization options
