@@ -82,7 +82,7 @@ constraint method). The speed of optimization would be greatly affected by the n
 
 The results from multi-objective optimization can be visualized using a pareto front.
 
-.. image:: ./guide/resources/pareto.png
+.. image:: ./resources/pareto.png
       :width: 400
       :alt: pareto
 
