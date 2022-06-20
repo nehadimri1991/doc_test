@@ -95,7 +95,33 @@ days are used. ‘options’ specifies the command line parameters to be passed 
 described further in the following section.</p>
 <section id="optimization-options">
 <h2>Optimization options<a class="headerlink" href="#optimization-options" title="Permalink to this headline"></a></h2>
-<p>To be completed</p>
+<p>The ‘options’ parameter of the optimize function allows passing command line options to the solver. The optimization options
+could be passed as a dictionary indexed by the solver name. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># solver specific command line options</span>
+<span class="n">optimizationOptions</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;gurobi&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;BarConvTol&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="c1"># The barrier solver terminates when the relative difference between the primal and dual objective values is less than the specified tolerance (with a GRB_OPTIMAL status)</span>
+        <span class="s2">&quot;OptimalityTol&quot;</span><span class="p">:</span> <span class="mf">1e-4</span><span class="p">,</span>
+        <span class="c1"># Reduced costs must all be smaller than OptimalityTol in the improving direction in order for a model to be declared optimal</span>
+        <span class="s2">&quot;MIPGap&quot;</span><span class="p">:</span> <span class="mf">1e-2</span><span class="p">,</span>
+        <span class="c1"># Relative Tolerance between the best integer objective and the objective of the best node remaining</span>
+        <span class="s2">&quot;MIPFocus&quot;</span><span class="p">:</span> <span class="mi">2</span>
+        <span class="c1"># 1 feasible solution quickly. 2 proving optimality. 3 if the best objective bound is moving very slowly/focus on the bound</span>
+        <span class="c1"># &quot;Cutoff&quot;: #Indicates that you aren&#39;t interested in solutions whose objective values are worse than the specified value., could be dynamically be used in moo</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;cbc&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;tee&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The options for a new solver could be added as a new item in this dictionary in the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">solver_name</span><span class="p">:{</span><span class="n">option_name</span><span class="p">:</span> <span class="n">option_value</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>where ‘solver_name’ specifies the name of the solver, ‘option_name’ and ‘option_value’ are the name and value, respectively
+of the command line option.</p>
+<p>For more details on the different command line options which could be passed to the solver, we recommend you to have a
+look at the documentation of the respective solver.</p>
 </section>
 <section id="single-objective-optimization">
 <h2>Single-objective optimization<a class="headerlink" href="#single-objective-optimization" title="Permalink to this headline"></a></h2>
