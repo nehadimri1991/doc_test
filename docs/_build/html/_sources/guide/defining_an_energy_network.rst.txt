@@ -95,7 +95,7 @@ commodity_sources
 This sheet defines the different commodity sources which serve as an energy input to the model. The parameters ``label``,
 ``active`` and ``building`` are analogous to the parameters described earlier for buses.
 
-.. image:: ./resources/input_excel_sources.png
+.. image:: ./resources/input_excel_sources.PNG
       :width: 600
       :alt: input_excel_sources
 
