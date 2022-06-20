@@ -55,7 +55,7 @@ is structured to defin different components, such as buses, storages and transfo
 connections between these components and the building to which they belong.
 
 .. image:: ./resources/input_excel_info.png
-      :width: 600
+      :width: 800
       :alt: input_excel_info
 
 A sample excel file for building the energy network model is given in the excels folder: `scenario.xls <https://github.com/SPF-OST/optihood/blob/main/data/excels/scenario.xls`_.
@@ -67,7 +67,7 @@ This excel sheet defines the buses used in the energy network. Buses define the 
 components. Each row of this excel sheet represents a bus node in the model.
 
 .. image:: ./resources/input_excel_buses.png
-      :width: 600
+      :width: 400
       :alt: input_excel_buses
 
 ``label`` (string)
@@ -116,7 +116,7 @@ The nodes related to the energy demand i.e. sink are defined in this sheet. The 
 ``building`` are analogous to the parameters described earlier for buses.
 
 .. image:: ./resources/input_excel_demand.png
-      :width: 600
+      :width: 800
       :alt: input_excel_demand
 
 ``from`` (string)
@@ -146,7 +146,7 @@ The nodes related to the energy conversion units (or transformers) such as CHP, 
 sheet. The parameters ``label``, ``active`` and ``building`` are analogous to the parameters described earlier for buses.
 
 .. image:: ./resources/input_excel_transformer.png
-      :width: 600
+      :width: 800
       :alt: input_excel_transformer
 
 ``from`` (string)
@@ -220,7 +220,7 @@ The parameters ``label``, ``active`` and ``building`` are analogous to the param
 the cost and environmental impact paramaters are described under transformers sheet.
 
 .. image:: ./resources/input_excel_solar.png
-      :width: 600
+      :width: 800
       :alt: input_excel_solar
 
 ``connect`` (string)
@@ -275,7 +275,7 @@ described in the transformers sheet section. ``capacity_min`` and ``capacity_max
 section.
 
 .. image:: ./resources/input_excel_storages.png
-      :width: 600
+      :width: 800
       :alt: input_excel_storages
 
 ``efficiency inflow`` (float)
@@ -331,7 +331,7 @@ The paths to CSV files containing demand profiles, weather data and electricity 
 excel sheet. ``INFO`` gives further information about each row.
 
 .. image:: ./resources/input_excel_profiles.png
-      :width: 600
+      :width: 500
       :alt: input_excel_profiles
 
 grid_connection
