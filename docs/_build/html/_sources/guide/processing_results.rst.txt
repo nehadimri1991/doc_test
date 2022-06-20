@@ -56,7 +56,7 @@ the sankey diagram, number of buildings and a boolean specifying whether or not 
 dictionary is defined in `labelDict.py <https://github.com/SPF-OST/optihood/blob/main/optihood/labelDict.py>`_. Note that
 if 'useLabelDict' is set to True, the label for each flow should be defined in labelDict.py, otherwise there will be an error.
 
-.. image:: ./guide/resources/sankey.png
+.. image:: ./resources/sankey.png
       :width: 600
       :alt: sankey
 
@@ -83,12 +83,12 @@ at a monthly level. The interactive bokeh plots are illustrated at both hourly a
 set to "all", "electricity", "space heat" or "domestic hot water" to plot the respective energy flow. 'figureFolderName' is
 the path of the folder where the figures should be saved.
 
-.. image:: ./guide/resources/bokeh_elec.png
+.. image:: ./resources/bokeh_elec.png
       :width: 400
       :alt: bokeh_elec
 
 Moreover, the monthly energy balance could be checked for each flow.
 
-.. image:: ./guide/resources/balance.png
+.. image:: ./resources/balance.png
       :width: 400
       :alt: balance
