@@ -15,11 +15,19 @@ can be defined easily using an excel file. Additionally, a variety of plotting m
 result visualization.
 
 The package was developed at the `SPF - Institute for Solar Technology <https://www.spf.ch/>`_ at the `OST - Eastern
-Switzerland University of Applied Sciences <https://www.ost.ch/>`_.
+Switzerland University of Applied Sciences <https://www.ost.ch/>`_ and `Haute Ecole d'Ingénierie et de Gestion du Canton Vaud <https://heig-vd.ch/>`_.
 
-.. image:: ./guide/resources/logos.svg
-      :width: 600
-      :alt: logos
+.. image:: ./guide/resources/spf_logos.svg
+      :width: 500
+      :alt: spf_logos
+
+.. image:: ./guide/resources/heig_logo.svg
+      :width: 200
+      :scale: 40 %
+      :alt: heig_logo
+      :align: right
+
+
 
 Table of contents
 =================
@@ -46,3 +54,9 @@ Developers
 
 - SPF Institute for Solar Technology, Rapperswil, Switzerland
 - HEIG VD, Yverdon-les-Bains, Switzerland
+
+Acknowledgements
+^^^^^^^^^^^^^^^^
+This framework was created in 2021 and made open-source in 2022. We would like to thank the Swiss Federal Office Of Energy
+(SFOE) for the support and funding received in the projects OptimEase and SolHood which allowed us to spend efforts in
+developing and sharing the code and becoming a part of the open-source community.
