@@ -38,7 +38,19 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="getting_started.html">Getting Started</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#prerequesites">Prerequesites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#installation">Installation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="getting_started.html#setting-up-your-optimization-model">Setting up your optimization model</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Defining an energy network</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#energynetworkclass">EnergyNetworkClass</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#input-excel-file">Input Excel File</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Defining an energy network</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#energynetworkclass">EnergyNetworkClass</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#input-excel-file">Input Excel File</a><ul>
@@ -50,7 +62,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#storages">storages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#stratified-storage">stratified_storage</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#links">links</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#csv-data">csv_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#profiles">profiles</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#grid-connection">grid_connection</a></li>
 </ul>
 </li>
@@ -117,15 +129,15 @@ optimization model. The Datetime index could be defined using date_range() in pa
 </div>
 <p>The second and the third parameters tSH and tDHW define the temperatures for space heating and domestic hot water
 production, respectively.</p>
-<p>Once the ‘network’ object has been created, the next step then is to build the model from an input excel file which
+<p>Once the <code class="docutils literal notranslate"><span class="pre">network</span></code> object has been created, the next step then is to build the model from an input excel file which
 defines different components which constitute the model, how they are connected and their associated parameters:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">network</span><span class="o">.</span><span class="n">setFromExcel</span><span class="p">(</span><span class="n">inputExcelFilePath</span><span class="p">,</span> <span class="n">numberOfBuildings</span><span class="p">,</span> <span class="n">clusterSize</span><span class="p">,</span> <span class="n">opt</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>‘inputExcelFilePath’ gives the path of the excel input file. ‘numberofBuildings’ is an integer parameter specifying the
-number of buildings defined in the excel file. The last two parameters clusterSize and opt are optional. The ‘opt’
-parameter could be either ‘costs’ (default value) or ‘env’ depending on which criteria should be optimized. The
-‘clusterSize’ parameter is used to provide a selected number of days which could be assumed representative of the entire
+<p><code class="docutils literal notranslate"><span class="pre">inputExcelFilePath</span></code> gives the path of the excel input file. <code class="docutils literal notranslate"><span class="pre">numberofBuildings</span></code> is an integer parameter specifying the
+number of buildings defined in the excel file. The last two parameters clusterSize and opt are optional. The <code class="docutils literal notranslate"><span class="pre">opt</span></code>
+parameter could be either <code class="docutils literal notranslate"><span class="pre">'costs'</span></code> (default value) or <code class="docutils literal notranslate"><span class="pre">'env'</span></code> depending on which criteria should be optimized. The
+<code class="docutils literal notranslate"><span class="pre">clusterSize</span></code> parameter is used to provide a selected number of days which could be assumed representative of the entire
 time range. For example: two typical days could be selected to model the entire year, which could represent two clusters
 summer and winter. This would improve the optimization speed. If not given during the function call, the default value
 of the clusterSize parameter assumes no day clusters. This parameter is described further in
@@ -136,12 +148,14 @@ of the clusterSize parameter assumes no day clusters. This parameter is describe
 <p>The input excel file is used to define an optimization model and set the model parameters. Each sheet of this excel file
 is structured to defin different components, such as buses, storages and transformers, their respective parameters,
 connections between these components and the building to which they belong.</p>
-<p>A sample excel file for building the energy network model could be found with the <a class="reference external" href="https://github.com/SPF-OST/OptiHood/tree/main/data/examples/">basic example</a>.
+<a class="reference internal image-reference" href="../_images/input_excel_info.png"><img alt="input_excel_info" src="../_images/input_excel_info.png" style="width: 600px;" /></a>
+<p>A sample excel file for building the energy network model is given in the excels folder: <a href="#id3"><span class="problematic" id="id4">`scenario.xls &lt;https://github.com/SPF-OST/optihood/blob/main/data/excels/scenario.xls`_</span></a>.
 The input excel file typically has 9-10 sheets, each defining a different component type of the model.</p>
 <section id="buses">
 <h3>buses<a class="headerlink" href="#buses" title="Permalink to this headline"></a></h3>
 <p>This excel sheet defines the buses used in the energy network. Buses define the connections between different
 components. Each row of this excel sheet represents a bus node in the model.</p>
+<a class="reference internal image-reference" href="../_images/input_excel_buses.png"><img alt="input_excel_buses" src="../_images/input_excel_buses.png" style="width: 600px;" /></a>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">label</span></code> (string)</dt><dd><p>label name of the bus. Should be unique for each building i.e. different buildings could have the same label for two
 buses but for one building the buses should not have duplicate labels.</p>
@@ -164,6 +178,7 @@ monetary gains such as in case of PV feed-in.</p>
 <h3>commodity_sources<a class="headerlink" href="#commodity-sources" title="Permalink to this headline"></a></h3>
 <p>This sheet defines the different commodity sources which serve as an energy input to the model. The parameters <code class="docutils literal notranslate"><span class="pre">label</span></code>,
 <code class="docutils literal notranslate"><span class="pre">active</span></code> and <code class="docutils literal notranslate"><span class="pre">building</span></code> are analogous to the parameters described earlier for buses.</p>
+<a class="reference internal image-reference" href="../_images/input_excel_sources.png"><img alt="input_excel_sources" src="../_images/input_excel_sources.png" style="width: 600px;" /></a>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">to</span></code> (string)</dt><dd><p>Label of bus to which the energy from the commodity source flows. The corresponding bus label should exist in
 the buses sheet.</p>
@@ -178,6 +193,7 @@ the buses sheet.</p>
 <h3>demand<a class="headerlink" href="#demand" title="Permalink to this headline"></a></h3>
 <p>The nodes related to the energy demand i.e. sink are defined in this sheet. The parameters <code class="docutils literal notranslate"><span class="pre">label</span></code>, <code class="docutils literal notranslate"><span class="pre">active</span></code> and
 <code class="docutils literal notranslate"><span class="pre">building</span></code> are analogous to the parameters described earlier for buses.</p>
+<a class="reference internal image-reference" href="../_images/input_excel_demand.png"><img alt="input_excel_demand" src="../_images/input_excel_demand.png" style="width: 600px;" /></a>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">from</span></code> (string)</dt><dd><p>Label of the bus from which the energy flows to the demand node. The corresponding bus label should exist in
 the buses sheet.</p>
@@ -191,12 +207,17 @@ demands are accepted.</p>
 the normalized series is multiplied to obtain the actual demand profile series. If set to 1, then the given demand
 profile series is taken as it is (not normalized).</p>
 </dd>
+<dt><code class="docutils literal notranslate"><span class="pre">building</span> <span class="pre">model</span></code> (string)</dt><dd><p>If set to ‘Yes’, the custom sink component for building RC model would be used instead of static demand profiles. This
+is an under-development feature described further in <a class="reference internal" href="advanced_under_development_features.html#advanced-under-development-features"><span class="std std-ref">Advanced under-development features</span></a>, do not set this column
+to ‘Yes’. Leave this column blank if building model should not be used.</p>
+</dd>
 </dl>
 </section>
 <section id="transformers">
 <h3>transformers<a class="headerlink" href="#transformers" title="Permalink to this headline"></a></h3>
 <p>The nodes related to the energy conversion units (or transformers) such as CHP, heat pump, etc. are given in this excel
 sheet. The parameters <code class="docutils literal notranslate"><span class="pre">label</span></code>, <code class="docutils literal notranslate"><span class="pre">active</span></code> and <code class="docutils literal notranslate"><span class="pre">building</span></code> are analogous to the parameters described earlier for buses.</p>
+<a class="reference internal image-reference" href="../_images/input_excel_transformer.png"><img alt="input_excel_transformer" src="../_images/input_excel_transformer.png" style="width: 600px;" /></a>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">from</span></code> (string)</dt><dd><p>Label of bus from which the energy flows to the transformer node. The corresponding bus label should exist in
 the buses sheet.</p>
@@ -252,6 +273,7 @@ installed capacity of the node.</p>
 The parameters <code class="docutils literal notranslate"><span class="pre">label</span></code>, <code class="docutils literal notranslate"><span class="pre">active</span></code> and <code class="docutils literal notranslate"><span class="pre">building</span></code> are analogous to the parameters described earlier for buses.
 <code class="docutils literal notranslate"><span class="pre">from</span></code> and <code class="docutils literal notranslate"><span class="pre">to</span></code> parameters have been previously defined for commodity sources and demand sheets, respectively, while
 the cost and environmental impact paramaters are described under transformers sheet.</p>
+<a class="reference internal image-reference" href="../_images/input_excel_solar.png"><img alt="input_excel_solar" src="../_images/input_excel_solar.png" style="width: 600px;" /></a>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">connect</span></code> (string)</dt><dd><p>Label of the bus which connects a solar collector to the model. This bus allows excess heat production from the solar
 collector. A node for heat sink is created automatically. The given bus label should exist in the buses sheet. This
@@ -292,6 +314,7 @@ this parameter denotes the temperature difference between the solar cells and th
 been given in commodity sources and demand sheets, respectively. The cost and environmental impact parameters are
 described in the transformers sheet section. <code class="docutils literal notranslate"><span class="pre">capacity_min</span></code> and <code class="docutils literal notranslate"><span class="pre">capacity_max</span></code> are described in the solar excel sheet
 section.</p>
+<a class="reference internal image-reference" href="../_images/input_excel_storages.png"><img alt="input_excel_storages" src="../_images/input_excel_storages.png" style="width: 600px;" /></a>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">efficiency</span> <span class="pre">inflow</span></code> (float)</dt><dd><p>Charging efficiency of battery. This parameter is not relevant for thermal storages.</p>
 </dd>
@@ -316,6 +339,7 @@ defined in oemof-thermal.</p>
 production and/or space heat production. Links allow this sharing to be possible. <code class="docutils literal notranslate"><span class="pre">label</span></code> and <code class="docutils literal notranslate"><span class="pre">active</span></code> have been
 defined already for buses excel sheet. <code class="docutils literal notranslate"><span class="pre">invest_base</span></code> and <code class="docutils literal notranslate"><span class="pre">invest_cap</span></code> parameters (defined in the transformers sheet
 section) are only relevant for space heating links in the present stage of development.</p>
+<a class="reference internal image-reference" href="../_images/input_excel_links.png"><img alt="input_excel_links" src="../_images/input_excel_links.png" style="width: 600px;" /></a>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">buildingA</span></code> (integer)</dt><dd><p>Building number of the first building of the link. This should match with the values typically given in the
 <code class="docutils literal notranslate"><span class="pre">building</span></code> parameter in the other excel sheets.</p>
@@ -329,10 +353,11 @@ section) are only relevant for space heating links in the present stage of devel
 </dd>
 </dl>
 </section>
-<section id="csv-data">
-<h3>csv_data<a class="headerlink" href="#csv-data" title="Permalink to this headline"></a></h3>
+<section id="profiles">
+<h3>profiles<a class="headerlink" href="#profiles" title="Permalink to this headline"></a></h3>
 <p>The paths to CSV files containing demand profiles, weather data and electricity impact data are to be given in this
 excel sheet. <code class="docutils literal notranslate"><span class="pre">INFO</span></code> gives further information about each row.</p>
+<a class="reference internal image-reference" href="../_images/input_excel_profiles.png"><img alt="input_excel_profiles" src="../_images/input_excel_profiles.png" style="width: 600px;" /></a>
 </section>
 <section id="grid-connection">
 <h3>grid_connection<a class="headerlink" href="#grid-connection" title="Permalink to this headline"></a></h3>

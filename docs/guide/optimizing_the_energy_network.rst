@@ -12,20 +12,20 @@ optimized::
                                                                            clusterSize=clusterSize,
                                                                            options=optimizationOptions)
 
-The first parameter solver specifies the name of solver to be used for optimization. 'solver' could take the values
-'gurobi', 'cbc', 'cplex' or 'glpk'. 'envImpactlimit' denotes the maximum limit for environmental impact. This parameter
+The first parameter solver specifies the name of solver to be used for optimization. ``solver`` could take the values
+``gurobi``, ``cbc``, ``cplex`` or ``glpk``. ``envImpactlimit`` denotes the maximum limit for environmental impact. This parameter
 becomes relevant in case of multi-objective optimization and would be described in the later sections. For single-objective
-optimization set this parameter to a significantly high value which would never be reached (For example: 10^6). 'clusterSize'
+optimization set this parameter to a significantly high value which would never be reached (For example: 10^6). ``clusterSize``
 is the parameter related to clustered days (if defined). This is an optional parameter and is required only if clustered
-days are used. 'options' specifies the command line parameters to be passed to the selected solver. This parameter is
-described further in the following section. The 'optimize' function returns the environmental impact of the optimized energy
+days are used. ``options`` specifies the command line parameters to be passed to the selected solver. This parameter is
+described further in the following section. The ``optimize`` function returns the environmental impact of the optimized energy
 model, the capacities selected for energy transformers (or converters such as CHP, heat pump, etc.) and for the storages
 in the optimized energy network model.
 
 Optimization options
 --------------------
 
-The 'options' parameter of the optimize function allows passing command line options to the solver. The optimization options
+The ``options`` parameter of the optimize function allows passing command line options to the solver. The optimization options
 could be passed as a dictionary indexed by the solver name. For example::
 
     # solver specific command line options
@@ -48,7 +48,7 @@ The options for a new solver could be added as a new item in this dictionary in 
 
     solver_name:{option_name: option_value}
 
-where 'solver_name' specifies the name of the solver, 'option_name' and 'option_value' are the name and value, respectively
+where ``solver_name`` specifies the name of the solver, ``option_name`` and ``option_value`` are the name and value, respectively
 of the command line option.
 
 For more details on the different command line options which could be passed to the solver, we recommend you to have a
@@ -57,24 +57,24 @@ look at the documentation of the respective solver.
 Single-objective optimization
 -----------------------------
 
-Single-objective optimization can be performed easily by calling the 'optimize' function of the EnergyNetworkIndiv or
+Single-objective optimization can be performed easily by calling the ``optimize`` function of the EnergyNetworkIndiv or
 EnergyNetworkGroup class once the energy network has been defined. The optimization problem and the energy network should
 be defined using the input excel file. The target for single-objective optimization could be specified at this stage as
-a parameter passed in the 'setFromExcel' function::
+a parameter passed in the ``setFromExcel`` function::
 
    network.setFromExcel(inputExcelFilePath, numberOfBuildings, clusterSize, opt)
 
-The parameter 'opt' could be set to either 'costs' or 'env' for optimization based on cost or environmental impact,
+The parameter ``opt`` could be set to either ``'costs'`` or ``'env'`` for optimization based on cost or environmental impact,
 respectively. The respective data related to costs/environmental impact of the energy resources and the available energy
 conversion and storage technologies should be given in the appropriate sections of the input excel file.
 
-For more details on the 'setFromExcel' function and the structure of the input excel file, have a look at :ref:`defining_an_energy_network`.
+For more details on the ``setFromExcel`` function and the structure of the input excel file, have a look at :ref:`defining_an_energy_network`.
 
 Multi-objective optimization
 ----------------------------
 
 Multi-objective optimization can be performed as multiple single objective optimizations. At present, the two supported
-target objectives are 'costs' (total cost) and 'env' (environmental emission). The first optimization would then be for
+target objectives are ``'costs'`` (total cost) and ``'env'`` (environmental emission). The first optimization would then be for
 cost minimization and the second for the minimization of emissions, which would give the two extremes i.e. cost-optimum
 solution and environmental optimum solution. And then, more solutions are obtained between the cost and environmental
 optimum, these optimizations are a minimization of the cost subject to a constraint on the environmental criteria (epsilon

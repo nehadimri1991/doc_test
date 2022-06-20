@@ -86,18 +86,18 @@ optimized:</p>
                                                                        <span class="n">options</span><span class="o">=</span><span class="n">optimizationOptions</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The first parameter solver specifies the name of solver to be used for optimization. ‘solver’ could take the values
-‘gurobi’, ‘cbc’, ‘cplex’ or ‘glpk’. ‘envImpactlimit’ denotes the maximum limit for environmental impact. This parameter
+<p>The first parameter solver specifies the name of solver to be used for optimization. <code class="docutils literal notranslate"><span class="pre">solver</span></code> could take the values
+<code class="docutils literal notranslate"><span class="pre">gurobi</span></code>, <code class="docutils literal notranslate"><span class="pre">cbc</span></code>, <code class="docutils literal notranslate"><span class="pre">cplex</span></code> or <code class="docutils literal notranslate"><span class="pre">glpk</span></code>. <code class="docutils literal notranslate"><span class="pre">envImpactlimit</span></code> denotes the maximum limit for environmental impact. This parameter
 becomes relevant in case of multi-objective optimization and would be described in the later sections. For single-objective
-optimization set this parameter to a significantly high value which would never be reached (For example: 10^6). ‘clusterSize’
+optimization set this parameter to a significantly high value which would never be reached (For example: 10^6). <code class="docutils literal notranslate"><span class="pre">clusterSize</span></code>
 is the parameter related to clustered days (if defined). This is an optional parameter and is required only if clustered
-days are used. ‘options’ specifies the command line parameters to be passed to the selected solver. This parameter is
-described further in the following section. The ‘optimize’ function returns the environmental impact of the optimized energy
+days are used. <code class="docutils literal notranslate"><span class="pre">options</span></code> specifies the command line parameters to be passed to the selected solver. This parameter is
+described further in the following section. The <code class="docutils literal notranslate"><span class="pre">optimize</span></code> function returns the environmental impact of the optimized energy
 model, the capacities selected for energy transformers (or converters such as CHP, heat pump, etc.) and for the storages
 in the optimized energy network model.</p>
 <section id="optimization-options">
 <h2>Optimization options<a class="headerlink" href="#optimization-options" title="Permalink to this headline"></a></h2>
-<p>The ‘options’ parameter of the optimize function allows passing command line options to the solver. The optimization options
+<p>The <code class="docutils literal notranslate"><span class="pre">options</span></code> parameter of the optimize function allows passing command line options to the solver. The optimization options
 could be passed as a dictionary indexed by the solver name. For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># solver specific command line options</span>
 <span class="n">optimizationOptions</span> <span class="o">=</span> <span class="p">{</span>
@@ -120,29 +120,29 @@ could be passed as a dictionary indexed by the solver name. For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">solver_name</span><span class="p">:{</span><span class="n">option_name</span><span class="p">:</span> <span class="n">option_value</span><span class="p">}</span>
 </pre></div>
 </div>
-<p>where ‘solver_name’ specifies the name of the solver, ‘option_name’ and ‘option_value’ are the name and value, respectively
+<p>where <code class="docutils literal notranslate"><span class="pre">solver_name</span></code> specifies the name of the solver, <code class="docutils literal notranslate"><span class="pre">option_name</span></code> and <code class="docutils literal notranslate"><span class="pre">option_value</span></code> are the name and value, respectively
 of the command line option.</p>
 <p>For more details on the different command line options which could be passed to the solver, we recommend you to have a
 look at the documentation of the respective solver.</p>
 </section>
 <section id="single-objective-optimization">
 <h2>Single-objective optimization<a class="headerlink" href="#single-objective-optimization" title="Permalink to this headline"></a></h2>
-<p>Single-objective optimization can be performed easily by calling the ‘optimize’ function of the EnergyNetworkIndiv or
+<p>Single-objective optimization can be performed easily by calling the <code class="docutils literal notranslate"><span class="pre">optimize</span></code> function of the EnergyNetworkIndiv or
 EnergyNetworkGroup class once the energy network has been defined. The optimization problem and the energy network should
 be defined using the input excel file. The target for single-objective optimization could be specified at this stage as
-a parameter passed in the ‘setFromExcel’ function:</p>
+a parameter passed in the <code class="docutils literal notranslate"><span class="pre">setFromExcel</span></code> function:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">network</span><span class="o">.</span><span class="n">setFromExcel</span><span class="p">(</span><span class="n">inputExcelFilePath</span><span class="p">,</span> <span class="n">numberOfBuildings</span><span class="p">,</span> <span class="n">clusterSize</span><span class="p">,</span> <span class="n">opt</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The parameter ‘opt’ could be set to either ‘costs’ or ‘env’ for optimization based on cost or environmental impact,
+<p>The parameter <code class="docutils literal notranslate"><span class="pre">opt</span></code> could be set to either <code class="docutils literal notranslate"><span class="pre">'costs'</span></code> or <code class="docutils literal notranslate"><span class="pre">'env'</span></code> for optimization based on cost or environmental impact,
 respectively. The respective data related to costs/environmental impact of the energy resources and the available energy
 conversion and storage technologies should be given in the appropriate sections of the input excel file.</p>
-<p>For more details on the ‘setFromExcel’ function and the structure of the input excel file, have a look at <a class="reference internal" href="defining_an_energy_network.html#defining-an-energy-network"><span class="std std-ref">Defining an energy network</span></a>.</p>
+<p>For more details on the <code class="docutils literal notranslate"><span class="pre">setFromExcel</span></code> function and the structure of the input excel file, have a look at <a class="reference internal" href="defining_an_energy_network.html#defining-an-energy-network"><span class="std std-ref">Defining an energy network</span></a>.</p>
 </section>
 <section id="multi-objective-optimization">
 <h2>Multi-objective optimization<a class="headerlink" href="#multi-objective-optimization" title="Permalink to this headline"></a></h2>
 <p>Multi-objective optimization can be performed as multiple single objective optimizations. At present, the two supported
-target objectives are ‘costs’ (total cost) and ‘env’ (environmental emission). The first optimization would then be for
+target objectives are <code class="docutils literal notranslate"><span class="pre">'costs'</span></code> (total cost) and <code class="docutils literal notranslate"><span class="pre">'env'</span></code> (environmental emission). The first optimization would then be for
 cost minimization and the second for the minimization of emissions, which would give the two extremes i.e. cost-optimum
 solution and environmental optimum solution. And then, more solutions are obtained between the cost and environmental
 optimum, these optimizations are a minimization of the cost subject to a constraint on the environmental criteria (epsilon

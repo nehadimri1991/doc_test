@@ -82,7 +82,7 @@ into an excel file so that they could be analysed later without the need to perf
 flows and energy balance across the network.</p>
 <section id="saving-the-results">
 <h2>Saving the results<a class="headerlink" href="#saving-the-results" title="Permalink to this headline"></a></h2>
-<p>The optimization results can be saved into an excel file using the ‘exportToExcel’ function of the EnergyNetwork class:</p>
+<p>The optimization results can be saved into an excel file using the <code class="docutils literal notranslate"><span class="pre">exportToExcel</span></code> function of the EnergyNetwork class:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># save results</span>
 <span class="n">network</span><span class="o">.</span><span class="n">exportToExcel</span><span class="p">(</span><span class="s2">&quot;results.xlsx&quot;</span><span class="p">)</span>
 </pre></div>
@@ -95,16 +95,16 @@ selected by the optimizer for different components, total cost and environmental
 <span class="n">network</span><span class="o">.</span><span class="n">printEnvImpacts</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>‘capacitiesTransformers’ and ‘capacitiesStorages’ are returned by the optimize function of the EnergyNetwork class (For
-more details look at <a class="reference internal" href="optimizing_the_energy_network.html#optimizing-the-energy-network"><span class="std std-ref">Optimizing the energy network</span></a>.).</p>
+<p><code class="docutils literal notranslate"><span class="pre">capacitiesTransformers</span></code> and <code class="docutils literal notranslate"><span class="pre">capacitiesStorages</span></code> are returned by the optimize function of the EnergyNetwork class (For
+more details look at <a class="reference internal" href="optimizing_the_energy_network.html#optimizing-the-energy-network"><span class="std std-ref">Optimizing the energy network</span></a>).</p>
 </section>
 <section id="result-visualization">
 <h2>Result visualization<a class="headerlink" href="#result-visualization" title="Permalink to this headline"></a></h2>
 <p>The results can be visualized at different levels of detail, for example a sankey diagram of the energy network summarizes
 the capacities of the technologies selected and the annual energy flows between different components, while a detailed plot
 could be made for visualizing the hourly electricity flows to/from Building 1.</p>
-<p>To view the sankey diagram summarizing the optimization results, the plotting functions defined in optihood.plot_sankey
-should first be imported. ‘plot’ function could then be used to obtain the interactive sankey diagram:</p>
+<p>To view the sankey diagram summarizing the optimization results, the plotting functions defined in <code class="docutils literal notranslate"><span class="pre">optihood.plot_sankey</span></code>
+should first be imported. <code class="docutils literal notranslate"><span class="pre">plot</span></code> function could then be used to obtain the interactive sankey diagram:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># import plotting methods for Sankey</span>
 <span class="kn">import</span> <span class="nn">optihood.plot_sankey</span> <span class="k">as</span> <span class="nn">snk</span>
 
@@ -118,12 +118,12 @@ should first be imported. ‘plot’ function could then be used to obtain the i
 <span class="n">snk</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s2">&quot;results.xlsx&quot;</span><span class="p">,</span> <span class="s2">&quot;sankey.html&quot;</span><span class="p">,</span> <span class="n">numberOfBuildings</span><span class="p">,</span> <span class="n">UseLabelDict</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The ‘plot’ function requires four parameters: the absolute path (including filename) of the results excel file, filename for
+<p>The <code class="docutils literal notranslate"><span class="pre">plot</span></code> function requires four parameters: the absolute path (including filename) of the results excel file, filename for
 the sankey diagram, number of buildings and a boolean specifying whether or not the label dictionary should be used. The label
 dictionary is defined in <a class="reference external" href="https://github.com/SPF-OST/optihood/blob/main/optihood/labelDict.py">labelDict.py</a>. Note that
-if ‘useLabelDict’ is set to True, the label for each flow should be defined in labelDict.py, otherwise there will be an error.</p>
+if <code class="docutils literal notranslate"><span class="pre">useLabelDict</span></code> is set to True, the label for each flow should be defined in labelDict.py, otherwise there will be an error.</p>
 <a class="reference internal image-reference" href="../_images/sankey.png"><img alt="sankey" src="../_images/sankey.png" style="width: 600px;" /></a>
-<p>The detailed energy flows can be visualized using the ‘plot_functions’ library of optihood:</p>
+<p>The detailed energy flows can be visualized using the <code class="docutils literal notranslate"><span class="pre">plot_functions</span></code> library of optihood:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># import the plot_functions library</span>
 <span class="kn">import</span> <span class="nn">optihood.plot_functions</span> <span class="k">as</span> <span class="nn">fnc</span>
 
@@ -138,13 +138,13 @@ if ‘useLabelDict’ is set to True, the label for each flow should be defined 
 </pre></div>
 </div>
 <p>optihood provides two types of detailed plots: interactive bokeh plots for visualizing the energy flows and the monthly
-balance plots to check the energy balance across each flow. Accordingly, plotType can be selected as either ‘bokeh’ or
-‘energy balance’. ‘plotLevel’ can be set to either “allMonths” (for the entire year) or a specific month (three letter
-abbreviation of the month, example: “Jan”, “Feb”, “Mar”, etc.) or a specific date in the format “YYYY-MM-DD”. Note that
-if the plotType is ‘energy balance’, the ‘plotLevel’ should be set to “allMonths” since the energy balance is made only
-at a monthly level. The interactive bokeh plots are illustrated at both hourly and daily resolutions. ‘flowType’ could be
-set to “all”, “electricity”, “space heat” or “domestic hot water” to plot the respective energy flow. ‘figureFolderName’ is
-the path of the folder where the figures should be saved.</p>
+balance plots to check the energy balance across each flow. Accordingly, <code class="docutils literal notranslate"><span class="pre">plotType</span></code> can be selected as either <code class="docutils literal notranslate"><span class="pre">'bokeh'</span></code> or
+<code class="docutils literal notranslate"><span class="pre">'energy</span> <span class="pre">balance'</span></code>. <code class="docutils literal notranslate"><span class="pre">plotLevel</span></code> can be set to either <code class="docutils literal notranslate"><span class="pre">'allMonths'</span></code> (for the entire year) or a specific month (three letter
+abbreviation of the month, example: ‘Jan’, ‘Feb’, ‘Mar’, etc.) or a specific date in the format ‘YYYY-MM-DD’. Note that
+if the <code class="docutils literal notranslate"><span class="pre">plotType</span></code> is <code class="docutils literal notranslate"><span class="pre">'energy</span> <span class="pre">balance'</span></code>, the <code class="docutils literal notranslate"><span class="pre">plotLevel</span></code> should be set to <code class="docutils literal notranslate"><span class="pre">'allMonths'</span></code> since the energy balance is made only
+at a monthly level. The interactive bokeh plots are illustrated at both hourly and daily resolutions. <code class="docutils literal notranslate"><span class="pre">flowType</span></code> could be
+set to <code class="docutils literal notranslate"><span class="pre">'all'</span></code>, <code class="docutils literal notranslate"><span class="pre">'electricity'</span></code>, <code class="docutils literal notranslate"><span class="pre">'space</span> <span class="pre">heat'</span></code> or <code class="docutils literal notranslate"><span class="pre">'domestic</span> <span class="pre">hot</span> <span class="pre">water'</span></code> to plot the respective energy flow.
+<code class="docutils literal notranslate"><span class="pre">figureFolderName</span></code> is the path of the folder where the figures would be saved.</p>
 <a class="reference internal image-reference" href="../_images/bokeh_elec.png"><img alt="bokeh_elec" src="../_images/bokeh_elec.png" style="width: 400px;" /></a>
 <p>Moreover, the monthly energy balance could be checked for each flow.</p>
 <a class="reference internal image-reference" href="../_images/balance.png"><img alt="balance" src="../_images/balance.png" style="width: 400px;" /></a>

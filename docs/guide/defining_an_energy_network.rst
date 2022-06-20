@@ -34,15 +34,15 @@ optimization model. The Datetime index could be defined using date_range() in pa
 The second and the third parameters tSH and tDHW define the temperatures for space heating and domestic hot water
 production, respectively.
 
-Once the 'network' object has been created, the next step then is to build the model from an input excel file which
+Once the ``network`` object has been created, the next step then is to build the model from an input excel file which
 defines different components which constitute the model, how they are connected and their associated parameters::
 
     network.setFromExcel(inputExcelFilePath, numberOfBuildings, clusterSize, opt)
 
-'inputExcelFilePath' gives the path of the excel input file. 'numberofBuildings' is an integer parameter specifying the
-number of buildings defined in the excel file. The last two parameters clusterSize and opt are optional. The 'opt'
-parameter could be either 'costs' (default value) or 'env' depending on which criteria should be optimized. The
-'clusterSize' parameter is used to provide a selected number of days which could be assumed representative of the entire
+``inputExcelFilePath`` gives the path of the excel input file. ``numberofBuildings`` is an integer parameter specifying the
+number of buildings defined in the excel file. The last two parameters clusterSize and opt are optional. The ``opt``
+parameter could be either ``'costs'`` (default value) or ``'env'`` depending on which criteria should be optimized. The
+``clusterSize`` parameter is used to provide a selected number of days which could be assumed representative of the entire
 time range. For example: two typical days could be selected to model the entire year, which could represent two clusters
 summer and winter. This would improve the optimization speed. If not given during the function call, the default value
 of the clusterSize parameter assumes no day clusters. This parameter is described further in
@@ -54,13 +54,21 @@ The input excel file is used to define an optimization model and set the model p
 is structured to defin different components, such as buses, storages and transformers, their respective parameters,
 connections between these components and the building to which they belong.
 
-A sample excel file for building the energy network model could be found with the `basic example <https://github.com/SPF-OST/OptiHood/tree/main/data/examples/>`_.
+.. image:: ./resources/input_excel_info.png
+      :width: 600
+      :alt: input_excel_info
+
+A sample excel file for building the energy network model is given in the excels folder: `scenario.xls <https://github.com/SPF-OST/optihood/blob/main/data/excels/scenario.xls`_.
 The input excel file typically has 9-10 sheets, each defining a different component type of the model.
 
 buses
 ^^^^^
 This excel sheet defines the buses used in the energy network. Buses define the connections between different
 components. Each row of this excel sheet represents a bus node in the model.
+
+.. image:: ./resources/input_excel_buses.png
+      :width: 600
+      :alt: input_excel_buses
 
 ``label`` (string)
     label name of the bus. Should be unique for each building i.e. different buildings could have the same label for two
@@ -87,6 +95,10 @@ commodity_sources
 This sheet defines the different commodity sources which serve as an energy input to the model. The parameters ``label``,
 ``active`` and ``building`` are analogous to the parameters described earlier for buses.
 
+.. image:: ./resources/input_excel_sources.png
+      :width: 600
+      :alt: input_excel_sources
+
 ``to`` (string)
     Label of bus to which the energy from the commodity source flows. The corresponding bus label should exist in
     the buses sheet.
@@ -103,6 +115,10 @@ demand
 The nodes related to the energy demand i.e. sink are defined in this sheet. The parameters ``label``, ``active`` and
 ``building`` are analogous to the parameters described earlier for buses.
 
+.. image:: ./resources/input_excel_demand.png
+      :width: 600
+      :alt: input_excel_demand
+
 ``from`` (string)
     Label of the bus from which the energy flows to the demand node. The corresponding bus label should exist in
     the buses sheet.
@@ -118,11 +134,20 @@ The nodes related to the energy demand i.e. sink are defined in this sheet. The 
     the normalized series is multiplied to obtain the actual demand profile series. If set to 1, then the given demand
     profile series is taken as it is (not normalized).
 
+``building model`` (string)
+    If set to 'Yes', the custom sink component for building RC model would be used instead of static demand profiles. This
+    is an under-development feature described further in :ref:`advanced_under_development_features`, do not set this column
+    to 'Yes'. Leave this column blank if building model should not be used.
+
 transformers
 ^^^^^^^^^^^^
 
 The nodes related to the energy conversion units (or transformers) such as CHP, heat pump, etc. are given in this excel
 sheet. The parameters ``label``, ``active`` and ``building`` are analogous to the parameters described earlier for buses.
+
+.. image:: ./resources/input_excel_transformer.png
+      :width: 600
+      :alt: input_excel_transformer
 
 ``from`` (string)
     Label of bus from which the energy flows to the transformer node. The corresponding bus label should exist in
@@ -194,6 +219,10 @@ The parameters ``label``, ``active`` and ``building`` are analogous to the param
 ``from`` and ``to`` parameters have been previously defined for commodity sources and demand sheets, respectively, while
 the cost and environmental impact paramaters are described under transformers sheet.
 
+.. image:: ./resources/input_excel_solar.png
+      :width: 600
+      :alt: input_excel_solar
+
 ``connect`` (string)
     Label of the bus which connects a solar collector to the model. This bus allows excess heat production from the solar
     collector. A node for heat sink is created automatically. The given bus label should exist in the buses sheet. This
@@ -245,6 +274,10 @@ been given in commodity sources and demand sheets, respectively. The cost and en
 described in the transformers sheet section. ``capacity_min`` and ``capacity_max`` are described in the solar excel sheet
 section.
 
+.. image:: ./resources/input_excel_storages.png
+      :width: 600
+      :alt: input_excel_storages
+
 ``efficiency inflow`` (float)
     Charging efficiency of battery. This parameter is not relevant for thermal storages.
 
@@ -273,6 +306,10 @@ production and/or space heat production. Links allow this sharing to be possible
 defined already for buses excel sheet. ``invest_base`` and ``invest_cap`` parameters (defined in the transformers sheet
 section) are only relevant for space heating links in the present stage of development.
 
+.. image:: ./resources/input_excel_links.png
+      :width: 600
+      :alt: input_excel_links
+
 ``buildingA`` (integer)
     Building number of the first building of the link. This should match with the values typically given in the
     ``building`` parameter in the other excel sheets.
@@ -287,11 +324,15 @@ section) are only relevant for space heating links in the present stage of devel
 ``efficiency from B to A`` (integer)
     Efficiency of energy transfer over the link from ``buildingB`` to ``buildingA``.
 
-csv_data
+profiles
 ^^^^^^^^
 
 The paths to CSV files containing demand profiles, weather data and electricity impact data are to be given in this
 excel sheet. ``INFO`` gives further information about each row.
+
+.. image:: ./resources/input_excel_profiles.png
+      :width: 600
+      :alt: input_excel_profiles
 
 grid_connection
 ^^^^^^^^^^^^^^^
