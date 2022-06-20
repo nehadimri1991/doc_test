@@ -54,7 +54,7 @@ The input excel file is used to define an optimization model and set the model p
 is structured to defin different components, such as buses, storages and transformers, their respective parameters,
 connections between these components and the building to which they belong.
 
-.. image:: ./resources/input_excel_info.png
+.. image:: ./resources/input_excel_info.PNG
       :width: 800
       :alt: input_excel_info
 
@@ -66,7 +66,7 @@ buses
 This excel sheet defines the buses used in the energy network. Buses define the connections between different
 components. Each row of this excel sheet represents a bus node in the model.
 
-.. image:: ./resources/input_excel_buses.png
+.. image:: ./resources/input_excel_buses.PNG
       :width: 400
       :alt: input_excel_buses
 
@@ -115,7 +115,7 @@ demand
 The nodes related to the energy demand i.e. sink are defined in this sheet. The parameters ``label``, ``active`` and
 ``building`` are analogous to the parameters described earlier for buses.
 
-.. image:: ./resources/input_excel_demand.png
+.. image:: ./resources/input_excel_demand.PNG
       :width: 800
       :alt: input_excel_demand
 
@@ -145,7 +145,7 @@ transformers
 The nodes related to the energy conversion units (or transformers) such as CHP, heat pump, etc. are given in this excel
 sheet. The parameters ``label``, ``active`` and ``building`` are analogous to the parameters described earlier for buses.
 
-.. image:: ./resources/input_excel_transformer.png
+.. image:: ./resources/input_excel_transformer.PNG
       :width: 800
       :alt: input_excel_transformer
 
@@ -219,7 +219,7 @@ The parameters ``label``, ``active`` and ``building`` are analogous to the param
 ``from`` and ``to`` parameters have been previously defined for commodity sources and demand sheets, respectively, while
 the cost and environmental impact paramaters are described under transformers sheet.
 
-.. image:: ./resources/input_excel_solar.png
+.. image:: ./resources/input_excel_solar.PNG
       :width: 800
       :alt: input_excel_solar
 
@@ -274,7 +274,7 @@ been given in commodity sources and demand sheets, respectively. The cost and en
 described in the transformers sheet section. ``capacity_min`` and ``capacity_max`` are described in the solar excel sheet
 section.
 
-.. image:: ./resources/input_excel_storages.png
+.. image:: ./resources/input_excel_storages.PNG
       :width: 800
       :alt: input_excel_storages
 
@@ -306,7 +306,7 @@ production and/or space heat production. Links allow this sharing to be possible
 defined already for buses excel sheet. ``invest_base`` and ``invest_cap`` parameters (defined in the transformers sheet
 section) are only relevant for space heating links in the present stage of development.
 
-.. image:: ./resources/input_excel_links.png
+.. image:: ./resources/input_excel_links.PNG
       :width: 600
       :alt: input_excel_links
 
@@ -330,7 +330,7 @@ profiles
 The paths to CSV files containing demand profiles, weather data and electricity impact data are to be given in this
 excel sheet. ``INFO`` gives further information about each row.
 
-.. image:: ./resources/input_excel_profiles.png
+.. image:: ./resources/input_excel_profiles.PNG
       :width: 500
       :alt: input_excel_profiles
 

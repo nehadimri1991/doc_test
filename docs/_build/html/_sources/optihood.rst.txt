@@ -4,22 +4,6 @@ optihood package
 Submodules
 ----------
 
-optihood.Run module
--------------------
-
-.. automodule:: optihood.Run
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-optihood.Test module
---------------------
-
-.. automodule:: optihood.Test
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 optihood.buildings module
 -------------------------
 
@@ -60,14 +44,6 @@ optihood.labelDict module
    :undoc-members:
    :show-inheritance:
 
-optihood.loadProfilesResidential module
----------------------------------------
-
-.. automodule:: optihood.loadProfilesResidential
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 optihood.plot\_functions module
 -------------------------------
 
@@ -80,22 +56,6 @@ optihood.plot\_sankey module
 ----------------------------
 
 .. automodule:: optihood.plot_sankey
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-optihood.plot\_sankey\_anim module
-----------------------------------
-
-.. automodule:: optihood.plot_sankey_anim
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-optihood.shoppingmall module
-----------------------------
-
-.. automodule:: optihood.shoppingmall
    :members:
    :undoc-members:
    :show-inheritance:

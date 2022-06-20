@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>optihood.plot_sankey &mdash; pytrnsys  documentation</title>
+  <title>optihood.plot_sankey &mdash; optihood  documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -24,7 +24,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> pytrnsys
+            <a href="../../index.html" class="icon icon-home"> optihood
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -49,7 +49,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">pytrnsys</a>
+          <a href="../../index.html">optihood</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -280,7 +280,7 @@
     <span class="k">return</span> <span class="n">fig</span></div>
 
 
-<div class="viewcode-block" id="plotSankey"><a class="viewcode-back" href="../../optihood.html#optihood.plot_sankey.plotSankey">[docs]</a><span class="k">def</span> <span class="nf">plotSankey</span><span class="p">(</span><span class="n">excelFileName</span><span class="p">,</span> <span class="n">outputFileName</span><span class="p">,</span> <span class="n">numberOfBuildings</span><span class="p">,</span> <span class="n">UseLabelDict</span><span class="p">):</span>
+<div class="viewcode-block" id="plot"><a class="viewcode-back" href="../../optihood.html#optihood.plot_sankey.plot">[docs]</a><span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">excelFileName</span><span class="p">,</span> <span class="n">outputFileName</span><span class="p">,</span> <span class="n">numberOfBuildings</span><span class="p">,</span> <span class="n">UseLabelDict</span><span class="p">):</span>
     <span class="n">BUILDINGSLIST</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">numberOfBuildings</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">displaySankey</span><span class="p">(</span><span class="n">excelFileName</span><span class="p">,</span> <span class="n">UseLabelDict</span><span class="p">,</span> <span class="n">BUILDINGSLIST</span><span class="p">)</span>
     <span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -294,7 +294,7 @@
     <span class="n">UseLabelDict</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">excelFileName</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;..\data\Results&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;results</span><span class="si">{</span><span class="n">numberOfBuildings</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">plotOptim</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">optMode</span><span class="si">}</span><span class="s2">.xlsx&quot;</span><span class="p">)</span>
     <span class="n">outputFileName</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;..\data\figures&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Sankey_</span><span class="si">{</span><span class="n">plotOptim</span><span class="si">}</span><span class="s2">.html&quot;</span><span class="p">)</span>
-    <span class="n">plotSankey</span><span class="p">(</span><span class="n">excelFileName</span><span class="p">,</span> <span class="n">outputFileName</span><span class="p">,</span> <span class="n">numberOfBuildings</span><span class="p">,</span> <span class="n">UseLabelDict</span><span class="p">)</span>
+    <span class="n">plot</span><span class="p">(</span><span class="n">excelFileName</span><span class="p">,</span> <span class="n">outputFileName</span><span class="p">,</span> <span class="n">numberOfBuildings</span><span class="p">,</span> <span class="n">UseLabelDict</span><span class="p">)</span>
 </pre></div>
 
            </div>
@@ -304,7 +304,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2019, Dani Carbonell, Mattia Battaglia, Jeremias Schmidli, Maike Schubert, Martin Neugebauer.</p>
+    <p>&#169; Copyright 2022  .... .</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
