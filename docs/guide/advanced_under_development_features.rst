@@ -52,7 +52,7 @@ The parameters and variables of the RC model are described below:
 +---------------------------+------------------------------------------------------------------------------------------+
 | :math:`Q^{dis}_{max}`     |  Maximum operating power from the tank to the distribution system [kW]                   |
 +---------------------------+------------------------------------------------------------------------------------------+
-| :math:`T^{ind}_{min}`     |  Indoor minimum comfort temperature [:math:`\circ`C]                                     |
+| :math:`T^{ind}_{min}`     |  Indoor minimum comfort temperature [°C]                                                 |
 +---------------------------+------------------------------------------------------------------------------------------+
 | :math:`T^{ind}_{max}`     |  Indoor maximum comfort temperature [:math:`\circ`C]                                     |
 +---------------------------+------------------------------------------------------------------------------------------+
