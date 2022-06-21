@@ -54,11 +54,11 @@ The parameters and variables of the RC model are described below:
 +---------------------------+------------------------------------------------------------------------------------------+
 | :math:`T^{ind}_{min}`     |  Indoor minimum comfort temperature [°C]                                                 |
 +---------------------------+------------------------------------------------------------------------------------------+
-| :math:`T^{ind}_{max}`     |  Indoor maximum comfort temperature [:math:`\circ`C]                                     |
+| :math:`T^{ind}_{max}`     |  Indoor maximum comfort temperature [°C]                                                 |
 +---------------------------+------------------------------------------------------------------------------------------+
 | **Exogenous input parameters**                                                                                       |
 +---------------------------+------------------------------------------------------------------------------------------+
-| :math:`T^{amb}_{t}`       |  Ambient outside air temperature at :math:`t^{th}` timestep [:math:`\degree`C]           |
+| :math:`T^{amb}_{t}`       |  Ambient outside air temperature at :math:`t^{th}` timestep [°C]                         |
 +---------------------------+------------------------------------------------------------------------------------------+
 | :math:`I^{H}_{t}`         |  Total horizontal irradiation at :math:`t^{th}` timestep [kW/:math:`m^2`]                |
 +---------------------------+------------------------------------------------------------------------------------------+
@@ -66,23 +66,23 @@ The parameters and variables of the RC model are described below:
 +---------------------------+------------------------------------------------------------------------------------------+
 | **Boundary parameters**                                                                                              |
 +---------------------------+------------------------------------------------------------------------------------------+
-| :math:`T^{ind}_{init}`    |  Indoor initial temperature [:math:`\circ`C]                                             |
+| :math:`T^{ind}_{init}`    |  Indoor initial temperature [°C]                                                         |
 +---------------------------+------------------------------------------------------------------------------------------+
-| :math:`T^{wall}_{init}`   |  Wall initial temperature [:math:`\circ`C]                                               |
+| :math:`T^{wall}_{init}`   |  Wall initial temperature [°C]                                                           |
 +---------------------------+------------------------------------------------------------------------------------------+
-| :math:`T^{dis}_{init}`    |  Distribution system initial temperature [:math:`\circ`C]                                |
+| :math:`T^{dis}_{init}`    |  Distribution system initial temperature [°C]                                            |
 +---------------------------+------------------------------------------------------------------------------------------+
 | **State variables**                                                                                                  |
 +---------------------------+------------------------------------------------------------------------------------------+
-| :math:`T^{ind}_t`         |  Indoor temperature at :math:`t^{th}` timestep [:math:`\circ`C]                          |
+| :math:`T^{ind}_t`         |  Indoor temperature at :math:`t^{th}` timestep [°C]                                      |
 +---------------------------+------------------------------------------------------------------------------------------+
-| :math:`T^{wall}_t`        |  Wall temperature at :math:`t^{th}` timestep [:math:`\circ`C]                            |
+| :math:`T^{wall}_t`        |  Wall temperature at :math:`t^{th}` timestep [°C]                                        |
 +---------------------------+------------------------------------------------------------------------------------------+
-| :math:`T^{dis}_t`         |  Distribution system temperature at :math:`t^{th}` timestep [:math:`\circ`C]             |
+| :math:`T^{dis}_t`         |  Distribution system temperature at :math:`t^{th}` timestep [°C]                         |
 +---------------------------+------------------------------------------------------------------------------------------+
-| :math:`\epsilon^{ind}_t`  | Violation of indoor comfort temperature range at :math:`t^{th}` timestep [:math:`\circ`C]|
+| :math:`\epsilon^{ind}_t`  | Violation of indoor comfort temperature range at :math:`t^{th}` timestep [°C]            |
 +---------------------------+------------------------------------------------------------------------------------------+
-| :math:`\delta^{ind}_t`    |  Violation of indoor final temperature requirement [:math:`\circ`C]                      |
+| :math:`\delta^{ind}_t`    |  Violation of indoor final temperature requirement [°C]                                  |
 +---------------------------+------------------------------------------------------------------------------------------+
 | :math:`P^{dis}_t`         |  Electric consumption of the distribution system                                         |
 +---------------------------+------------------------------------------------------------------------------------------+
