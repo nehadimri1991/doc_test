@@ -94,19 +94,19 @@ The parameters and variables of the RC model are described below:
 The state space equations of the building model are:
 
 .. image:: ./resources/state_space_eq.png
-      :width: 400
+      :width: 450
       :alt: state_space_eq
 
 The final constraints of the building model are:
 
 .. image:: ./resources/Constraint1.png
-      :width: 400
+      :width: 500
       :alt: constraint1
 
 |
 
 .. image:: ./resources/Constraint2.png
-      :width: 100
+      :width: 200
       :alt: constraint2
 
 |
@@ -118,7 +118,7 @@ The final constraints of the building model are:
 |
 
 .. image:: ./resources/Constraint4.png
-      :width: 300
+      :width: 250
       :alt: constraint4
 
 |
