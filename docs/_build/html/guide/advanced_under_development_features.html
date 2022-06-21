@@ -15,6 +15,7 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -78,7 +79,121 @@
 <span id="id1"></span><h1>Advanced under-development features<a class="headerlink" href="#advanced-under-development-features" title="Permalink to this headline"></a></h1>
 <section id="building-model">
 <h2>Building model<a class="headerlink" href="#building-model" title="Permalink to this headline"></a></h2>
-<p>To be completed</p>
+<p>A linear RC building model is presently under-development to replace the static space heating demand profiles. A building
+model is a grey-box model which is often used to depict the thermal behaviour of a building in a simplified manner. It is
+implemented as a custom sink component along with a set of new constraints.</p>
+<a class="reference internal image-reference" href="../_images/building_model_oemof.png"><img alt="building_model_oemof" src="../_images/building_model_oemof.png" style="width: 400px;" /></a>
+<p>The specific building model implemented in optihood was proposed and validated in [1] and is characterized by three thermal
+spaces:</p>
+<ul class="simple">
+<li><p>wall and building mass</p></li>
+<li><p>indoor air</p></li>
+<li><p>distribution system</p></li>
+</ul>
+<p>Each thermal space is at a certain temperature at a particular timestep. Moreover, each thermal space has two key parameters
+which represent the thermal resistance and thermal capacity. The temperature of each thermal space is influenced by the
+temperature of adjascent thermal spaces, heat flow, internal heat gains and ambient weather conditions.</p>
+<a class="reference internal image-reference" href="../_images/building_model.png"><img alt="building_model" src="../_images/building_model.png" style="width: 400px;" /></a>
+<p>The parameters and variables of the RC model are described below:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 77%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td colspan="2"><p><strong>Parameters</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(R_{ind}\)</span></p></td>
+<td><p>Thermal resistance between indoor and wall states [K/kW]</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(R_{wall}\)</span></p></td>
+<td><p>Thermal resistance between wall state and outside [K/kW]</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(R_{dis}\)</span></p></td>
+<td><p>Thermal resistance between indoor and distribution system states [K/kW]</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(C_{ind}\)</span></p></td>
+<td><p>Thermal capacity of the indoor air state [kWh/K]</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(C_{wall}\)</span></p></td>
+<td><p>Thermal capacity of the wall state [kWh/K]</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(C_{dis}\)</span></p></td>
+<td><p>Thermal capacity of the distribution system state [kWh/K]</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(gA\)</span></p></td>
+<td><p>Aperture area of the windows [<span class="math notranslate nohighlight">\(m^2\)</span>]</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(Q^{dis}_{min}\)</span></p></td>
+<td><p>Minimum operating power from the tank to the distribution system [kW]</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(Q^{dis}_{max}\)</span></p></td>
+<td><p>Maximum operating power from the tank to the distribution system [kW]</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(T^{ind}_{min}\)</span></p></td>
+<td><p>Indoor minimum comfort temperature [:math:<a href="#id2"><span class="problematic" id="id3">`</span></a>circ`C]</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(T^{ind}_{max}\)</span></p></td>
+<td><p>Indoor maximum comfort temperature [:math:<a href="#id4"><span class="problematic" id="id5">`</span></a>circ`C]</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p><strong>Exogenous input parameters</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(T^{amb}_{t}\)</span></p></td>
+<td><p>Ambient outside air temperature at <span class="math notranslate nohighlight">\(t^th\)</span> timestep [:math:<a href="#id6"><span class="problematic" id="id7">`</span></a>circ`C]</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(I^{H}_{t}\)</span></p></td>
+<td><p>Total horizontal irradiation at <span class="math notranslate nohighlight">\(t^th\)</span> timestep [kW/<span class="math notranslate nohighlight">\(m^2\)</span>]</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(Q^{occ}_{t}\)</span></p></td>
+<td><p>Internal heat gains from occupants at <span class="math notranslate nohighlight">\(t^th\)</span> timestep [kW]</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p><strong>Boundary parameters</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(T^{ind}_{init}\)</span></p></td>
+<td><p>Indoor initial temperature [:math:<a href="#id8"><span class="problematic" id="id9">`</span></a>circ`C]</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(T^{wall}_{init}\)</span></p></td>
+<td><p>Wall initial temperature [:math:<a href="#id10"><span class="problematic" id="id11">`</span></a>circ`C]</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(T^{dis}_{init}\)</span></p></td>
+<td><p>Distribution system initial temperature [:math:<a href="#id12"><span class="problematic" id="id13">`</span></a>circ`C]</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p><strong>State variables</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(T^{ind}_t\)</span></p></td>
+<td><p>Indoor temperature at <span class="math notranslate nohighlight">\(t^th\)</span> timestep [:math:<a href="#id14"><span class="problematic" id="id15">`</span></a>circ`C]</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(T^{wall}_t\)</span></p></td>
+<td><p>Wall temperature at <span class="math notranslate nohighlight">\(t^th\)</span> timestep [:math:<a href="#id16"><span class="problematic" id="id17">`</span></a>circ`C]</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(T^{dis}_t\)</span></p></td>
+<td><p>Distribution system temperature at <span class="math notranslate nohighlight">\(t^th\)</span> timestep [:math:<a href="#id18"><span class="problematic" id="id19">`</span></a>circ`C]</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\epsilon^{ind}_t\)</span></p></td>
+<td><p>Violation of indoor comfort temperature range at <span class="math notranslate nohighlight">\(t^th\)</span> timestep [:math:<a href="#id20"><span class="problematic" id="id21">`</span></a>circ`C]</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\delta^{ind}_t\)</span></p></td>
+<td><p>Violation of indoor final temperature requirement [:math:<a href="#id22"><span class="problematic" id="id23">`</span></a>circ`C]</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(P^{dis}_t\)</span></p></td>
+<td><p>Electric consumption of the distribution system</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p><strong>Decision variable</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(Q^{dis}_t\)</span></p></td>
+<td><p>Heating power from the tank to the distribution system at <span class="math notranslate nohighlight">\(t^th\)</span> timestep [kW]</p></td>
+</tr>
+</tbody>
+</table>
+<p>The state space equations of the building model are:</p>
+<a class="reference internal image-reference" href="../_images/state_space_eq.png"><img alt="state_space_eq" src="../_images/state_space_eq.png" style="width: 400px;" /></a>
+<p>The final constraints of the building model are:</p>
+<a class="reference internal image-reference" href="../_images/constraint1.png"><img alt="constraint1" src="../_images/constraint1.png" style="width: 400px;" /></a>
+<a class="reference internal image-reference" href="../_images/constraint1.png"><img alt="constraint2" src="../_images/constraint1.png" style="width: 400px;" /></a>
+<a class="reference internal image-reference" href="../_images/constraint1.png"><img alt="constraint3" src="../_images/constraint1.png" style="width: 400px;" /></a>
+<a class="reference internal image-reference" href="../_images/constraint1.png"><img alt="constraint4" src="../_images/constraint1.png" style="width: 400px;" /></a>
+<a class="reference internal image-reference" href="../_images/constraint1.png"><img alt="constraint5" src="../_images/constraint1.png" style="width: 400px;" /></a>
+<p>[1] T. Péan, R. Costa Castelló y J. Salom, Price and carbon-based energy flexibility of residential heating and cooling loads using model predictive control, Sustainable Cities and Society, vol. 50, 2019</p>
 </section>
 <section id="clustering">
 <h2>Clustering<a class="headerlink" href="#clustering" title="Permalink to this headline"></a></h2>
