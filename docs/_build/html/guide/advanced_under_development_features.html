@@ -187,7 +187,9 @@ temperature of adjascent thermal spaces, heat flow, internal heat gains and ambi
 </table>
 <p>The state space equations of the building model are:</p>
 <a class="reference internal image-reference" href="../_images/state_space_eq.png"><img alt="state_space_eq" class="align-center" src="../_images/state_space_eq.png" style="width: 600px;" /></a>
-<p>The final constraints of the building model are:</p>
+<div class="line-block">
+<div class="line">The final constraints of the building model are:</div>
+</div>
 <a class="reference internal image-reference" href="../_images/Constraint1.png"><img alt="constraint1" class="align-center" src="../_images/Constraint1.png" style="width: 520px;" /></a>
 <a class="reference internal image-reference" href="../_images/Constraint2.png"><img alt="constraint2" class="align-center" src="../_images/Constraint2.png" style="width: 140px;" /></a>
 <a class="reference internal image-reference" href="../_images/Constraint3.png"><img alt="constraint3" class="align-center" src="../_images/Constraint3.png" style="width: 300px;" /></a>
@@ -199,7 +201,52 @@ temperature of adjascent thermal spaces, heat flow, internal heat gains and ambi
 </section>
 <section id="clustering">
 <h2>Clustering<a class="headerlink" href="#clustering" title="Permalink to this headline"></a></h2>
-<p>To be completed</p>
+<p>Clustering feature allows the users to improve the optimization speed by specifying a set of dates which could be considered
+representative of the whole year (or the entire duration of the analysis). For example: four typical days could be selected
+, one representing each season, and optihood would then provide the optimal design plan of the energy network based on these
+days. Since the time resolution of the optimization problem would be much lower than simulating the whole year, the speed
+of optimization is much faster when clustering is used.</p>
+<p>Any clustering method (for example K-means clustering) can be chosen by the user and the results could be fed to optihood
+for faster optimization. Note that in optihood one could use the results from clustering (which is to be done independently)
+but the implementation of the clustering method itself is not a part of the optihood framework. The following results are
+required from the clustering algorithm:</p>
+<ul class="simple">
+<li><p>Number of clusters</p></li>
+<li><p>Days of year representing each cluster</p></li>
+<li><p>Number of days in each cluster</p></li>
+</ul>
+<p>In order to use the clustering feature, first a dictionary containing one item for each cluster, where keys and values are
+the cluster’s representative date and number of days, respectively, should be defined:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cluster</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;2018-07-30&quot;</span><span class="p">:</span> <span class="mi">26</span><span class="p">,</span>
+           <span class="s2">&quot;2018-02-03&quot;</span><span class="p">:</span> <span class="mi">44</span><span class="p">,</span>
+           <span class="s2">&quot;2018-07-23&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
+           <span class="s2">&quot;2018-09-18&quot;</span><span class="p">:</span> <span class="mi">28</span><span class="p">,</span>
+           <span class="s2">&quot;2018-04-15&quot;</span><span class="p">:</span> <span class="mi">22</span><span class="p">,</span>
+           <span class="s2">&quot;2018-10-01&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
+           <span class="s2">&quot;2018-11-04&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
+           <span class="s2">&quot;2018-10-11&quot;</span><span class="p">:</span> <span class="mi">37</span><span class="p">,</span>
+           <span class="s2">&quot;2018-01-24&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+           <span class="s2">&quot;2018-08-18&quot;</span><span class="p">:</span> <span class="mi">26</span><span class="p">,</span>
+           <span class="s2">&quot;2018-05-28&quot;</span><span class="p">:</span> <span class="mi">23</span><span class="p">,</span>
+           <span class="s2">&quot;2018-02-06&quot;</span><span class="p">:</span> <span class="mi">48</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Here, the days of the year have been represented using 12 clusters, where the first cluster consists of 26 days and is
+represented by the date 30 June 2018.</p>
+<p>This dictionary should be passed in the <code class="docutils literal notranslate"><span class="pre">setFromExcel</span></code> and <code class="docutils literal notranslate"><span class="pre">optimize</span></code> functions of the EnergyNetwork class:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># set a time period for the optimization problem according to the number of clusers</span>
+<span class="n">network</span> <span class="o">=</span> <span class="n">EnergyNetwork</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s2">&quot;2018-01-01 00:00:00&quot;</span><span class="p">,</span> <span class="s2">&quot;2018-01-12 23:00:00&quot;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;60min&quot;</span><span class="p">),</span> <span class="n">temperatureSH</span><span class="p">,</span> <span class="n">temperatureDHW</span><span class="p">)</span>
+
+<span class="c1"># pass the dictionary defining the clusters to setFromExcel function</span>
+<span class="n">network</span><span class="o">.</span><span class="n">setFromExcel</span><span class="p">(</span><span class="s2">&quot;scenario.xls&quot;</span><span class="p">,</span> <span class="n">numberOfBuildings</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">clusterSize</span><span class="o">=</span><span class="n">cluster</span><span class="p">,</span> <span class="n">opt</span><span class="o">=</span><span class="s2">&quot;costs&quot;</span><span class="p">)</span>
+
+<span class="c1"># pass the dictionary defining the clusters to optimize function</span>
+<span class="n">envImpact</span><span class="p">,</span> <span class="n">capacitiesTransformers</span><span class="p">,</span> <span class="n">capacitiesStorages</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="s1">&#39;gurobi&#39;</span><span class="p">,</span> <span class="n">clusterSize</span><span class="o">=</span><span class="n">cluster</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that the time period would need to be adjusted to include the timesteps corresponding to 12 days (12 x 24 = 288 timesteps
+if hourly resolution is considered). Try the example on <a href="#id2"><span class="problematic" id="id3">`selective days clustering &lt;https://github.com/SPF-OST/optihood/blob/main/data/examples/selective_days_clustering.py`_</span></a>
+for a better grasp.</p>
 </section>
 </section>
 
