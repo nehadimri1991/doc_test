@@ -103,17 +103,25 @@ The final constraints of the building model are:
       :width: 400
       :alt: constraint1
 
+|
+
 .. image:: ./resources/Constraint2.png
       :width: 100
       :alt: constraint2
+
+|
 
 .. image:: ./resources/Constraint3.png
       :width: 300
       :alt: constraint3
 
+|
+
 .. image:: ./resources/Constraint4.png
       :width: 300
       :alt: constraint4
+
+|
 
 .. image:: ./resources/Constraint5.png
       :width: 400
