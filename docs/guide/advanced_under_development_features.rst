@@ -58,11 +58,11 @@ The parameters and variables of the RC model are described below:
 +---------------------------+------------------------------------------------------------------------------------------+
 | **Exogenous input parameters**                                                                                       |
 +---------------------------+------------------------------------------------------------------------------------------+
-| :math:`T^{amb}_{t}`       |  Ambient outside air temperature at :math:`t^{th}` timestep [:math:`\degree`C]               |
+| :math:`T^{amb}_{t}`       |  Ambient outside air temperature at :math:`t^{th}` timestep [:math:`\degree`C]           |
 +---------------------------+------------------------------------------------------------------------------------------+
-| :math:`I^{H}_{t}`         |  Total horizontal irradiation at :math:`t^{th}` timestep [kW/:math:`m^2`]                  |
+| :math:`I^{H}_{t}`         |  Total horizontal irradiation at :math:`t^{th}` timestep [kW/:math:`m^2`]                |
 +---------------------------+------------------------------------------------------------------------------------------+
-| :math:`Q^{occ}_{t}`       |  Internal heat gains from occupants at :math:`t^{th}` timestep [kW]                        |
+| :math:`Q^{occ}_{t}`       |  Internal heat gains from occupants at :math:`t^{th}` timestep [kW]                      |
 +---------------------------+------------------------------------------------------------------------------------------+
 | **Boundary parameters**                                                                                              |
 +---------------------------+------------------------------------------------------------------------------------------+
@@ -74,13 +74,13 @@ The parameters and variables of the RC model are described below:
 +---------------------------+------------------------------------------------------------------------------------------+
 | **State variables**                                                                                                  |
 +---------------------------+------------------------------------------------------------------------------------------+
-| :math:`T^{ind}_t`         |  Indoor temperature at :math:`t^{th}` timestep [:math:`\circ`C]                            |
+| :math:`T^{ind}_t`         |  Indoor temperature at :math:`t^{th}` timestep [:math:`\circ`C]                          |
 +---------------------------+------------------------------------------------------------------------------------------+
-| :math:`T^{wall}_t`        |  Wall temperature at :math:`t^{th}` timestep [:math:`\circ`C]                              |
+| :math:`T^{wall}_t`        |  Wall temperature at :math:`t^{th}` timestep [:math:`\circ`C]                            |
 +---------------------------+------------------------------------------------------------------------------------------+
-| :math:`T^{dis}_t`         |  Distribution system temperature at :math:`t^{th}` timestep [:math:`\circ`C]               |
+| :math:`T^{dis}_t`         |  Distribution system temperature at :math:`t^{th}` timestep [:math:`\circ`C]             |
 +---------------------------+------------------------------------------------------------------------------------------+
-| :math:`\epsilon^{ind}_t`  | Violation of indoor comfort temperature range at :math:`t^{th}` timestep [:math:`\circ`C]  |
+| :math:`\epsilon^{ind}_t`  | Violation of indoor comfort temperature range at :math:`t^{th}` timestep [:math:`\circ`C]|
 +---------------------------+------------------------------------------------------------------------------------------+
 | :math:`\delta^{ind}_t`    |  Violation of indoor final temperature requirement [:math:`\circ`C]                      |
 +---------------------------+------------------------------------------------------------------------------------------+
@@ -88,7 +88,7 @@ The parameters and variables of the RC model are described below:
 +---------------------------+------------------------------------------------------------------------------------------+
 | **Decision variable**                                                                                                |
 +---------------------------+------------------------------------------------------------------------------------------+
-| :math:`Q^{dis}_t`         | Heating power from the tank to the distribution system at :math:`t^{th}` timestep [kW]     |
+| :math:`Q^{dis}_t`         | Heating power from the tank to the distribution system at :math:`t^{th}` timestep [kW]   |
 +---------------------------+------------------------------------------------------------------------------------------+
 
 The state space equations of the building model are:
@@ -100,15 +100,15 @@ The state space equations of the building model are:
 The final constraints of the building model are:
 
 .. image:: ./resources/Constraint1.png
-      :width: 400
+      :width: 150
       :alt: constraint1
 
 .. image:: ./resources/Constraint2.png
-      :width: 400
+      :width: 300
       :alt: constraint2
 
 .. image:: ./resources/Constraint3.png
-      :width: 400
+      :width: 250
       :alt: constraint3
 
 .. image:: ./resources/Constraint4.png
