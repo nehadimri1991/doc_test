@@ -100,19 +100,19 @@ The state space equations of the building model are:
 The final constraints of the building model are:
 
 .. image:: ./resources/Constraint1.png
-      :width: 150
+      :width: 400
       :alt: constraint1
 
 .. image:: ./resources/Constraint2.png
-      :width: 300
+      :width: 100
       :alt: constraint2
 
 .. image:: ./resources/Constraint3.png
-      :width: 250
+      :width: 300
       :alt: constraint3
 
 .. image:: ./resources/Constraint4.png
-      :width: 400
+      :width: 300
       :alt: constraint4
 
 .. image:: ./resources/Constraint5.png
