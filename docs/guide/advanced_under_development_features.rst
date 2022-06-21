@@ -100,7 +100,7 @@ The state space equations of the building model are:
 The final constraints of the building model are:
 
 .. image:: ./resources/Constraint1.png
-      :width: 500
+      :width: 520
       :alt: constraint1
       :align: left
 
@@ -109,24 +109,28 @@ The final constraints of the building model are:
 .. image:: ./resources/Constraint2.png
       :width: 150
       :alt: constraint2
+      :align: left
 
 |
 
 .. image:: ./resources/Constraint3.png
       :width: 300
       :alt: constraint3
+      :align: left
 
 |
 
 .. image:: ./resources/Constraint4.png
-      :width: 230
+      :width: 220
       :alt: constraint4
+      :align: left
 
 |
 
 .. image:: ./resources/Constraint5.png
       :width: 400
       :alt: constraint5
+      :align: left
 
 [1] T. Péan, R. Costa Castelló y J. Salom, Price and carbon-based energy flexibility of residential heating and cooling loads using model predictive control, Sustainable Cities and Society, vol. 50, 2019
 
